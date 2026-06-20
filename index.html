@@ -476,6 +476,76 @@
   .btn-salvar { background: #27ae60; color: white; }
   .btn-cancelar { background: #95a5a6; color: white; }
 
+  /* ===== MODAL LOGIN ===== */
+  .login-box {
+    max-width: 420px;
+    text-align: center;
+  }
+  .login-box .login-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+  }
+  .login-box h2 {
+    color: #333;
+    margin-bottom: 8px;
+  }
+  .login-box .login-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+  .login-box .form-group {
+    text-align: left;
+  }
+  .login-box .form-group input {
+    padding: 12px;
+    font-size: 1rem;
+  }
+  .login-error {
+    background: #fee;
+    color: #c0392b;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    display: none;
+    border-left: 4px solid #e74c3c;
+  }
+  .login-error.show { display: block; }
+  .login-info {
+    background: #f0f4ff;
+    color: #555;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-top: 15px;
+    border-left: 4px solid #667eea;
+    text-align: left;
+  }
+  .login-info strong { color: #667eea; }
+  .btn-entrar {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.3s;
+  }
+  .btn-entrar:hover { opacity: 0.9; }
+  .btn-entrar:disabled { opacity: 0.6; cursor: not-allowed; }
+
   /* ===== ADMIN ===== */
   .admin-menu {
     display: grid;
@@ -495,6 +565,64 @@
     transition: all 0.3s;
   }
   .admin-btn:hover { background: #667eea; color: white; }
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+  .admin-user {
+    font-size: 0.85rem;
+    color: #888;
+  }
+  .btn-logout {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .btn-logout:hover { background: #c0392b; }
+
+  /* ===== BLOQUEIO DE ACESSO ===== */
+  .acesso-negado {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .acesso-negado.active { display: flex; }
+  .acesso-negado-box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .acesso-negado-box .icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+  }
+  .acesso-negado-box h2 {
+    color: #c0392b;
+    margin-bottom: 10px;
+  }
+  .acesso-negado-box p {
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
 
   @media (max-width: 600px) {
     .hero h2 { font-size: 1.6rem; }
@@ -508,10 +636,20 @@
 </head>
 <body>
 
+<!-- ===== BLOQUEIO DE ACESSO DIRETO ===== -->
+<div class="acesso-negado" id="acessoNegado">
+  <div class="acesso-negado-box">
+    <div class="icon">🔒</div>
+    <h2>Acesso Negado</h2>
+    <p>Você tentou acessar uma área restrita sem autenticação. Faça login para continuar.</p>
+    <button class="btn-entrar" onclick="fecharBloqueio(); abrirLogin()">Fazer Login</button>
+  </div>
+</div>
+
 <!-- ===== HEADER ===== -->
 <header>
   <div class="header-inner">
-    <div class="logo-area" onclick="trocarLogo()">
+    <div class="logo-area" onclick="irParaHome()">
       <div class="logo-img" id="logoContainer">
         <span id="logoLetra">A</span>
       </div>
@@ -533,7 +671,7 @@
       </ul>
     </nav>
 
-    <button class="btn-admin" onclick="abrirAdmin()">⚙️ Admin</button>
+    <button class="btn-admin" id="btnAdmin" onclick="abrirAdmin()">⚙️ Admin</button>
   </div>
 </header>
 
@@ -556,7 +694,7 @@
   <!-- ===== NOTÍCIAS ===== -->
   <div class="pagina" id="pagina-noticias">
     <section>
-      <h2 class="section-title"> Notícias e Matérias</h2>
+      <h2 class="section-title">📰 Notícias e Matérias</h2>
       <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 1.05rem;">
         Fique por dentro das novidades, dicas e novidades da A Mesa Arrumação
       </p>
@@ -585,7 +723,7 @@
     <section>
       <h2 class="section-title">👥 Quem Somos</h2>
       <div class="texto-pagina">
-        <button class="btn-editar-texto" onclick="editarTexto('quemSomos')">✏️ Editar</button>
+        <button class="btn-editar-texto" onclick="editarTextoPublico('quemSomos')">✏️ Editar</button>
         <span id="conteudoQuemSomos">Somos a A Mesa Arrumação, uma empresa dedicada a oferecer os melhores produtos com qualidade e preços justos. Nossa missão é proporcionar uma experiência de compra incrível para todos os nossos clientes.
 
 Trabalhamos com dedicação para atender você da melhor forma possível, sempre buscando inovação e excelência em tudo o que fazemos.
@@ -600,7 +738,7 @@ Entre em contato e conheça nossa história!</span>
     <section>
       <h2 class="section-title">📋 Nossas Políticas</h2>
       <div class="texto-pagina">
-        <button class="btn-editar-texto" onclick="editarTexto('politicas')">✏️ Editar</button>
+        <button class="btn-editar-texto" onclick="editarTextoPublico('politicas')">✏️ Editar</button>
         <span id="conteudoPoliticas">📦 POLÍTICA DE ENTREGA
 Realizamos entregas em todo o Brasil. O prazo varia de acordo com a região.
 
@@ -699,10 +837,51 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   <p>&copy; 2026 <span id="footerNome">A Mesa Arrumação</span> - Todos os direitos reservados</p>
 </footer>
 
+<!-- ===== MODAL LOGIN ===== -->
+<div class="modal" id="modalLogin">
+  <div class="modal-content login-box">
+    <div class="login-icon">🔐</div>
+    <h2>Acesso Administrativo</h2>
+    <p class="login-subtitle">Digite suas credenciais para continuar</p>
+    
+    <div class="login-error" id="loginErro">
+      ❌ Usuário ou senha inválidos. Tente novamente.
+    </div>
+
+    <form id="formLogin">
+      <div class="form-group">
+        <label>👤 Usuário</label>
+        <input type="text" id="loginUsuario" required placeholder="Digite seu usuário" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>🔑 Senha</label>
+        <input type="password" id="loginSenha" required placeholder="Digite sua senha" autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-entrar" id="btnEntrar">🔓 Entrar</button>
+    </form>
+
+    <div class="login-info">
+      <strong>⚠️ Credenciais padrão (primeiro acesso):</strong><br>
+      Usuário: <code>admin</code> | Senha: <code>******</code><br>
+      <em>Altere a senha após o primeiro login!</em>
+    </div>
+
+    <div class="modal-buttons" style="margin-top: 15px;">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalLogin')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== MODAL ADMIN ===== -->
 <div class="modal" id="modalAdmin">
   <div class="modal-content">
-    <h2>⚙️ Painel Administrativo</h2>
+    <div class="admin-header">
+      <h2 style="margin-bottom: 0;">⚙️ Painel Admin</h2>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <span class="admin-user" id="adminUserLabel">👤 admin</span>
+        <button class="btn-logout" onclick="fazerLogout()">🚪 Sair</button>
+      </div>
+    </div>
     <div class="admin-menu">
       <button class="admin-btn" onclick="abrirModalNoticia(); fecharModal('modalAdmin')">📰 Nova Matéria</button>
       <button class="admin-btn" onclick="abrirModalProduto(); fecharModal('modalAdmin')">➕ Novo Produto</button>
@@ -710,11 +889,37 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
       <button class="admin-btn" onclick="editarTexto('quemSomos'); fecharModal('modalAdmin')">📝 Quem Somos</button>
       <button class="admin-btn" onclick="editarTexto('politicas'); fecharModal('modalAdmin')">📋 Políticas</button>
       <button class="admin-btn" onclick="trocarNomeLoja(); fecharModal('modalAdmin')">✏️ Trocar Nome</button>
+      <button class="admin-btn" onclick="abrirModalSenha(); fecharModal('modalAdmin')">🔑 Trocar Senha</button>
       <button class="admin-btn" onclick="limparTudo()">🗑️ Limpar Tudo</button>
     </div>
     <div class="modal-buttons">
       <button type="button" class="btn-cancelar" onclick="fecharModal('modalAdmin')">Fechar</button>
     </div>
+  </div>
+</div>
+
+<!-- ===== MODAL TROCAR SENHA ===== -->
+<div class="modal" id="modalSenha">
+  <div class="modal-content">
+    <h2>🔑 Alterar Senha</h2>
+    <form id="formSenha">
+      <div class="form-group">
+        <label>Senha Atual</label>
+        <input type="password" id="senhaAtual" required>
+      </div>
+      <div class="form-group">
+        <label>Nova Senha (mínimo 4 caracteres)</label>
+        <input type="password" id="senhaNova" required minlength="4">
+      </div>
+      <div class="form-group">
+        <label>Confirmar Nova Senha</label>
+        <input type="password" id="senhaConfirm" required minlength="4">
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalSenha')">Cancelar</button>
+        <button type="submit" class="btn-salvar">Alterar</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -793,7 +998,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
       </div>
 
       <div class="form-group">
-        <label> Link do Botão (WhatsApp, site, etc.)</label>
+        <label>🔗 Link do Botão (WhatsApp, site, etc.)</label>
         <input type="url" id="produtoLink" required placeholder="https://wa.me/5511999999999">
       </div>
 
@@ -829,6 +1034,80 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   let logo = localStorage.getItem('logo') || '';
   let nomeLoja = localStorage.getItem('nomeLoja') || 'A Mesa Arrumação';
 
+  // ===== AUTENTICAÇÃO =====
+  // Hash simples (em produção use backend com bcrypt/argon2)
+  function hashSenha(senha) {
+    let hash = 0;
+    const str = 'AMA_XOR_' + senha + '_SALT_2026';
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash |= 0;
+    }
+    return 'h_' + Math.abs(hash).toString(36) + '_' + str.length;
+  }
+
+  function inicializarAuth() {
+    if (!localStorage.getItem('auth_usuario')) {
+      localStorage.setItem('auth_usuario', 'admin');
+      localStorage.setItem('auth_senha_hash', hashSenha('admin123'));
+    }
+  }
+
+  function verificarCredenciais(usuario, senha) {
+    const usuarioSalvo = localStorage.getItem('auth_usuario');
+    const hashSalvo = localStorage.getItem('auth_senha_hash');
+    return usuario === usuarioSalvo && hashSenha(senha) === hashSalvo;
+  }
+
+  function estaLogado() {
+    const sessao = localStorage.getItem('auth_sessao');
+    if (!sessao) return false;
+    try {
+      const dados = JSON.parse(sessao);
+      // Sessão expira em 2 horas
+      if (Date.now() - dados.timestamp > 2 * 60 * 60 * 1000) {
+        localStorage.removeItem('auth_sessao');
+        return false;
+      }
+      return dados.logado === true;
+    } catch {
+      return false;
+    }
+  }
+
+  function criarSessao(usuario) {
+    localStorage.setItem('auth_sessao', JSON.stringify({
+      logado: true,
+      usuario: usuario,
+      timestamp: Date.now()
+    }));
+  }
+
+  function destruirSessao() {
+    localStorage.removeItem('auth_sessao');
+  }
+
+  // ===== PROTEÇÃO CONTRA ACESSO DIRETO =====
+  function verificarAcessoDireto() {
+    const params = new URLSearchParams(window.location.search);
+    const acessoDireto = params.get('admin') === '1' || 
+                         params.get('painel') === '1' ||
+                         window.location.hash === '#admin' ||
+                         window.location.hash === '#painel';
+    
+    if (acessoDireto && !estaLogado()) {
+      document.getElementById('acessoNegado').classList.add('active');
+      // Limpa URL para não ficar tentando acessar
+      history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
+
+  function fecharBloqueio() {
+    document.getElementById('acessoNegado').classList.remove('active');
+  }
+
+  // ===== SALVAR DADOS =====
   function salvar() {
     localStorage.setItem('produtos', JSON.stringify(produtos));
     localStorage.setItem('recados', JSON.stringify(recados));
@@ -839,21 +1118,26 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     localStorage.setItem('nomeLoja', nomeLoja);
   }
 
-  // ===== NAVEGAÇÃO ENTRE PÁGINAS =====
+  // ===== NAVEGAÇÃO =====
   document.querySelectorAll('nav a').forEach(link => {
     link.addEventListener('click', function(e) {
       e.preventDefault();
       const pagina = this.getAttribute('data-pagina');
-      
       document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
       document.getElementById('pagina-' + pagina).classList.add('active');
-      
       document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
       this.classList.add('active');
-      
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
+
+  function irParaHome() {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+    document.getElementById('pagina-home').classList.add('active');
+    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+    document.querySelector('nav a[data-pagina="home"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   function voltarParaNoticias() {
     document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
@@ -862,6 +1146,101 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     document.querySelector('nav a[data-pagina="noticias"]').classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // ===== LOGIN =====
+  function abrirLogin() {
+    document.getElementById('formLogin').reset();
+    document.getElementById('loginErro').classList.remove('show');
+    document.getElementById('modalLogin').classList.add('active');
+    setTimeout(() => document.getElementById('loginUsuario').focus(), 100);
+  }
+
+  function abrirAdmin() {
+    if (!estaLogado()) {
+      abrirLogin();
+      return;
+    }
+    const sessao = JSON.parse(localStorage.getItem('auth_sessao'));
+    document.getElementById('adminUserLabel').textContent = '👤 ' + sessao.usuario;
+    document.getElementById('modalAdmin').classList.add('active');
+  }
+
+  document.getElementById('formLogin').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const usuario = document.getElementById('loginUsuario').value.trim();
+    const senha = document.getElementById('loginSenha').value;
+    const btn = document.getElementById('btnEntrar');
+
+    btn.disabled = true;
+    btn.textContent = '🔄 Verificando...';
+
+    // Simula delay para evitar brute force rápido
+    setTimeout(() => {
+      if (verificarCredenciais(usuario, senha)) {
+        criarSessao(usuario);
+        fecharModal('modalLogin');
+        document.getElementById('loginErro').classList.remove('show');
+        atualizarBotaoAdmin();
+        // Abre o painel admin automaticamente após login
+        setTimeout(() => abrirAdmin(), 300);
+      } else {
+        document.getElementById('loginErro').classList.add('show');
+        document.getElementById('loginSenha').value = '';
+        document.getElementById('loginSenha').focus();
+      }
+      btn.disabled = false;
+      btn.textContent = '🔓 Entrar';
+    }, 500);
+  });
+
+  function fazerLogout() {
+    if (!confirm('Deseja realmente sair do painel admin?')) return;
+    destruirSessao();
+    fecharModal('modalAdmin');
+    atualizarBotaoAdmin();
+    alert('👋 Sessão encerrada com sucesso!');
+  }
+
+  function atualizarBotaoAdmin() {
+    const btn = document.getElementById('btnAdmin');
+    if (estaLogado()) {
+      const sessao = JSON.parse(localStorage.getItem('auth_sessao'));
+      btn.textContent = '⚙️ Admin (' + sessao.usuario + ')';
+    } else {
+      btn.textContent = '⚙️ Admin';
+    }
+  }
+
+  // ===== TROCAR SENHA =====
+  function abrirModalSenha() {
+    document.getElementById('formSenha').reset();
+    document.getElementById('modalSenha').classList.add('active');
+  }
+
+  document.getElementById('formSenha').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const atual = document.getElementById('senhaAtual').value;
+    const nova = document.getElementById('senhaNova').value;
+    const confirm = document.getElementById('senhaConfirm').value;
+
+    const usuarioAtual = localStorage.getItem('auth_usuario');
+    if (!verificarCredenciais(usuarioAtual, atual)) {
+      alert('❌ Senha atual incorreta!');
+      return;
+    }
+    if (nova !== confirm) {
+      alert('❌ As senhas novas não coincidem!');
+      return;
+    }
+    if (nova.length < 4) {
+      alert('❌ A nova senha deve ter no mínimo 4 caracteres!');
+      return;
+    }
+
+    localStorage.setItem('auth_senha_hash', hashSenha(nova));
+    fecharModal('modalSenha');
+    alert('✅ Senha alterada com sucesso!');
+  });
 
   // ===== LOGO =====
   function carregarLogo() {
@@ -877,6 +1256,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function trocarLogo() {
+    if (!estaLogado()) { abrirLogin(); return; }
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
@@ -895,6 +1275,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function trocarNomeLoja() {
+    if (!estaLogado()) { abrirLogin(); return; }
     const novo = prompt('Digite o novo nome da loja:', nomeLoja);
     if (novo && novo.trim()) {
       nomeLoja = novo.trim();
@@ -907,6 +1288,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   function renderizarNoticias() {
     const listaHome = document.getElementById('listaNoticiasHome');
     const listaCompleta = document.getElementById('listaNoticias');
+    const logado = estaLogado();
     
     if (noticias.length === 0) {
       const vazio = '<div class="vazio"><h3>📰 Nenhuma matéria publicada</h3><p>Clique em ⚙️ Admin para adicionar notícias.</p></div>';
@@ -915,7 +1297,9 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
       return;
     }
 
-    const html = noticias.slice().reverse().map(n => `
+    const noticiasOrdenadas = noticias.slice().reverse();
+
+    const gerarCard = (n, mostrarAcoes) => `
       <div class="noticia-card" onclick="abrirMateria(${n.id})">
         <img src="${n.img}" alt="${n.titulo}" class="noticia-img">
         <div class="noticia-content">
@@ -927,29 +1311,18 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
             <span class="noticia-leia-mais">Leia mais →</span>
           </div>
         </div>
+        ${mostrarAcoes ? `
         <div class="noticia-actions">
           <button class="btn-edit" onclick="event.stopPropagation(); editarNoticia(${n.id})">✏️ Editar</button>
-          <button class="btn-del" onclick="event.stopPropagation(); excluirNoticia(${n.id})">️ Excluir</button>
-        </div>
+          <button class="btn-del" onclick="event.stopPropagation(); excluirNoticia(${n.id})">🗑️ Excluir</button>
+        </div>` : ''}
       </div>
-    `).join('');
+    `;
 
-    listaHome.innerHTML = noticias.slice().reverse().slice(0, 3).map(n => `
-      <div class="noticia-card" onclick="abrirMateria(${n.id})">
-        <img src="${n.img}" alt="${n.titulo}" class="noticia-img">
-        <div class="noticia-content">
-          ${n.categoria ? `<span class="noticia-categoria">${n.categoria}</span>` : ''}
-          <div class="noticia-titulo">${n.titulo}</div>
-          <div class="noticia-resumo">${n.resumo}</div>
-          <div class="noticia-meta">
-            <span>📅 ${n.data}</span>
-            <span class="noticia-leia-mais">Leia mais →</span>
-          </div>
-        </div>
-      </div>
-    `).join('') || '<div class="vazio"><h3>📰 Nenhuma matéria publicada</h3></div>';
+    listaHome.innerHTML = noticiasOrdenadas.slice(0, 3).map(n => gerarCard(n, false)).join('') || 
+      '<div class="vazio"><h3>📰 Nenhuma matéria publicada</h3></div>';
     
-    listaCompleta.innerHTML = html;
+    listaCompleta.innerHTML = noticiasOrdenadas.map(n => gerarCard(n, logado)).join('');
   }
 
   function abrirMateria(id) {
@@ -963,7 +1336,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
         <h1>${n.titulo}</h1>
         <div class="meta-info">
           📅 ${n.data}
-          ${n.autor ? ` • ️ ${n.autor}` : ''}
+          ${n.autor ? ` • ✍️ ${n.autor}` : ''}
         </div>
         <div class="conteudo-texto">${n.texto}</div>
       </div>
@@ -976,6 +1349,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function abrirModalNoticia() {
+    if (!estaLogado()) { abrirLogin(); return; }
     document.getElementById('modalNoticiaTitulo').textContent = 'Nova Matéria';
     document.getElementById('formNoticia').reset();
     document.getElementById('noticiaId').value = '';
@@ -984,6 +1358,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function editarNoticia(id) {
+    if (!estaLogado()) { abrirLogin(); return; }
     const n = noticias.find(x => x.id === id);
     document.getElementById('modalNoticiaTitulo').textContent = 'Editar Matéria';
     document.getElementById('noticiaId').value = n.id;
@@ -999,6 +1374,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function excluirNoticia(id) {
+    if (!estaLogado()) { abrirLogin(); return; }
     if (!confirm('Deseja realmente excluir esta matéria?')) return;
     noticias = noticias.filter(n => n.id !== id);
     salvar();
@@ -1019,6 +1395,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
 
   document.getElementById('formNoticia').addEventListener('submit', function(e) {
     e.preventDefault();
+    if (!estaLogado()) { fecharModal('modalNoticia'); abrirLogin(); return; }
     const id = document.getElementById('noticiaId').value;
     const preview = document.getElementById('previewNoticiaImg');
     const img = preview.style.display === 'block' ? preview.src : (id ? noticias.find(n => n.id == id).img : '');
@@ -1056,6 +1433,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   function renderizarProdutos() {
     const listaHome = document.getElementById('listaProdutosHome');
     const listaCompleta = document.getElementById('listaProdutos');
+    const logado = estaLogado();
     
     if (produtos.length === 0) {
       const vazio = '<div class="vazio"><h3>📦 Nenhum produto cadastrado</h3><p>Clique em ⚙️ Admin para adicionar produtos.</p></div>';
@@ -1073,17 +1451,20 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
           <div class="produto-preco">R$ ${Number(p.preco).toFixed(2).replace('.', ',')}</div>
           <a href="${p.link}" target="_blank" class="btn-comprar">🛒 Comprar</a>
         </div>
+        ${logado ? `
         <div class="card-actions">
           <button class="btn-edit" onclick="editarProduto(${p.id})">✏️ Editar</button>
           <button class="btn-del" onclick="excluirProduto(${p.id})">🗑️ Excluir</button>
-        </div>
+        </div>` : ''}
       </div>
     `).join('');
 
+    listaHome.innerHTML = html;
     listaCompleta.innerHTML = html;
   }
 
   function abrirModalProduto() {
+    if (!estaLogado()) { abrirLogin(); return; }
     document.getElementById('modalTitulo').textContent = 'Novo Produto';
     document.getElementById('formProduto').reset();
     document.getElementById('produtoId').value = '';
@@ -1092,6 +1473,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function editarProduto(id) {
+    if (!estaLogado()) { abrirLogin(); return; }
     const p = produtos.find(x => x.id === id);
     document.getElementById('modalTitulo').textContent = 'Editar Produto';
     document.getElementById('produtoId').value = p.id;
@@ -1106,6 +1488,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function excluirProduto(id) {
+    if (!estaLogado()) { abrirLogin(); return; }
     if (!confirm('Deseja realmente excluir este produto?')) return;
     produtos = produtos.filter(p => p.id !== id);
     salvar();
@@ -1126,6 +1509,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
 
   document.getElementById('formProduto').addEventListener('submit', function(e) {
     e.preventDefault();
+    if (!estaLogado()) { fecharModal('modalProduto'); abrirLogin(); return; }
     const id = document.getElementById('produtoId').value;
     const preview = document.getElementById('previewImg');
     const img = preview.style.display === 'block' ? preview.src : (id ? produtos.find(p => p.id == id).img : '');
@@ -1160,10 +1544,27 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   function carregarTextos() {
     if (textos.quemSomos) document.getElementById('conteudoQuemSomos').textContent = textos.quemSomos;
     if (textos.politicas) document.getElementById('conteudoPoliticas').textContent = textos.politicas;
+    atualizarBotoesEditar();
+  }
+
+  function atualizarBotoesEditar() {
+    const logado = estaLogado();
+    document.querySelectorAll('.btn-editar-texto').forEach(btn => {
+      btn.style.display = logado ? 'block' : 'none';
+    });
+  }
+
+  function editarTextoPublico(tipo) {
+    if (!estaLogado()) {
+      abrirLogin();
+      return;
+    }
+    editarTexto(tipo);
   }
 
   let textoAtual = '';
   function editarTexto(tipo) {
+    if (!estaLogado()) { abrirLogin(); return; }
     textoAtual = tipo;
     const titulo = tipo === 'quemSomos' ? 'Editar Quem Somos' : 'Editar Políticas';
     document.getElementById('tituloTexto').textContent = titulo;
@@ -1175,6 +1576,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   }
 
   function salvarTexto() {
+    if (!estaLogado()) { fecharModal('modalTexto'); abrirLogin(); return; }
     const novo = document.getElementById('areaTexto').value;
     textos[textoAtual] = novo;
     if (textoAtual === 'quemSomos') {
@@ -1189,6 +1591,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   // ===== RECADOS =====
   function renderizarRecados() {
     const lista = document.getElementById('listaRecados');
+    const logado = estaLogado();
     if (recados.length === 0) {
       lista.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">Nenhum recado ainda. Seja o primeiro! 💌</p>';
       return;
@@ -1196,9 +1599,9 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     lista.innerHTML = recados.slice().reverse().map(r => `
       <div class="recado-card">
         <div class="recado-nome">👤 ${r.nome}</div>
-        <div class="recado-data"> ${r.data}</div>
+        <div class="recado-data">📅 ${r.data}</div>
         <div class="recado-msg">${r.msg}</div>
-        <button class="recado-del" onclick="excluirRecado(${r.id})">🗑️ Excluir</button>
+        ${logado ? `<button class="recado-del" onclick="excluirRecado(${r.id})">🗑️ Excluir</button>` : ''}
       </div>
     `).join('');
   }
@@ -1219,6 +1622,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   });
 
   function excluirRecado(id) {
+    if (!estaLogado()) { abrirLogin(); return; }
     if (!confirm('Excluir este recado?')) return;
     recados = recados.filter(r => r.id !== id);
     salvar();
@@ -1243,15 +1647,18 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   });
 
   // ===== MODAIS =====
-  function abrirAdmin() {
-    document.getElementById('modalAdmin').classList.add('active');
-  }
   function fecharModal(id) {
     document.getElementById(id).classList.remove('active');
   }
   function limparTudo() {
+    if (!estaLogado()) { abrirLogin(); return; }
     if (!confirm('⚠️ Isso apagará TODOS os dados (produtos, recados, textos, notícias e logo). Continuar?')) return;
+    const usuario = localStorage.getItem('auth_usuario');
+    const hash = localStorage.getItem('auth_senha_hash');
     localStorage.clear();
+    if (usuario) localStorage.setItem('auth_usuario', usuario);
+    if (hash) localStorage.setItem('auth_senha_hash', hash);
+    destruirSessao();
     location.reload();
   }
 
@@ -1261,12 +1668,26 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     });
   });
 
+  // Monitora sessão em outras abas
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'auth_sessao') {
+      atualizarBotaoAdmin();
+      renderizarProdutos();
+      renderizarNoticias();
+      renderizarRecados();
+      atualizarBotoesEditar();
+    }
+  });
+
   // ===== INICIAR =====
+  inicializarAuth();
+  verificarAcessoDireto();
   carregarLogo();
   carregarTextos();
   renderizarProdutos();
   renderizarRecados();
   renderizarNoticias();
+  atualizarBotaoAdmin();
 </script>
 
 </body>
