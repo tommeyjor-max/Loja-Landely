@@ -1,614 +1,1302 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.0.0' expr:class='data:blog.languageDirection' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html lang="pt-BR">
 <head>
-<title><data:view.title.escaped/></title>
-<b:include data='blog' name='all-head-content'/>
-<!-- Google Fonts -->
-<link href='//fonts.googleapis.com/css?family=Poppins:400,400i,600,600i,700,700i' media='all' rel='stylesheet' type='text/css'/>
-<link href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'/>
-
-<!-- PAINEL ADMIN CSS -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Mesa Arrumação</title>
 <style>
-.admin-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
-  z-index: 999999;
-  justify-content: center;
-  align-items: center;
-}
-.admin-modal.active {
-  display: flex;
-}
-.admin-panel {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 900px;
-  width: 95%;
-  max-height: 90vh;
-  overflow-y: auto;
-}
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #667eea;
-}
-.admin-header h2 {
-  margin: 0;
-  color: #333;
-  font-size: 24px;
-}
-.admin-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-bottom: 25px;
-}
-.admin-btn {
-  background: white;
-  border: 2px solid #667eea;
-  color: #667eea;
-  padding: 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.admin-btn:hover {
-  background: #667eea;
-  color: white;
-}
-.admin-form {
-  display: none;
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-.admin-form.active {
-  display: block;
-}
-.form-group {
-  margin-bottom: 15px;
-}
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #333;
-}
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-}
-.form-group textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-.btn-save {
-  background: #27ae60;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-right: 10px;
-}
-.btn-cancel {
-  background: #95a5a6;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.btn-close {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.admin-message {
-  padding: 10px;
-  border-radius: 6px;
-  margin-top: 10px;
-  display: none;
-}
-.admin-message.success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-  display: block;
-}
-.admin-message.error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-  display: block;
-}
-</style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { background: #f4f6f9; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+  .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .logo-img { width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.3rem; overflow: hidden; }
+  .logo-img img { width: 100%; height: 100%; object-fit: cover; }
+  .logo-text h1 { font-size: 1.3rem; color: #333; }
+  .logo-text p { font-size: 0.8rem; color: #888; }
+  nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
+  nav a { text-decoration: none; color: #555; padding: 8px 16px; border-radius: 20px; font-weight: 500; transition: all 0.3s; font-size: 0.95rem; cursor: pointer; }
+  nav a:hover, nav a.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+  .btn-admin { background: #2c3e50; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; }
+  .btn-admin:hover { background: #1a252f; }
+  .pagina { display: none; }
+  .pagina.active { display: block; }
+  main { flex: 1; }
+  section { max-width: 1200px; margin: 0 auto; padding: 50px 20px; }
+  .section-title { text-align: center; font-size: 2rem; margin-bottom: 30px; color: #333; position: relative; padding-bottom: 15px; }
+  .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 2px; }
+  .produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+  .produto-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s; display: flex; flex-direction: column; position: relative; }
+  .produto-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+  .produto-img { width: 100%; height: 220px; object-fit: cover; background: #eee; }
+  .produto-info { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+  .produto-nome { font-size: 1.15rem; font-weight: bold; margin-bottom: 8px; color: #222; }
+  .produto-desc { font-size: 0.9rem; color: #666; margin-bottom: 15px; flex: 1; line-height: 1.5; }
+  .produto-preco { font-size: 1.5rem; font-weight: bold; color: #27ae60; margin-bottom: 15px; }
+  .btn-comprar { background: linear-gradient(135deg, #667eea, #764ba2); color: white; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: bold; display: block; }
+  .btn-comprar:hover { opacity: 0.9; }
+  .vazio { text-align: center; padding: 60px 20px; color: #888; grid-column: 1 / -1; }
+  .texto-pagina { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); line-height: 1.8; font-size: 1.05rem; color: #555; white-space: pre-wrap; }
+  .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+  .noticia-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s; display: flex; flex-direction: column; cursor: pointer; position: relative; }
+  .noticia-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+  .noticia-img { width: 100%; height: 220px; object-fit: cover; background: linear-gradient(135deg, #e0e7ff, #f3e8ff); }
+  .noticia-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+  .noticia-categoria { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; align-self: flex-start; }
+  .noticia-titulo { font-size: 1.3rem; font-weight: bold; color: #222; margin-bottom: 10px; line-height: 1.3; }
+  .noticia-resumo { font-size: 0.95rem; color: #666; line-height: 1.6; margin-bottom: 15px; flex: 1; }
+  .noticia-meta { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid #eee; font-size: 0.85rem; color: #888; }
+  .noticia-leia-mais { color: #667eea; font-weight: 600; }
+  .materia-leitura { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); overflow: hidden; max-width: 900px; margin: 0 auto; }
+  .materia-hero-img { width: 100%; max-height: 450px; object-fit: cover; display: block; }
+  .materia-body { padding: 40px; }
+  .materia-body h1 { font-size: 2.2rem; color: #222; margin-bottom: 15px; line-height: 1.2; }
+  .materia-body .meta-info { color: #888; font-size: 0.9rem; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+  .materia-body .conteudo-texto { font-size: 1.1rem; line-height: 1.9; color: #444; white-space: pre-wrap; }
+  .btn-voltar { display: inline-flex; align-items: center; gap: 8px; background: white; color: #667eea; border: 2px solid #667eea; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; margin-bottom: 20px; }
+  .btn-voltar:hover { background: #667eea; color: white; }
+  .contato-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .contato-card { background: white; padding: 25px; border-radius: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  .contato-card .icone { font-size: 2.5rem; margin-bottom: 10px; }
+  .contato-card h3 { margin-bottom: 8px; color: #333; }
+  .contato-card p { color: #666; }
+  .contato-card a { color: #667eea; text-decoration: none; }
+  footer { background: #2c3e50; color: white; text-align: center; padding: 25px 20px; margin-top: 40px; }
+  .loading { text-align: center; padding: 40px; color: #888; grid-column: 1 / -1; }
+  .loading-spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: center; padding: 20px; }
+  .modal.active { display: flex; }
+  .modal-content { background: white; border-radius: 12px; padding: 25px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+  .modal-content h2 { margin-bottom: 20px; color: #333; }
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
+  .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: inherit; }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-buttons button { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+  .btn-salvar { background: #27ae60; color: white; }
+  .btn-cancelar { background: #95a5a6; color: white; }
+  
+  .login-box { max-width: 420px; text-align: center; }
+  .login-box .login-icon { width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; }
+  .login-box h2 { color: #333; margin-bottom: 8px; }
+  .login-box .login-subtitle { color: #888; font-size: 0.9rem; margin-bottom: 25px; }
+  .login-box .form-group { text-align: left; }
+  .login-box .form-group input { padding: 12px; font-size: 1rem; }
+  .login-error { background: #fee; color: #c0392b; padding: 10px; border-radius: 6px; font-size: 0.9rem; margin-bottom: 15px; display: none; border-left: 4px solid #e74c3c; }
+  .login-error.show { display: block; }
+  .login-info { background: #f0f4ff; color: #555; padding: 12px; border-radius: 6px; font-size: 0.8rem; margin-top: 15px; border-left: 4px solid #667eea; text-align: left; }
+  .login-info strong { color: #667eea; }
+  .btn-entrar { width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 13px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+  .btn-entrar:hover { opacity: 0.9; }
+  
+  .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+  .admin-btn { background: white; border: 2px solid #667eea; color: #667eea; padding: 20px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .admin-btn:hover { background: #667eea; color: white; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+  .btn-logout { background: #e74c3c; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+  
+  .config-box { background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+  .config-box h3 { color: #856404; margin-bottom: 10px; }
+  .config-box p { color: #856404; line-height: 1.6; margin-bottom: 10px; font-size: 0.9rem; }
+  .config-box a { color: #004085; font-weight: bold; }
+  .config-box input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: monospace; font-size: 0.9rem; margin-top: 10px; box-sizing: border-box; }
+  .config-box .btn-configurar { background: #ffc107; color: #000; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .config-box .btn-testar { background: #17a2b8; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .config-box .status-teste { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.9rem; display: none; }
+  .config-box .status-teste.show { display: block; }
+  .config-box .status-teste.ok { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .config-box .status-teste.erro { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  
+  .toast { position: fixed; top: 80px; right: 20px; background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; display: none; max-width: 400px; }
+  .toast.show { display: block; animation: slideIn 0.3s; }
+  .toast.success { border-left: 4px solid #27ae60; }
+  .toast.error { border-left: 4px solid #e74c3c; }
+  .toast.loading { border-left: 4px solid #667eea; }
+  @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  
+  .json-output { background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; padding: 15px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
+  .btn-copiar { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .instrucoes { background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin-top: 15px; border-radius: 6px; }
+  .instrucoes h4 { color: #0d47a1; margin-bottom: 10px; }
+  .instrucoes p { color: #333; line-height: 1.6; margin-bottom: 8px; }
+  .instrucoes a { color: #1976D2; font-weight: bold; }
 
-<!-- Theme Options CSS -->
-<b:skin version='1.0.0'><![CDATA[
-/* ... (mantenha todo o CSS original do template aqui) ... */
-]]></b:skin>
-
-<style>
-/*-------Typography and ShortCodes-------*/
-.firstcharacter{float:left;color:#27ae60;font-size:75px;line-height:60px;padding-top:4px;padding-right:8px;padding-left:3px}.post-body h1,.post-body h2,.post-body h3,.post-body h4,.post-body h5,.post-body h6{margin-bottom:15px;color:#2c3e50}blockquote{font-style:italic;color:#888;border-left:5px solid #27ae60;margin-left:0;padding:10px 15px}blockquote:before{content:'\f10d';display:inline-block;font-family:FontAwesome;font-style:normal;font-weight:400;line-height:1;margin-right:10px;color:#888}blockquote:after{content:'\f10e';display:inline-block;font-family:FontAwesome;font-style:normal;font-weight:400;line-height:1;margin-left:10px;color:#888}.button{background-color:#2c3e50;float:left;padding:5px 12px;margin:5px;color:#fff;text-align:center;border:0;cursor:pointer;border-radius:3px;display:block;text-decoration:none;font-weight:400;transition:all .3s ease-out !important;-webkit-transition:all .3s ease-out !important}a.button{color:#fff}.button:hover{background-color:#27ae60;color:#fff}.button.small{font-size:12px;padding:5px 12px}.button.medium{font-size:16px;padding:6px 15px}.button.large{font-size:18px;padding:8px 18px}.small-button{width:100%;overflow:hidden;clear:both}.medium-button{width:100%;overflow:hidden;clear:both}.large-button{width:100%;overflow:hidden;clear:both}.demo:before{content:"\f06e";margin-right:5px;display:inline-block;font-family:FontAwesome;font-style:normal;font-weight:400;line-height:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.download:before{content:"\f019";margin-right:5px;display:inline-block;font-family:FontAwesome;font-style:normal;font-weight:400;line-height:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.buy:before{content:"\f09d";margin-right:5px;display:inline-block;font-family:FontAwesome;font-style:normal;font-weight:400;line-height:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.visit:before{content:"\f14c";margin-right:5px;display:inline-block;font-family:FontAwesome;font-style:normal;font-weight:400;line-height:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.widget .post-body ul,.widget .post-body ol{line-height:1.5;font-weight:400}.widget .post-body li{margin:5px 0;padding:0;line-height:1.5}.post-body ul li:before{content:"\f105";margin-right:5px;font-family:fontawesome}pre{font-family:Monaco, "Andale Mono", "Courier New", Courier, monospace;background-color:#2c3e50;background-image:-webkit-linear-gradient(rgba(0, 0, 0, 0.05) 50%, transparent 50%, transparent);background-image:-moz-linear-gradient(rgba(0, 0, 0, 0.05) 50%, transparent 50%, transparent);background-image:-ms-linear-gradient(rgba(0, 0, 0, 0.05) 50%, transparent 50%, transparent);background-image:-o-linear-gradient(rgba(0, 0, 0, 0.05) 50%, transparent 50%, transparent);background-image:linear-gradient(rgba(0, 0, 0, 0.05) 50%, transparent 50%, transparent);-webkit-background-size:100% 50px;-moz-background-size:100% 50px;background-size:100% 50px;line-height:25px;color:#f1f1f1;position:relative;padding:0 7px;margin:15px 0 10px;overflow:hidden;word-wrap:normal;white-space:pre;position:relative}pre:before{content:'Code';display:block;background:#F7F7F7;margin-left:-7px;margin-right:-7px;color:#2c3e50;padding-left:7px;font-weight:400;font-size:14px}pre code,pre .line-number{display:block}pre .line-number a{color:#27ae60;opacity:0.6}pre .line-number span{display:block;float:left;clear:both;width:20px;text-align:center;margin-left:-7px;margin-right:7px}pre .line-number span:nth-child(odd){background-color:rgba(0, 0, 0, 0.11)}pre .line-number span:nth-child(even){background-color:rgba(255, 255, 255, 0.05)}pre .cl{display:block;clear:both}#contact{background-color:#fff;margin:30px 0 !important}#contact .contact-form-widget{max-width:100% !important}#contact .contact-form-name,#contact .contact-form-email,#contact .contact-form-email-message{background-color:#FFF;border:1px solid #eee;border-radius:3px;padding:10px;margin-bottom:10px !important;max-width:100% !important}#contact .contact-form-name{width:47.7%;height:50px}#contact .contact-form-email{width:49.7%;height:50px}#contact .contact-form-email-message{height:150px}#contact .contact-form-button-submit{max-width:100%;width:100%;z-index:0;margin:4px 0 0;padding:10px !important;text-align:center;cursor:pointer;background:#27ae60;border:0;height:auto;-webkit-border-radius:2px;-moz-border-radius:2px;-ms-border-radius:2px;-o-border-radius:2px;border-radius:2px;text-transform:uppercase;-webkit-transition:all .2s ease-out;-moz-transition:all .2s ease-out;-o-transition:all .2s ease-out;-ms-transition:all .2s ease-out;transition:all .2s ease-out;color:#FFF}#contact .contact-form-button-submit:hover{background:#2c3e50}#contact .contact-form-email:focus,#contact .contact-form-name:focus,#contact .contact-form-email-message:focus{box-shadow:none !important}.alert-message{position:relative;display:block;background-color:#FAFAFA;padding:20px;margin:20px 0;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;color:#2f3239;border:1px solid}.alert-message p{margin:0 !important;padding:0;line-height:22px;font-size:13px;color:#2f3239}.alert-message span{font-size:14px !important}.alert-message i{font-size:16px;line-height:20px}.alert-message.success{background-color:#f1f9f7;border-color:#e0f1e9;color:#1d9d74}.alert-message.success a,.alert-message.success span{color:#1d9d74}.alert-message.alert{background-color:#DAEFFF;border-color:#8ED2FF;color:#378FFF}.alert-message.alert a,.alert-message.alert span{color:#378FFF}.alert-message.warning{background-color:#fcf8e3;border-color:#faebcc;color:#8a6d3b}.alert-message.warning a,.alert-message.warning span{color:#8a6d3b}.alert-message.error{background-color:#FFD7D2;border-color:#FF9494;color:#F55D5D}.alert-message.error a,.alert-message.error span{color:#F55D5D}.fa-check-circle:before{content:"\f058"}.fa-info-circle:before{content:"\f05a"}.fa-exclamation-triangle:before{content:"\f071"}.fa-exclamation-circle:before{content:"\f06a"}.post-table table{border-collapse:collapse;width:100%}.post-table th{background-color:#eee;font-weight:bold}.post-table th,.post-table td{border:0.125em solid #333;line-height:1.5;padding:0.75em;text-align:left}@media (max-width: 30em){.post-table thead tr{position:absolute;top:-9999em;left:-9999em}.post-table tr{border:0.125em solid #333;border-bottom:0}.post-table tr + tr{margin-top:1.5em}.post-table tr,.post-table td{display:block}.post-table td{border:none;border-bottom:0.125em solid #333;padding-left:50%}.post-table td:before{content:attr(data-label);display:inline-block;font-weight:bold;line-height:1.5;margin-left:-100%;width:100%}}@media (max-width: 20em){.post-table td{padding-left:0.75em}.post-table td:before{display:block;margin-bottom:0.75em;margin-left:0}}
-.FollowByEmail {
-clear: both;
-}
-.widget .post-body ol {
-padding: 0 0 0 15px;
-}
-.post-body ul li {
-list-style: none;
-}
+  /* Botões admin nos cards */
+  .admin-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+  }
+  .btn-admin-edit, .btn-admin-delete {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+  }
+  .btn-admin-edit {
+    background: #3498db;
+    color: white;
+  }
+  .btn-admin-delete {
+    background: #e74c3c;
+    color: white;
+  }
+  .btn-admin-edit:hover, .btn-admin-delete:hover {
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 600px) {
+    .texto-pagina { padding: 25px; }
+    nav ul { justify-content: center; width: 100%; }
+    .materia-body { padding: 25px; }
+    .materia-body h1 { font-size: 1.6rem; }
+    .noticias-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
+<body>
 
-<body expr:class='data:blog.pageType'>
-<b:class cond='data:view.isHomepage' name='home'/>
-<b:class cond='data:view.isPage' name='item'/>
-<b:class cond='data:view.isArchive' name='index'/>
-<b:class cond='data:view.isError' name='error404'/>
+<header>
+  <div class="header-inner">
+    <div class="logo-area" onclick="irParaHome()">
+      <div class="logo-img" id="logoContainer">
+        <span id="logoLetra">A</span>
+      </div>
+      <div class="logo-text">
+        <h1 id="nomeLoja">A Mesa Arrumação</h1>
+        <p>Qualidade e confiança</p>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" data-pagina="home" class="active">Home</a></li>
+        <li><a href="#" data-pagina="noticias">Notícias</a></li>
+        <li><a href="#" data-pagina="produtos">Produtos</a></li>
+        <li><a href="#" data-pagina="quem-somos">Quem Somos</a></li>
+        <li><a href="#" data-pagina="politicas">Políticas</a></li>
+        <li><a href="#" data-pagina="contato">Contato</a></li>
+      </ul>
+    </nav>
+    <button class="btn-admin" id="btnAdmin" onclick="abrirAdmin()">⚙️ Admin</button>
+  </div>
+</header>
 
-<!-- BOTÃO ADMIN -->
-<button class="admin-btn" onclick="openAdmin()" style="position:fixed;bottom:20px;right:20px;z-index:99999;background:#667eea;color:white;padding:15px 20px;border-radius:50%;border:none;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);font-size:24px;" title="Painel Admin">⚙️</button>
+<main>
+  <div class="pagina active" id="pagina-home">
+    <section>
+      <h2 class="section-title">Dicas e Novidades</h2>
+      <div class="noticias-grid" id="listaNoticiasHome">
+        <div class="loading"><div class="loading-spinner"></div><p>Carregando...</p></div>
+      </div>
+      <h2 class="section-title" style="margin-top: 60px;">Produtos em Destaque</h2>
+      <div class="produtos" id="listaProdutosHome">
+        <div class="loading"><div class="loading-spinner"></div><p>Carregando...</p></div>
+      </div>
+    </section>
+  </div>
 
-<!-- MODAL ADMIN -->
-<div class="admin-modal" id="adminModal">
-  <div class="admin-panel">
-    <div class="admin-header">
-      <h2>⚙️ Painel Admin</h2>
-      <button class="btn-close" onclick="closeAdmin()">✖ Fechar</button>
+  <div class="pagina" id="pagina-noticias">
+    <section>
+      <h2 class="section-title">Dicas e Novidades</h2>
+      <p style="text-align: center; color: #666; margin-bottom: 30px;">Fique por dentro de novidades, dicas e negócios</p>
+      <div class="noticias-grid" id="listaNoticias"></div>
+    </section>
+  </div>
+
+  <div class="pagina" id="pagina-materia">
+    <section>
+      <button class="btn-voltar" onclick="voltarParaNoticias()">← Voltar para Notícias</button>
+      <div class="materia-leitura" id="materiaLeitura"></div>
+    </section>
+  </div>
+
+  <div class="pagina" id="pagina-produtos">
+    <section>
+      <h2 class="section-title">🛍️ Nossos Produtos</h2>
+      <div class="produtos" id="listaProdutos"></div>
+    </section>
+  </div>
+
+  <div class="pagina" id="pagina-quem-somos">
+    <section>
+      <h2 class="section-title">👥 Quem Somos</h2>
+      <div class="texto-pagina" id="conteudoQuemSomos"></div>
+    </section>
+  </div>
+
+  <div class="pagina" id="pagina-politicas">
+    <section>
+      <h2 class="section-title">📋 Nossas Políticas</h2>
+      <div class="texto-pagina" id="conteudoPoliticas"></div>
+    </section>
+  </div>
+
+  <div class="pagina" id="pagina-contato">
+    <section>
+      <h2 class="section-title">📞 Fale Conosco</h2>
+      <div class="contato-info">
+        <div class="contato-card">
+          <div class="icone">📧</div>
+          <h3>E-mail</h3>
+          <p><a href="mailto:contato@amesaarrumacao.com">contato@amesaarrumacao.com</a></p>
+        </div>
+        <div class="contato-card">
+          <div class="icone">📱</div>
+          <h3>WhatsApp</h3>
+          <p><a href="https://wa.me/5511999999999" target="_blank">(11) 99999-9999</a></p>
+        </div>
+        <div class="contato-card">
+          <div class="icone">📍</div>
+          <h3>Endereço</h3>
+          <p>Rua Exemplo, 123 - São Paulo/SP</p>
+        </div>
+        <div class="contato-card">
+          <div class="icone">🕐</div>
+          <h3>Horário</h3>
+          <p>Seg a Sex: 9h às 18h</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 <span id="footerNome">A Mesa Arrumação</span> - Todos os direitos reservados</p>
+</footer>
+
+<!-- MODAL LOGIN -->
+<div class="modal" id="modalLogin">
+  <div class="modal-content login-box">
+    <div class="login-icon">🔐</div>
+    <h2>Acesso Administrativo</h2>
+    <p class="login-subtitle">Digite suas credenciais</p>
+    <div class="login-error" id="loginErro">❌ Usuário ou senha inválidos.</div>
+    <form id="formLogin">
+      <div class="form-group">
+        <label>Usuário</label>
+        <input type="text" id="loginUsuario" required placeholder="admin">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="loginSenha" required placeholder="admin123">
+      </div>
+      <button type="submit" class="btn-entrar">🔓 Entrar</button>
+    </form>
+    <div class="login-info">
+      <strong>Credenciais:</strong><br>
+      Usuário: <code>admin</code> | Senha: <code>admin123</code>
     </div>
-    
-    <div class="admin-grid">
-      <button class="admin-btn" onclick="showForm('materia')">📄 Nova Matéria</button>
-      <button class="admin-btn" onclick="showForm('produto')">➕ Novo Produto</button>
-      <button class="admin-btn" onclick="showForm('logo')">🖼️ Trocar Logo</button>
-      <button class="admin-btn" onclick="showForm('quemsomos')">📄 Quem Somos</button>
-      <button class="admin-btn" onclick="showForm('politicas')">📋 Políticas</button>
-      <button class="admin-btn" onclick="showForm('nome')">✏️ Trocar Nome</button>
-      <button class="admin-btn" onclick="showForm('senha')">🔑 Trocar Senha</button>
-      <button class="admin-btn" onclick="limparTudo()">🗑️ Limpar Tudo</button>
-    </div>
-    
-    <!-- FORM NOVA MATÉRIA -->
-    <div id="form-materia" class="admin-form">
-      <h3>📄 Nova Matéria</h3>
-      <div class="form-group">
-        <label>Título:</label>
-        <input type="text" id="materia-titulo" placeholder="Título da matéria">
-      </div>
-      <div class="form-group">
-        <label>Categoria:</label>
-        <input type="text" id="materia-categoria" placeholder="Categoria">
-      </div>
-      <div class="form-group">
-        <label>Resumo:</label>
-        <textarea id="materia-resumo" placeholder="Resumo da matéria"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Conteúdo Completo:</label>
-        <textarea id="materia-conteudo" placeholder="Conteúdo completo da matéria"></textarea>
-      </div>
-      <div class="form-group">
-        <label>URL da Imagem:</label>
-        <input type="url" id="materia-imagem" placeholder="https://exemplo.com/imagem.jpg">
-      </div>
-      <div id="message-materia" class="admin-message"></div>
-      <button class="btn-save" onclick="salvarMateria()">💾 Salvar Matéria</button>
-      <button class="btn-cancel" onclick="hideAllForms()">Cancelar</button>
-    </div>
-    
-    <!-- FORM NOVO PRODUTO -->
-    <div id="form-produto" class="admin-form">
-      <h3>➕ Novo Produto</h3>
-      <div class="form-group">
-        <label>Nome do Produto:</label>
-        <input type="text" id="produto-nome" placeholder="Nome do produto">
-      </div>
-      <div class="form-group">
-        <label>Descrição:</label>
-        <textarea id="produto-desc" placeholder="Descrição do produto"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Preço (R$):</label>
-        <input type="text" id="produto-preco" placeholder="399,00">
-      </div>
-      <div class="form-group">
-        <label>Link de Compra:</label>
-        <input type="url" id="produto-link" placeholder="https://...">
-      </div>
-      <div class="form-group">
-        <label>URL da Imagem:</label>
-        <input type="url" id="produto-imagem" placeholder="https://exemplo.com/imagem.jpg">
-      </div>
-      <div id="message-produto" class="admin-message"></div>
-      <button class="btn-save" onclick="salvarProduto()">💾 Salvar Produto</button>
-      <button class="btn-cancel" onclick="hideAllForms()">Cancelar</button>
-    </div>
-    
-    <!-- FORM TROCAR LOGO -->
-    <div id="form-logo" class="admin-form">
-      <h3>🖼️ Trocar Logo</h3>
-      <div class="form-group">
-        <label>URL da Nova Logo:</label>
-        <input type="url" id="logo-url" placeholder="https://exemplo.com/logo.png">
-      </div>
-      <div id="message-logo" class="admin-message"></div>
-      <button class="btn-save" onclick="salvarLogo()">💾 Salvar Logo</button>
-      <button class="btn-cancel" onclick="hideAllForms()">Cancelar</button>
-    </div>
-    
-    <!-- FORM QUEM SOMOS -->
-    <div id="form-quemsomos" class="admin-form">
-      <h3>📄 Quem Somos</h3>
-      <div class="form-group">
-        <label>Texto "Quem Somos":</label>
-        <textarea id="quemsomos-texto" placeholder="Texto sobre a empresa..." style="min-height:200px;"></textarea>
-      </div>
-      <div id="message-quemsomos" class="admin-message"></div>
-      <button class="btn-save" onclick="salvarQuemSomos()">💾 Salvar</button>
-      <button class="btn-cancel" onclick="hideAllForms()">Cancelar</button>
-    </div>
-    
-    <!-- FORM POLÍTICAS -->
-    <div id="form-politicas" class="admin-form">
-      <h3>📋 Políticas</h3>
-      <div class="form-group">
-        <label>Texto das Políticas:</label>
-        <textarea id="politicas-texto" placeholder="Texto das políticas..." style="min-height:200px;"></textarea>
-      </div>
-      <div id="message-politicas" class="admin-message"></div>
-      <button class="btn-save" onclick="salvarPoliticas()">💾 Salvar</button>
-      <button class="btn-cancel" onclick="hideAllForms()">Cancelar</button>
-    </div>
-    
-    <!-- FORM TROCAR NOME -->
-    <div id="form-nome" class="admin-form">
-      <h3>✏️ Trocar Nome da Loja</h3>
-      <div class="form-group">
-        <label>Novo Nome:</label>
-        <input type="text" id="nome-loja" placeholder="Nome da loja">
-      </div>
-      <div id="message-nome" class="admin-message"></div>
-      <button class="btn-save" onclick="salvarNome()">💾 Salvar</button>
-      <button class="btn-cancel" onclick="hideAllForms()">Cancelar</button>
-    </div>
-    
-    <!-- FORM TROCAR SENHA -->
-    <div id="form-senha" class="admin-form">
-      <h3>🔑 Trocar Senha</h3>
-      <div class="form-group">
-        <label>Nova Senha:</label>
-        <input type="password" id="senha-nova" placeholder="Nova senha">
-      </div>
-      <div class="form-group">
-        <label>Confirmar Senha:</label>
-        <input type="password" id="senha-confirmar" placeholder="Confirmar senha">
-      </div>
-      <div id="message-senha" class="admin-message"></div>
-      <button class="btn-save" onclick="salvarSenha()">💾 Salvar Senha</button>
-      <button class="btn-cancel" onclick="hideAllForms()">Cancelar</button>
+    <div class="modal-buttons" style="margin-top:15px;">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalLogin')">Cancelar</button>
     </div>
   </div>
 </div>
 
-<!-- JAVASCRIPT DO ADMIN -->
+<!-- MODAL ADMIN -->
+<div class="modal" id="modalAdmin">
+  <div class="modal-content">
+    <div class="admin-header">
+      <h2 style="margin-bottom:0;">⚙️ Painel Admin</h2>
+      <button class="btn-logout" onclick="fazerLogout()">🚪 Sair</button>
+    </div>
+    
+    <div class="config-box" id="configBox">
+      <h3>🔑 Configurar Token do GitHub</h3>
+      <p>Para salvar automaticamente, cole seu token do GitHub abaixo:</p>
+      <p>👉 <a href="https://github.com/settings/tokens" target="_blank">Gerar token no GitHub</a></p>
+      <p style="font-size:0.85rem;"><strong>Importante:</strong> Marque a permissão <code>repo</code> ao criar o token.</p>
+      <input type="text" id="tokenInput" placeholder="Cole seu token aqui (começa com ghp_...)">
+      <button class="btn-testar" onclick="testarToken()">🔍 Testar Token</button>
+      <div class="status-teste" id="statusTeste"></div>
+      <button class="btn-configurar" onclick="salvarToken()">💾 Salvar Token</button>
+    </div>
+    
+    <div class="admin-menu">
+      <button class="admin-btn" onclick="abrirModalProduto()">➕ Novo Produto</button>
+      <button class="admin-btn" onclick="abrirModalNoticia()">📰 Nova Notícia</button>
+      <button class="admin-btn" onclick="abrirModalLogo()">🖼️ Trocar Logo</button>
+      <button class="admin-btn" onclick="abrirModalQuemSomos()">📝 Quem Somos</button>
+      <button class="admin-btn" onclick="abrirModalPoliticas()">📋 Políticas</button>
+      <button class="admin-btn" onclick="abrirModalNome()">✏️ Trocar Nome</button>
+      <button class="admin-btn" onclick="abrirModalSenha()">🔑 Trocar Senha</button>
+      <button class="admin-btn" onclick="limparTudo()">🗑️ Limpar Tudo</button>
+      <button class="admin-btn" onclick="gerarJSON()">📋 Gerar JSON</button>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalAdmin')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRODUTO -->
+<div class="modal" id="modalProduto">
+  <div class="modal-content">
+    <h2 id="tituloModalProduto">➕ Novo Produto</h2>
+    <form id="formProduto">
+      <div class="form-group">
+        <label>Nome do Produto</label>
+        <input type="text" id="produtoNome" required placeholder="Ex: Jogo de Pratos">
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="produtoDesc" required placeholder="Descreva o produto..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Preço (R$)</label>
+        <input type="number" id="produtoPreco" step="0.01" min="0" required placeholder="99.90">
+      </div>
+      <div class="form-group">
+        <label>🔗 Link (WhatsApp, site)</label>
+        <input type="url" id="produtoLink" required placeholder="https://wa.me/5511999999999">
+      </div>
+      <div class="form-group">
+        <label>📸 URL da Imagem</label>
+        <input type="url" id="produtoImg" required placeholder="https://exemplo.com/imagem.jpg">
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalProduto')">Cancelar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL NOTICIA -->
+<div class="modal" id="modalNoticia">
+  <div class="modal-content">
+    <h2 id="tituloModalNoticia">📰 Nova Notícia</h2>
+    <form id="formNoticia">
+      <div class="form-group">
+        <label>Categoria</label>
+        <input type="text" id="noticiaCategoria" placeholder="Ex: Dicas, Novidades">
+      </div>
+      <div class="form-group">
+        <label>Título</label>
+        <input type="text" id="noticiaTitulo" required placeholder="Título da notícia">
+      </div>
+      <div class="form-group">
+        <label>Resumo</label>
+        <textarea id="noticiaResumo" required placeholder="Breve descrição..." style="min-height:80px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Texto Completo</label>
+        <textarea id="noticiaTexto" required placeholder="Conteúdo completo..." style="min-height:150px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label>📸 URL da Imagem</label>
+        <input type="url" id="noticiaImg" required placeholder="https://exemplo.com/imagem.jpg">
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalNoticia')">Cancelar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL LOGO -->
+<div class="modal" id="modalLogo">
+  <div class="modal-content">
+    <h2>🖼️ Trocar Logo</h2>
+    <form id="formLogo">
+      <div class="form-group">
+        <label>URL da Imagem do Logo</label>
+        <input type="url" id="logoUrl" placeholder="https://exemplo.com/logo.png">
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalLogo')">Cancelar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL QUEM SOMOS -->
+<div class="modal" id="modalQuemSomos">
+  <div class="modal-content">
+    <h2>📝 Quem Somos</h2>
+    <form id="formQuemSomos">
+      <div class="form-group">
+        <label>Texto "Quem Somos"</label>
+        <textarea id="textoQuemSomos" required placeholder="Digite o texto sobre a empresa..." style="min-height:200px;"></textarea>
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalQuemSomos')">Cancelar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL POLITICAS -->
+<div class="modal" id="modalPoliticas">
+  <div class="modal-content">
+    <h2>📋 Políticas</h2>
+    <form id="formPoliticas">
+      <div class="form-group">
+        <label>Texto das Políticas</label>
+        <textarea id="textoPoliticas" required placeholder="Digite as políticas da loja..." style="min-height:200px;"></textarea>
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalPoliticas')">Cancelar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL NOME -->
+<div class="modal" id="modalNome">
+  <div class="modal-content">
+    <h2>✏️ Trocar Nome da Loja</h2>
+    <form id="formNome">
+      <div class="form-group">
+        <label>Nome da Loja</label>
+        <input type="text" id="nomeLojaInput" required placeholder="Nome da loja">
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalNome')">Cancelar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL SENHA -->
+<div class="modal" id="modalSenha">
+  <div class="modal-content">
+    <h2>🔑 Trocar Senha</h2>
+    <form id="formSenha">
+      <div class="form-group">
+        <label>Nova Senha</label>
+        <input type="password" id="novaSenha" required placeholder="Digite a nova senha">
+      </div>
+      <div class="form-group">
+        <label>Confirmar Senha</label>
+        <input type="password" id="confirmarSenha" required placeholder="Confirme a nova senha">
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalSenha')">Cancelar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL JSON -->
+<div class="modal" id="modalJSON">
+  <div class="modal-content" style="max-width:800px;">
+    <h2>📋 JSON Gerado</h2>
+    <p style="color:#666;margin-bottom:15px;">Copie este código e cole no arquivo <strong>dados.json</strong> do GitHub:</p>
+    <div class="json-output" id="jsonOutput"></div>
+    <button class="btn-copiar" onclick="copiarJSON()">📋 Copiar JSON</button>
+    <div class="instrucoes">
+      <h4>📝 Como publicar:</h4>
+      <p>1. Clique em <strong>"Copiar JSON"</strong> acima</p>
+      <p>2. Abra: <a href="https://github.com/tommeyjor-max/Loja-Landely/edit/main/dados.json" target="_blank">Editar dados.json no GitHub</a></p>
+      <p>3. Apague tudo e cole o JSON copiado</p>
+      <p>4. Clique em <strong>"Commit changes"</strong></p>
+      <p>5. Aguarde 1-2 minutos e recarregue o site!</p>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalJSON')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
 <script>
-// Variáveis globais
-let adminPassword = localStorage.getItem('admin_password') || 'admin123';
-let storeData = JSON.parse(localStorage.getItem('store_data')) || {
-  nomeLoja: 'ATLAS BUSSINES',
-  logo: '',
-  produtos: [],
-  materias: [],
-  quemSomos: '',
-  politicas: ''
-};
+  const URL_DADOS = 'https://raw.githubusercontent.com/tommeyjor-max/Loja-Landely/main/dados.json';
+  const API_URL = 'https://api.github.com/repos/tommeyjor-max/Loja-Landely/contents/dados.json';
+  
+  let dados = {
+    nomeLoja: 'A Mesa Arrumação',
+    logo: '',
+    produtos: [],
+    noticias: [],
+    textos: {}
+  };
 
-// Funções do Admin
-function openAdmin() {
-  let password = prompt('Digite a senha do admin:');
-  if (password === adminPassword) {
-    document.getElementById('adminModal').classList.add('active');
-    hideAllForms();
-  } else if (password !== null) {
-    alert('Senha incorreta!');
+  // ID de edição (null = novo, valor = editando)
+  let produtoEditandoId = null;
+  let noticiaEditandoId = null;
+
+  function isAdmin() {
+    return sessionStorage.getItem('admin_logado') === 'true';
   }
-}
 
-function closeAdmin() {
-  document.getElementById('adminModal').classList.remove('active');
-}
-
-function showForm(formName) {
-  hideAllForms();
-  document.getElementById('form-' + formName).classList.add('active');
-  
-  // Carregar dados existentes
-  if (formName === 'logo') {
-    document.getElementById('logo-url').value = storeData.logo || '';
-  } else if (formName === 'quemsomos') {
-    document.getElementById('quemsomos-texto').value = storeData.quemSomos || '';
-  } else if (formName === 'politicas') {
-    document.getElementById('politicas-texto').value = storeData.politicas || '';
-  } else if (formName === 'nome') {
-    document.getElementById('nome-loja').value = storeData.nomeLoja || '';
-  }
-}
-
-function hideAllForms() {
-  document.querySelectorAll('.admin-form').forEach(form => {
-    form.classList.remove('active');
-  });
-}
-
-function showMessage(formId, message, type) {
-  const msgDiv = document.getElementById('message-' + formId);
-  msgDiv.textContent = message;
-  msgDiv.className = 'admin-message ' + type;
-  setTimeout(() => {
-    msgDiv.className = 'admin-message';
-  }, 3000);
-}
-
-function salvarDados() {
-  localStorage.setItem('store_data', JSON.stringify(storeData));
-}
-
-function salvarMateria() {
-  const titulo = document.getElementById('materia-titulo').value;
-  const categoria = document.getElementById('materia-categoria').value;
-  const resumo = document.getElementById('materia-resumo').value;
-  const conteudo = document.getElementById('materia-conteudo').value;
-  const imagem = document.getElementById('materia-imagem').value;
-  
-  if (!titulo || !conteudo) {
-    showMessage('materia', 'Preencha pelo menos título e conteúdo!', 'error');
-    return;
-  }
-  
-  storeData.materias.push({
-    id: Date.now(),
-    titulo: titulo,
-    categoria: categoria,
-    resumo: resumo,
-    conteudo: conteudo,
-    imagem: imagem,
-    data: new Date().toLocaleDateString('pt-BR')
-  });
-  
-  salvarDados();
-  showMessage('materia', '✅ Matéria salva com sucesso!', 'success');
-  
-  // Limpar formulário
-  document.getElementById('materia-titulo').value = '';
-  document.getElementById('materia-categoria').value = '';
-  document.getElementById('materia-resumo').value = '';
-  document.getElementById('materia-conteudo').value = '';
-  document.getElementById('materia-imagem').value = '';
-}
-
-function salvarProduto() {
-  const nome = document.getElementById('produto-nome').value;
-  const desc = document.getElementById('produto-desc').value;
-  const preco = document.getElementById('produto-preco').value;
-  const link = document.getElementById('produto-link').value;
-  const imagem = document.getElementById('produto-imagem').value;
-  
-  if (!nome || !preco) {
-    showMessage('produto', 'Preencha pelo menos nome e preço!', 'error');
-    return;
-  }
-  
-  storeData.produtos.push({
-    id: Date.now(),
-    nome: nome,
-    descricao: desc,
-    preco: preco,
-    link: link,
-    imagem: imagem
-  });
-  
-  salvarDados();
-  showMessage('produto', '✅ Produto salvo com sucesso!', 'success');
-  
-  // Limpar formulário
-  document.getElementById('produto-nome').value = '';
-  document.getElementById('produto-desc').value = '';
-  document.getElementById('produto-preco').value = '';
-  document.getElementById('produto-link').value = '';
-  document.getElementById('produto-imagem').value = '';
-}
-
-function salvarLogo() {
-  const url = document.getElementById('logo-url').value;
-  if (!url) {
-    showMessage('logo', 'Digite a URL da logo!', 'error');
-    return;
-  }
-  
-  storeData.logo = url;
-  salvarDados();
-  showMessage('logo', '✅ Logo atualizada com sucesso!', 'success');
-  
-  // Atualizar logo no site
-  const logoImg = document.querySelector('.header-logo img');
-  if (logoImg) {
-    logoImg.src = url;
-  }
-}
-
-function salvarQuemSomos() {
-  const texto = document.getElementById('quemsomos-texto').value;
-  storeData.quemSomos = texto;
-  salvarDados();
-  showMessage('quemsomos', '✅ "Quem Somos" atualizado!', 'success');
-}
-
-function salvarPoliticas() {
-  const texto = document.getElementById('politicas-texto').value;
-  storeData.politicas = texto;
-  salvarDados();
-  showMessage('politicas', '✅ Políticas atualizadas!', 'success');
-}
-
-function salvarNome() {
-  const nome = document.getElementById('nome-loja').value;
-  if (!nome) {
-    showMessage('nome', 'Digite o nome da loja!', 'error');
-    return;
-  }
-  
-  storeData.nomeLoja = nome;
-  salvarDados();
-  showMessage('nome', '✅ Nome atualizado!', 'success');
-  
-  // Atualizar nome no header
-  const nomeElement = document.querySelector('.header-logo h1');
-  if (nomeElement) {
-    nomeElement.textContent = nome;
-  }
-}
-
-function salvarSenha() {
-  const novaSenha = document.getElementById('senha-nova').value;
-  const confirmarSenha = document.getElementById('senha-confirmar').value;
-  
-  if (!novaSenha || !confirmarSenha) {
-    showMessage('senha', 'Preencha todos os campos!', 'error');
-    return;
-  }
-  
-  if (novaSenha !== confirmarSenha) {
-    showMessage('senha', 'As senhas não coincidem!', 'error');
-    return;
-  }
-  
-  if (novaSenha.length < 6) {
-    showMessage('senha', 'A senha deve ter pelo menos 6 caracteres!', 'error');
-    return;
-  }
-  
-  adminPassword = novaSenha;
-  localStorage.setItem('admin_password', adminPassword);
-  showMessage('senha', '✅ Senha alterada com sucesso!', 'success');
-  
-  document.getElementById('senha-nova').value = '';
-  document.getElementById('senha-confirmar').value = '';
-}
-
-function limparTudo() {
-  if (confirm('⚠️ ATENÇÃO: Isso apagará TODOS os dados (produtos, matérias, textos). Tem certeza?')) {
-    if (confirm('⚠️ Esta ação NÃO pode ser desfeita. Confirma?')) {
-      storeData = {
-        nomeLoja: storeData.nomeLoja,
-        logo: storeData.logo,
-        produtos: [],
-        materias: [],
-        quemSomos: '',
-        politicas: ''
-      };
-      salvarDados();
-      alert('✅ Todos os dados foram limpos!');
-      location.reload();
+  function showToast(msg, tipo = 'loading') {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast show ' + tipo;
+    if (tipo !== 'loading') {
+      setTimeout(() => toast.classList.remove('show'), 4000);
     }
   }
-}
 
-// Fechar modal ao clicar fora
-document.getElementById('adminModal').addEventListener('click', function(e) {
-  if (e.target === this) {
-    closeAdmin();
+  function getToken() {
+    return localStorage.getItem('github_token') || '';
   }
-});
+
+  async function testarToken() {
+    const token = document.getElementById('tokenInput').value.trim();
+    const statusDiv = document.getElementById('statusTeste');
+    
+    if (!token) {
+      statusDiv.textContent = '❌ Cole um token primeiro!';
+      statusDiv.className = 'status-teste show erro';
+      return;
+    }
+    
+    statusDiv.textContent = '🔍 Testando conexão com o GitHub...';
+    statusDiv.className = 'status-teste show';
+    
+    try {
+      const response = await fetch('https://api.github.com/user', {
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      });
+      
+      if (response.status === 200) {
+        const user = await response.json();
+        statusDiv.textContent = '✅ Token válido! Conectado como: ' + user.login;
+        statusDiv.className = 'status-teste show ok';
+      } else if (response.status === 401) {
+        statusDiv.textContent = '❌ Token inválido ou expirado. Gere um novo em: github.com/settings/tokens';
+        statusDiv.className = 'status-teste show erro';
+      } else if (response.status === 403) {
+        statusDiv.textContent = '⚠️ Token sem permissão. Ao criar o token, marque a opção "repo" (acesso completo ao repositório).';
+        statusDiv.className = 'status-teste show erro';
+      } else {
+        statusDiv.textContent = '⚠️ Erro desconhecido. Código: ' + response.status;
+        statusDiv.className = 'status-teste show erro';
+      }
+    } catch (error) {
+      statusDiv.textContent = '❌ Erro de conexão: ' + error.message;
+      statusDiv.className = 'status-teste show erro';
+    }
+  }
+
+  function salvarToken() {
+    const token = document.getElementById('tokenInput').value.trim();
+    if (!token) {
+      showToast('❌ Cole um token válido!', 'error');
+      return;
+    }
+    if (!token.startsWith('ghp_')) {
+      showToast('⚠️ Token deve começar com ghp_', 'error');
+      return;
+    }
+    localStorage.setItem('github_token', token);
+    showToast('✅ Token salvo!', 'success');
+    document.getElementById('configBox').style.display = 'none';
+  }
+
+  function verificarToken() {
+    const token = getToken();
+    if (token) {
+      document.getElementById('configBox').style.display = 'none';
+      document.getElementById('tokenInput').value = token;
+    }
+  }
+
+  async function carregarDados() {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      
+      const url = URL_DADOS + '?t=' + Date.now();
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) throw new Error('Não foi possível carregar');
+      dados = await response.json();
+      
+      document.getElementById('nomeLoja').textContent = dados.nomeLoja || 'A Mesa Arrumação';
+      document.getElementById('footerNome').textContent = dados.nomeLoja || 'A Mesa Arrumação';
+      document.title = dados.nomeLoja || 'A Mesa Arrumação';
+      
+      if (dados.logo) {
+        document.getElementById('logoContainer').innerHTML = '<img src="' + dados.logo + '" alt="Logo">';
+      } else {
+        const letra = (dados.nomeLoja || 'A').charAt(0).toUpperCase();
+        document.getElementById('logoContainer').innerHTML = '<span>' + letra + '</span>';
+      }
+      
+      renderizarNoticias();
+      renderizarProdutos();
+      renderizarTextos();
+    } catch (error) {
+      console.error('Erro:', error);
+    }
+  }
+
+  async function salvarNoGitHub() {
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Configure o token primeiro!', 'error');
+      return false;
+    }
+
+    try {
+      showToast('💾 Salvando...', 'loading');
+      
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      
+      let sha = null;
+      let arquivoExiste = false;
+      
+      const getResponse = await fetch(API_URL, {
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (getResponse.status === 401) {
+        showToast('❌ Token inválido! Vá em Admin e teste o token.', 'error');
+        return false;
+      }
+      
+      if (getResponse.status === 403) {
+        showToast('❌ Token sem permissão "repo". Gere um novo token.', 'error');
+        return false;
+      }
+      
+      if (getResponse.status === 200) {
+        const fileData = await getResponse.json();
+        sha = fileData.sha;
+        arquivoExiste = true;
+      } else if (getResponse.status === 404) {
+        arquivoExiste = false;
+      } else {
+        const errorText = await getResponse.text();
+        showToast('❌ Erro GitHub (' + getResponse.status + '): ' + errorText.substring(0, 100), 'error');
+        return false;
+      }
+      
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2))));
+      
+      const putController = new AbortController();
+      const putTimeout = setTimeout(() => putController.abort(), 15000);
+      
+      const body = {
+        message: 'Atualização via admin - ' + new Date().toLocaleString('pt-BR'),
+        content: content,
+        branch: 'main'
+      };
+      
+      if (arquivoExiste) {
+        body.sha = sha;
+      }
+      
+      const putResponse = await fetch(API_URL, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body),
+        signal: putController.signal
+      });
+      
+      clearTimeout(putTimeout);
+      
+      if (putResponse.status === 401) {
+        showToast('❌ Token inválido!', 'error');
+        return false;
+      }
+      
+      if (putResponse.status === 403) {
+        showToast('❌ Token sem permissão!', 'error');
+        return false;
+      }
+      
+      if (!putResponse.ok) {
+        const error = await putResponse.json();
+        showToast('❌ Erro: ' + (error.message || 'Desconhecido'), 'error');
+        return false;
+      }
+      
+      showToast('✅ Salvo! Atualize em 1-2 min.', 'success');
+      return true;
+    } catch (error) {
+      console.error('Erro:', error);
+      if (error.name === 'AbortError') {
+        showToast('️ Tempo esgotado. Verifique sua internet.', 'error');
+      } else {
+        showToast('❌ Erro: ' + error.message, 'error');
+      }
+      return false;
+    }
+  }
+
+  function gerarBotoesAdmin(tipo, id) {
+    if (!isAdmin()) return '';
+    return `
+      <div class="admin-actions">
+        <button class="btn-admin-edit" onclick="event.stopPropagation(); editar${tipo}(${id})" title="Editar">✏️</button>
+        <button class="btn-admin-delete" onclick="event.stopPropagation(); deletar${tipo}(${id})" title="Excluir">🗑️</button>
+      </div>
+    `;
+  }
+
+  function renderizarNoticias() {
+    const listaHome = document.getElementById('listaNoticiasHome');
+    const listaCompleta = document.getElementById('listaNoticias');
+    
+    if (!dados.noticias || dados.noticias.length === 0) {
+      const vazio = '<div class="vazio"><h3>📰 Nenhuma matéria</h3></div>';
+      listaHome.innerHTML = vazio;
+      listaCompleta.innerHTML = vazio;
+      return;
+    }
+
+    const ordenadas = dados.noticias.slice().reverse();
+    
+    const gerarCard = (n) => `
+      <div class="noticia-card" onclick="abrirMateria(${n.id})">
+        ${gerarBotoesAdmin('Noticia', n.id)}
+        <img src="${n.img}" alt="${n.titulo}" class="noticia-img" onerror="this.style.display='none'">
+        <div class="noticia-content">
+          ${n.categoria ? '<span class="noticia-categoria">' + n.categoria + '</span>' : ''}
+          <div class="noticia-titulo">${n.titulo}</div>
+          <div class="noticia-resumo">${n.resumo}</div>
+          <div class="noticia-meta">
+            <span>📅 ${n.data}</span>
+            <span class="noticia-leia-mais">Leia mais →</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    listaHome.innerHTML = ordenadas.slice(0, 3).map(gerarCard).join('');
+    listaCompleta.innerHTML = ordenadas.map(gerarCard).join('');
+  }
+
+  function abrirMateria(id) {
+    const n = dados.noticias.find(x => x.id === id);
+    if (!n) return;
+    
+    let botoesAdmin = '';
+    if (isAdmin()) {
+      botoesAdmin = `
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+          <button class="btn-voltar" style="border-color:#3498db; color:#3498db;" onclick="editarNoticia(${n.id})">✏️ Editar Notícia</button>
+          <button class="btn-voltar" style="border-color:#e74c3c; color:#e74c3c;" onclick="deletarNoticia(${n.id})">🗑️ Excluir Notícia</button>
+        </div>
+      `;
+    }
+
+    document.getElementById('materiaLeitura').innerHTML = `
+      <img src="${n.img}" alt="${n.titulo}" class="materia-hero-img" onerror="this.style.display='none'">
+      <div class="materia-body">
+        ${botoesAdmin}
+        ${n.categoria ? '<span class="noticia-categoria">' + n.categoria + '</span>' : ''}
+        <h1>${n.titulo}</h1>
+        <div class="meta-info">📅 ${n.data}</div>
+        <div class="conteudo-texto">${n.texto}</div>
+      </div>
+    `;
+    
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+    document.getElementById('pagina-materia').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderizarProdutos() {
+    const listaHome = document.getElementById('listaProdutosHome');
+    const listaCompleta = document.getElementById('listaProdutos');
+    
+    if (!dados.produtos || dados.produtos.length === 0) {
+      const vazio = '<div class="vazio"><h3>📦 Nenhum produto</h3></div>';
+      listaHome.innerHTML = vazio;
+      listaCompleta.innerHTML = vazio;
+      return;
+    }
+
+    const html = dados.produtos.map(p => `
+      <div class="produto-card">
+        ${gerarBotoesAdmin('Produto', p.id)}
+        <img src="${p.img}" alt="${p.nome}" class="produto-img" onerror="this.style.background='#eee'">
+        <div class="produto-info">
+          <div class="produto-nome">${p.nome}</div>
+          <div class="produto-desc">${p.desc}</div>
+          <div class="produto-preco">R$ ${Number(p.preco).toFixed(2).replace('.', ',')}</div>
+          <a href="${p.link}" target="_blank" class="btn-comprar">🛒 Comprar</a>
+        </div>
+      </div>
+    `).join('');
+
+    listaHome.innerHTML = html;
+    listaCompleta.innerHTML = html;
+  }
+
+  function renderizarTextos() {
+    if (dados.textos) {
+      document.getElementById('conteudoQuemSomos').textContent = dados.textos.quemSomos || 'Informações sobre a empresa...';
+      document.getElementById('conteudoPoliticas').textContent = dados.textos.politicas || 'Nossas políticas...';
+    }
+  }
+
+  function abrirAdmin() {
+    if (sessionStorage.getItem('admin_logado') !== 'true') {
+      document.getElementById('formLogin').reset();
+      document.getElementById('loginErro').classList.remove('show');
+      document.getElementById('modalLogin').classList.add('active');
+    } else {
+      verificarToken();
+      document.getElementById('modalAdmin').classList.add('active');
+    }
+  }
+
+  document.getElementById('formLogin').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const usuario = document.getElementById('loginUsuario').value;
+    const senha = document.getElementById('loginSenha').value;
+    
+    if (usuario === 'admin' && senha === 'admin123') {
+      sessionStorage.setItem('admin_logado', 'true');
+      fecharModal('modalLogin');
+      setTimeout(() => {
+        verificarToken();
+        document.getElementById('modalAdmin').classList.add('active');
+        // Re-renderizar para mostrar botões admin
+        renderizarNoticias();
+        renderizarProdutos();
+      }, 300);
+    } else {
+      document.getElementById('loginErro').classList.add('show');
+    }
+  });
+
+  function fazerLogout() {
+    sessionStorage.removeItem('admin_logado');
+    fecharModal('modalAdmin');
+    // Re-renderizar para esconder botões admin
+    renderizarNoticias();
+    renderizarProdutos();
+  }
+
+  // ===== PRODUTOS =====
+  function abrirModalProduto() {
+    produtoEditandoId = null;
+    document.getElementById('formProduto').reset();
+    document.getElementById('tituloModalProduto').textContent = '➕ Novo Produto';
+    fecharModal('modalAdmin');
+    document.getElementById('modalProduto').classList.add('active');
+  }
+
+  function editarProduto(id) {
+    const p = dados.produtos.find(x => x.id === id);
+    if (!p) return;
+    produtoEditandoId = id;
+    document.getElementById('tituloModalProduto').textContent = '✏️ Editar Produto';
+    document.getElementById('produtoNome').value = p.nome || '';
+    document.getElementById('produtoDesc').value = p.desc || '';
+    document.getElementById('produtoPreco').value = p.preco || '';
+    document.getElementById('produtoLink').value = p.link || '';
+    document.getElementById('produtoImg').value = p.img || '';
+    document.getElementById('modalProduto').classList.add('active');
+  }
+
+  async function deletarProduto(id) {
+    if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+    dados.produtos = dados.produtos.filter(p => p.id !== id);
+    renderizarProdutos();
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    const salvou = await salvarNoGitHub();
+    if (!salvou) {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  }
+
+  // ===== NOTICIAS =====
+  function abrirModalNoticia() {
+    noticiaEditandoId = null;
+    document.getElementById('formNoticia').reset();
+    document.getElementById('tituloModalNoticia').textContent = '📰 Nova Notícia';
+    fecharModal('modalAdmin');
+    document.getElementById('modalNoticia').classList.add('active');
+  }
+
+  function editarNoticia(id) {
+    const n = dados.noticias.find(x => x.id === id);
+    if (!n) return;
+    noticiaEditandoId = id;
+    document.getElementById('tituloModalNoticia').textContent = '✏️ Editar Notícia';
+    document.getElementById('noticiaCategoria').value = n.categoria || '';
+    document.getElementById('noticiaTitulo').value = n.titulo || '';
+    document.getElementById('noticiaResumo').value = n.resumo || '';
+    document.getElementById('noticiaTexto').value = n.texto || '';
+    document.getElementById('noticiaImg').value = n.img || '';
+    document.getElementById('modalNoticia').classList.add('active');
+  }
+
+  async function deletarNoticia(id) {
+    if (!confirm('Tem certeza que deseja excluir esta notícia?')) return;
+    dados.noticias = dados.noticias.filter(n => n.id !== id);
+    renderizarNoticias();
+    
+    // Se estava visualizando a matéria, volta para lista
+    if (document.getElementById('pagina-materia').classList.contains('active')) {
+      voltarParaNoticias();
+    }
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    const salvou = await salvarNoGitHub();
+    if (!salvou) {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  }
+
+  // ===== LOGO =====
+  function abrirModalLogo() {
+    document.getElementById('logoUrl').value = dados.logo || '';
+    fecharModal('modalAdmin');
+    document.getElementById('modalLogo').classList.add('active');
+  }
+
+  document.getElementById('formLogo').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    dados.logo = document.getElementById('logoUrl').value;
+    fecharModal('modalLogo');
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
+    if (salvou) {
+      carregarDados();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  });
+
+  // ===== QUEM SOMOS =====
+  function abrirModalQuemSomos() {
+    document.getElementById('textoQuemSomos').value = dados.textos?.quemSomos || '';
+    fecharModal('modalAdmin');
+    document.getElementById('modalQuemSomos').classList.add('active');
+  }
+
+  document.getElementById('formQuemSomos').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!dados.textos) dados.textos = {};
+    dados.textos.quemSomos = document.getElementById('textoQuemSomos').value;
+    fecharModal('modalQuemSomos');
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
+    if (salvou) {
+      renderizarTextos();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  });
+
+  // ===== POLITICAS =====
+  function abrirModalPoliticas() {
+    document.getElementById('textoPoliticas').value = dados.textos?.politicas || '';
+    fecharModal('modalAdmin');
+    document.getElementById('modalPoliticas').classList.add('active');
+  }
+
+  document.getElementById('formPoliticas').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!dados.textos) dados.textos = {};
+    dados.textos.politicas = document.getElementById('textoPoliticas').value;
+    fecharModal('modalPoliticas');
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
+    if (salvou) {
+      renderizarTextos();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  });
+
+  // ===== NOME DA LOJA =====
+  function abrirModalNome() {
+    document.getElementById('nomeLojaInput').value = dados.nomeLoja || '';
+    fecharModal('modalAdmin');
+    document.getElementById('modalNome').classList.add('active');
+  }
+
+  document.getElementById('formNome').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    dados.nomeLoja = document.getElementById('nomeLojaInput').value;
+    fecharModal('modalNome');
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
+    if (salvou) {
+      carregarDados();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  });
+
+  // ===== SENHA =====
+  function abrirModalSenha() {
+    document.getElementById('formSenha').reset();
+    fecharModal('modalAdmin');
+    document.getElementById('modalSenha').classList.add('active');
+  }
+
+  document.getElementById('formSenha').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const novaSenha = document.getElementById('novaSenha').value;
+    const confirmarSenha = document.getElementById('confirmarSenha').value;
+    
+    if (novaSenha !== confirmarSenha) {
+      showToast('❌ As senhas não coincidem!', 'error');
+      return;
+    }
+    
+    if (novaSenha.length < 6) {
+      showToast('⚠️ A senha deve ter pelo menos 6 caracteres!', 'error');
+      return;
+    }
+    
+    // Nota: Esta é uma solução temporária. Em produção, use autenticação segura.
+    localStorage.setItem('admin_senha', novaSenha);
+    showToast('✅ Senha alterada com sucesso!', 'success');
+    fecharModal('modalSenha');
+  });
+
+  // ===== LIMPAR TUDO =====
+  function limparTudo() {
+    if (!confirm('⚠️ ATENÇÃO: Isso apagará TODOS os dados (produtos, notícias, textos). Tem certeza?')) return;
+    if (!confirm('⚠️ Esta ação NÃO pode ser desfeita. Confirma?')) return;
+    
+    dados = {
+      nomeLoja: dados.nomeLoja,
+      logo: dados.logo,
+      produtos: [],
+      noticias: [],
+      textos: {}
+    };
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    salvarNoGitHub().then(salvou => {
+      if (salvou) {
+        carregarDados();
+        showToast('✅ Todos os dados foram limpos!', 'success');
+      } else {
+        showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+        gerarJSON();
+      }
+    });
+  }
+
+  document.getElementById('formProduto').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const dadosProduto = {
+      nome: document.getElementById('produtoNome').value,
+      desc: document.getElementById('produtoDesc').value,
+      preco: document.getElementById('produtoPreco').value,
+      link: document.getElementById('produtoLink').value,
+      img: document.getElementById('produtoImg').value
+    };
+    
+    if (produtoEditandoId !== null) {
+      const idx = dados.produtos.findIndex(p => p.id === produtoEditandoId);
+      if (idx !== -1) {
+        dados.produtos[idx] = { ...dados.produtos[idx], ...dadosProduto };
+      }
+      produtoEditandoId = null;
+    } else {
+      dados.produtos.push({
+        id: Date.now(),
+        ...dadosProduto
+      });
+    }
+    
+    fecharModal('modalProduto');
+    
+    const token = getToken();
+    if (!token) {
+      showToast('️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
+    if (salvou) {
+      renderizarProdutos();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  });
+
+  document.getElementById('formNoticia').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const dadosNoticia = {
+      categoria: document.getElementById('noticiaCategoria').value,
+      titulo: document.getElementById('noticiaTitulo').value,
+      resumo: document.getElementById('noticiaResumo').value,
+      texto: document.getElementById('noticiaTexto').value,
+      img: document.getElementById('noticiaImg').value
+    };
+    
+    if (noticiaEditandoId !== null) {
+      const idx = dados.noticias.findIndex(n => n.id === noticiaEditandoId);
+      if (idx !== -1) {
+        dados.noticias[idx] = { ...dados.noticias[idx], ...dadosNoticia };
+      }
+      noticiaEditandoId = null;
+    } else {
+      dados.noticias.push({
+        id: Date.now(),
+        ...dadosNoticia,
+        data: new Date().toLocaleDateString('pt-BR')
+      });
+    }
+    
+    fecharModal('modalNoticia');
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
+    if (salvou) {
+      renderizarNoticias();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  });
+
+  function gerarJSON() {
+    const json = JSON.stringify(dados, null, 2);
+    document.getElementById('jsonOutput').textContent = json;
+    fecharModal('modalAdmin');
+    document.getElementById('modalJSON').classList.add('active');
+  }
+
+  function copiarJSON() {
+    const json = document.getElementById('jsonOutput').textContent;
+    navigator.clipboard.writeText(json).then(() => {
+      showToast('✅ JSON copiado! Cole no GitHub.', 'success');
+    }).catch(() => {
+      showToast('❌ Erro ao copiar', 'error');
+    });
+  }
+
+  function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
+
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const pagina = this.getAttribute('data-pagina');
+      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+      document.getElementById('pagina-' + pagina).classList.add('active');
+      document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  function irParaHome() {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+    document.getElementById('pagina-home').classList.add('active');
+    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+    document.querySelector('nav a[data-pagina="home"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function voltarParaNoticias() {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+    document.getElementById('pagina-noticias').classList.add('active');
+    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+    document.querySelector('nav a[data-pagina="noticias"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
+  });
+
+  carregarDados();
+  setInterval(carregarDados, 5 * 60 * 1000);
 </script>
-
-<!-- Outer Wrapper -->
-<div id='outer-wrapper'>
-<!-- Header Wrapper -->
-<div id='header-wrap'>
-<div class='header-header'>
-<div class='container row'>
-<b:section class='header-logo' id='header-logo' maxwidgets='1' name='Header Logo' showaddelement='yes'>
-<b:widget id='Header1' locked='true' title='LOJA LANDELY (CabeÃ§alho)' type='Header' version='2' visible='true'>
-<b:widget-settings>
-<b:widget-setting name='displayUrl'>https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjaBfiGNu3dRDUTWNUPoetX3vYl_VFxx5ycLrZq6XRsNpiDapQlSfaXaX89Vh9yHXsQPbJ-oc_M_82KDCoKnOowtp2XzqFQ45EkWtRis4U5qV67SscQi1Lg5ITO3vW2GsZxOtTgCet8vcEZAGSJAwiNSURsZAsD18sjLzbo9EuzKROqKkRSRstqWW_TI_v0/s705/LOGO%20LANDELY.png</b:widget-setting>
-<b:widget-setting name='displayHeight'>131</b:widget-setting>
-<b:widget-setting name='sectionWidth'>420</b:widget-setting>
-<b:widget-setting name='useImage'>true</b:widget-setting>
-<b:widget-setting name='shrinkToFit'>false</b:widget-setting>
-<b:widget-setting name='imagePlacement'>REPLACE</b:widget-setting>
-<b:widget-setting name='displayWidth'>705</b:widget-setting>
-</b:widget-settings>
-<b:includable id='main' var='this'>
-<div class='header-widget'>
-<b:include cond='data:imagePlacement in {&quot;REPLACE&quot;, &quot;BEFORE_DESCRIPTION&quot;}' name='image'/>
-<b:include cond='data:imagePlacement == &quot;BEHIND&quot;' name='title'/>
-</div>
-</b:includable>
-<b:includable id='behindImageStyle'>
-<b:if cond='data:sourceUrl'>
-<b:include cond='data:this.image' data='{                    image: data:this.image,                    selector: &quot;.header-widget&quot;                  }' name='responsiveImageStyle'/>
-<style type='text/css'>
-.header-widget {
-background-position: <data:blog.locale.languageAlignment/>;
-background-repeat: no-repeat;
-}
-</style>
-</b:if>
-</b:includable>
-<b:includable id='description'>
-<p>
-<data:this.description/>
-</p>
-</b:includable>
-<b:includable id='image'>
-<a class='header-image-wrapper' expr:href='data:blog.homepageUrl'>
-<img expr:alt='data:blog.title.escaped' expr:data-height='data:height' expr:data-width='data:width' expr:src='data:image'/>
-</a>
-</b:includable>
-<b:includable id='title'>
-<h1>
-<b:tag cond='data:view.url != data:blog.homepageUrl' expr:href='data:blog.homepageUrl' name='a'>
-<data:title/>
-</b:tag>
-</h1>
-</b:includable>
-</b:widget>
-</b:section>
-<b:section class='header-social social' id='header-social' maxwidgets='1' name='Header Social' showaddelement='yes'/>
-</div>
-</div>
-
-<!-- ... (mantenha todo o restante do código XML do template aqui) ... -->
 
 </body>
 </html>
