@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -27,7 +28,7 @@
   .section-title { text-align: center; font-size: 2rem; margin-bottom: 30px; color: #333; position: relative; padding-bottom: 15px; }
   .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 2px; }
   .produtos { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
-  .produto-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s; display: flex; flex-direction: column; }
+  .produto-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s; display: flex; flex-direction: column; position: relative; }
   .produto-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
   .produto-img { width: 100%; height: 220px; object-fit: cover; background: #eee; }
   .produto-info { padding: 18px; flex: 1; display: flex; flex-direction: column; }
@@ -39,7 +40,7 @@
   .vazio { text-align: center; padding: 60px 20px; color: #888; grid-column: 1 / -1; }
   .texto-pagina { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); line-height: 1.8; font-size: 1.05rem; color: #555; white-space: pre-wrap; }
   .noticias-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-  .noticia-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s; display: flex; flex-direction: column; cursor: pointer; }
+  .noticia-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s; display: flex; flex-direction: column; cursor: pointer; position: relative; }
   .noticia-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
   .noticia-img { width: 100%; height: 220px; object-fit: cover; background: linear-gradient(135deg, #e0e7ff, #f3e8ff); }
   .noticia-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
@@ -124,6 +125,40 @@
   .instrucoes h4 { color: #0d47a1; margin-bottom: 10px; }
   .instrucoes p { color: #333; line-height: 1.6; margin-bottom: 8px; }
   .instrucoes a { color: #1976D2; font-weight: bold; }
+
+  /* Botões admin nos cards */
+  .admin-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+  }
+  .btn-admin-edit, .btn-admin-delete {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+  }
+  .btn-admin-edit {
+    background: #3498db;
+    color: white;
+  }
+  .btn-admin-delete {
+    background: #e74c3c;
+    color: white;
+  }
+  .btn-admin-edit:hover, .btn-admin-delete:hover {
+    transform: scale(1.1);
+  }
   
   @media (max-width: 600px) {
     .texto-pagina { padding: 25px; }
@@ -305,7 +340,7 @@
 <!-- MODAL PRODUTO -->
 <div class="modal" id="modalProduto">
   <div class="modal-content">
-    <h2>➕ Novo Produto</h2>
+    <h2 id="tituloModalProduto">➕ Novo Produto</h2>
     <form id="formProduto">
       <div class="form-group">
         <label>Nome do Produto</label>
@@ -338,7 +373,7 @@
 <!-- MODAL NOTICIA -->
 <div class="modal" id="modalNoticia">
   <div class="modal-content">
-    <h2> Nova Notícia</h2>
+    <h2 id="tituloModalNoticia">📰 Nova Notícia</h2>
     <form id="formNoticia">
       <div class="form-group">
         <label>Categoria</label>
@@ -362,7 +397,7 @@
       </div>
       <div class="modal-buttons">
         <button type="button" class="btn-cancelar" onclick="fecharModal('modalNoticia')">Cancelar</button>
-        <button type="submit" class="btn-salvar"> Salvar</button>
+        <button type="submit" class="btn-salvar">💾 Salvar</button>
       </div>
     </form>
   </div>
@@ -404,6 +439,14 @@
     textos: {}
   };
 
+  // ID de edição (null = novo, valor = editando)
+  let produtoEditandoId = null;
+  let noticiaEditandoId = null;
+
+  function isAdmin() {
+    return sessionStorage.getItem('admin_logado') === 'true';
+  }
+
   function showToast(msg, tipo = 'loading') {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
@@ -417,7 +460,6 @@
     return localStorage.getItem('github_token') || '';
   }
 
-  // TESTAR TOKEN - verifica se está funcionando
   async function testarToken() {
     const token = document.getElementById('tokenInput').value.trim();
     const statusDiv = document.getElementById('statusTeste');
@@ -432,7 +474,6 @@
     statusDiv.className = 'status-teste show';
     
     try {
-      // Testa a API do GitHub
       const response = await fetch('https://api.github.com/user', {
         headers: {
           'Authorization': `token ${token}`,
@@ -514,7 +555,6 @@
     }
   }
 
-  // SALVAR NO GITHUB - com diagnóstico detalhado
   async function salvarNoGitHub() {
     const token = getToken();
     if (!token) {
@@ -528,7 +568,6 @@
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
       
-      // 1. Verificar se o arquivo existe
       let sha = null;
       let arquivoExiste = false;
       
@@ -564,10 +603,8 @@
         return false;
       }
       
-      // 2. Preparar conteúdo
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2))));
       
-      // 3. Salvar
       const putController = new AbortController();
       const putTimeout = setTimeout(() => putController.abort(), 15000);
       
@@ -623,6 +660,16 @@
     }
   }
 
+  function gerarBotoesAdmin(tipo, id) {
+    if (!isAdmin()) return '';
+    return `
+      <div class="admin-actions">
+        <button class="btn-admin-edit" onclick="event.stopPropagation(); editar${tipo}(${id})" title="Editar">✏️</button>
+        <button class="btn-admin-delete" onclick="event.stopPropagation(); deletar${tipo}(${id})" title="Excluir">🗑️</button>
+      </div>
+    `;
+  }
+
   function renderizarNoticias() {
     const listaHome = document.getElementById('listaNoticiasHome');
     const listaCompleta = document.getElementById('listaNoticias');
@@ -638,6 +685,7 @@
     
     const gerarCard = (n) => `
       <div class="noticia-card" onclick="abrirMateria(${n.id})">
+        ${gerarBotoesAdmin('Noticia', n.id)}
         <img src="${n.img}" alt="${n.titulo}" class="noticia-img" onerror="this.style.display='none'">
         <div class="noticia-content">
           ${n.categoria ? '<span class="noticia-categoria">' + n.categoria + '</span>' : ''}
@@ -659,9 +707,20 @@
     const n = dados.noticias.find(x => x.id === id);
     if (!n) return;
     
+    let botoesAdmin = '';
+    if (isAdmin()) {
+      botoesAdmin = `
+        <div style="display:flex; gap:10px; margin-bottom:20px;">
+          <button class="btn-voltar" style="border-color:#3498db; color:#3498db;" onclick="editarNoticia(${n.id})">✏️ Editar Notícia</button>
+          <button class="btn-voltar" style="border-color:#e74c3c; color:#e74c3c;" onclick="deletarNoticia(${n.id})">🗑️ Excluir Notícia</button>
+        </div>
+      `;
+    }
+
     document.getElementById('materiaLeitura').innerHTML = `
       <img src="${n.img}" alt="${n.titulo}" class="materia-hero-img" onerror="this.style.display='none'">
       <div class="materia-body">
+        ${botoesAdmin}
         ${n.categoria ? '<span class="noticia-categoria">' + n.categoria + '</span>' : ''}
         <h1>${n.titulo}</h1>
         <div class="meta-info">📅 ${n.data}</div>
@@ -687,6 +746,7 @@
 
     const html = dados.produtos.map(p => `
       <div class="produto-card">
+        ${gerarBotoesAdmin('Produto', p.id)}
         <img src="${p.img}" alt="${p.nome}" class="produto-img" onerror="this.style.background='#eee'">
         <div class="produto-info">
           <div class="produto-nome">${p.nome}</div>
@@ -730,6 +790,9 @@
       setTimeout(() => {
         verificarToken();
         document.getElementById('modalAdmin').classList.add('active');
+        // Re-renderizar para mostrar botões admin
+        renderizarNoticias();
+        renderizarProdutos();
       }, 300);
     } else {
       document.getElementById('loginErro').classList.add('show');
@@ -739,35 +802,124 @@
   function fazerLogout() {
     sessionStorage.removeItem('admin_logado');
     fecharModal('modalAdmin');
+    // Re-renderizar para esconder botões admin
+    renderizarNoticias();
+    renderizarProdutos();
   }
 
+  // ===== PRODUTOS =====
   function abrirModalProduto() {
+    produtoEditandoId = null;
     document.getElementById('formProduto').reset();
+    document.getElementById('tituloModalProduto').textContent = '➕ Novo Produto';
+    fecharModal('modalAdmin');
     document.getElementById('modalProduto').classList.add('active');
   }
 
+  function editarProduto(id) {
+    const p = dados.produtos.find(x => x.id === id);
+    if (!p) return;
+    produtoEditandoId = id;
+    document.getElementById('tituloModalProduto').textContent = '✏️ Editar Produto';
+    document.getElementById('produtoNome').value = p.nome || '';
+    document.getElementById('produtoDesc').value = p.desc || '';
+    document.getElementById('produtoPreco').value = p.preco || '';
+    document.getElementById('produtoLink').value = p.link || '';
+    document.getElementById('produtoImg').value = p.img || '';
+    document.getElementById('modalProduto').classList.add('active');
+  }
+
+  async function deletarProduto(id) {
+    if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+    dados.produtos = dados.produtos.filter(p => p.id !== id);
+    renderizarProdutos();
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    const salvou = await salvarNoGitHub();
+    if (!salvou) {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
+  }
+
+  // ===== NOTICIAS =====
   function abrirModalNoticia() {
+    noticiaEditandoId = null;
     document.getElementById('formNoticia').reset();
+    document.getElementById('tituloModalNoticia').textContent = '📰 Nova Notícia';
+    fecharModal('modalAdmin');
     document.getElementById('modalNoticia').classList.add('active');
+  }
+
+  function editarNoticia(id) {
+    const n = dados.noticias.find(x => x.id === id);
+    if (!n) return;
+    noticiaEditandoId = id;
+    document.getElementById('tituloModalNoticia').textContent = '✏️ Editar Notícia';
+    document.getElementById('noticiaCategoria').value = n.categoria || '';
+    document.getElementById('noticiaTitulo').value = n.titulo || '';
+    document.getElementById('noticiaResumo').value = n.resumo || '';
+    document.getElementById('noticiaTexto').value = n.texto || '';
+    document.getElementById('noticiaImg').value = n.img || '';
+    document.getElementById('modalNoticia').classList.add('active');
+  }
+
+  async function deletarNoticia(id) {
+    if (!confirm('Tem certeza que deseja excluir esta notícia?')) return;
+    dados.noticias = dados.noticias.filter(n => n.id !== id);
+    renderizarNoticias();
+    
+    // Se estava visualizando a matéria, volta para lista
+    if (document.getElementById('pagina-materia').classList.contains('active')) {
+      voltarParaNoticias();
+    }
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    const salvou = await salvarNoGitHub();
+    if (!salvou) {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
   }
 
   document.getElementById('formProduto').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    dados.produtos.push({
-      id: Date.now(),
+    const dadosProduto = {
       nome: document.getElementById('produtoNome').value,
       desc: document.getElementById('produtoDesc').value,
       preco: document.getElementById('produtoPreco').value,
       link: document.getElementById('produtoLink').value,
       img: document.getElementById('produtoImg').value
-    });
+    };
+    
+    if (produtoEditandoId !== null) {
+      const idx = dados.produtos.findIndex(p => p.id === produtoEditandoId);
+      if (idx !== -1) {
+        dados.produtos[idx] = { ...dados.produtos[idx], ...dadosProduto };
+      }
+      produtoEditandoId = null;
+    } else {
+      dados.produtos.push({
+        id: Date.now(),
+        ...dadosProduto
+      });
+    }
     
     fecharModal('modalProduto');
     
     const token = getToken();
     if (!token) {
-      // Sem token - mostra JSON para copiar
       showToast('️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
       gerarJSON();
       return;
@@ -777,7 +929,6 @@
     if (salvou) {
       renderizarProdutos();
     } else {
-      // Fallback - mostra JSON
       showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
       gerarJSON();
     }
@@ -786,15 +937,27 @@
   document.getElementById('formNoticia').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    dados.noticias.push({
-      id: Date.now(),
+    const dadosNoticia = {
       categoria: document.getElementById('noticiaCategoria').value,
       titulo: document.getElementById('noticiaTitulo').value,
       resumo: document.getElementById('noticiaResumo').value,
       texto: document.getElementById('noticiaTexto').value,
-      img: document.getElementById('noticiaImg').value,
-      data: new Date().toLocaleDateString('pt-BR')
-    });
+      img: document.getElementById('noticiaImg').value
+    };
+    
+    if (noticiaEditandoId !== null) {
+      const idx = dados.noticias.findIndex(n => n.id === noticiaEditandoId);
+      if (idx !== -1) {
+        dados.noticias[idx] = { ...dados.noticias[idx], ...dadosNoticia };
+      }
+      noticiaEditandoId = null;
+    } else {
+      dados.noticias.push({
+        id: Date.now(),
+        ...dadosNoticia,
+        data: new Date().toLocaleDateString('pt-BR')
+      });
+    }
     
     fecharModal('modalNoticia');
     
@@ -870,3 +1033,4 @@
 
 </body>
 </html>
+```
