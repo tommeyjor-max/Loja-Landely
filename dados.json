@@ -57,14 +57,6 @@
       "preco": "88.00",
       "link": "https://shopee.com.br/Bolsa-Mala-De-Viagem-Academia-Multifuncional-De-Grande-Capacidade-isabella-i.1384742237.22298224010?extraParams=%7B%22display_model_id%22%3A229416732176%2C%22model_selection_logic%22%3A3%7D",
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8NRAqhy57ETDlPzwHWzWb3S71rNWfmBLKu29TmFvpUD3jxil2bgrAold5&s=10"
-    },
-    {
-      "id": 1782028787103,
-      "nome": "Depilador Indolor Caneta Sobrancelha",
-      "desc": "hhghhjgjjjjjjjj",
-      "preco": "77.00",
-      "link": "https://shopee.com.br/Bolsa-Mala-De-Viagem-Academia-Multifuncional-De-Grande-Capacidade-isabella-i.1384742237.22298224010?extraParams=%7B%22display_model_id%22%3A229416732176%2C%22model_selection_logic%22%3A3%7D",
-      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLLOPM9viwNq5uz_wWBL_qVbK4oTaYQl8YWg&s"
     }
   ],
   "noticias": [
@@ -94,6 +86,15 @@
       "texto": "No próximo sábado, realizaremos nosso workshop gratuito 'Arte de Receber'!\n\n📅 Data: 28/06/2026\n🕐 Horário: 14h às 17h\n📍 Local: Nossa loja física\n\nO que você vai aprender:\n• Como organizar um jantar formal\n• Etiqueta básica à mesa\n• Harmonização de cores e texturas\n• Técnicas de dobradura de guardanapos\n\nVagas limitadas! Confirme presença pelo WhatsApp.",
       "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800",
       "data": "15/06/2026"
+    },
+    {
+      "id": 1782029043856,
+      "categoria": "Beleza e Estética",
+      "titulo": "Cicaplast: O Que Você Precisa Saber",
+      "resumo": "rrrrrrrrrrrrrrrrrr",
+      "texto": "rrrrrrrrrrrrrrrrrrr",
+      "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYSDETKoP5ALcYr0HkyKYKEu2m0i4Kmgr4k_FfXtAvas0XtkLXbdzZRGVF796S39cGVMpEpSDtySyL3k7XfNzR-ZXo5cCyjRmcP8ZbvJ3j7KinuzrIDq_R4BablNX7VXhA8c6GJXkNud4Gd3IKgO83-IydMzmXsdDU0UBPIJN5MFkgFwcafEWPtT5PgQ/s1600/a.jpg",
+      "data": "21/06/2026"
     }
   ],
   "textos": {
