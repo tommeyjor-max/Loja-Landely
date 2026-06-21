@@ -67,7 +67,6 @@
   .loading-spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite; }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   
-  /* Modal */
   .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: center; padding: 20px; }
   .modal.active { display: flex; }
   .modal-content { background: white; border-radius: 12px; padding: 25px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
@@ -81,7 +80,6 @@
   .btn-salvar { background: #27ae60; color: white; }
   .btn-cancelar { background: #95a5a6; color: white; }
   
-  /* Login */
   .login-box { max-width: 420px; text-align: center; }
   .login-box .login-icon { width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; }
   .login-box h2 { color: #333; margin-bottom: 8px; }
@@ -95,21 +93,17 @@
   .btn-entrar { width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 13px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; }
   .btn-entrar:hover { opacity: 0.9; }
   
-  /* Admin */
   .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
   .admin-btn { background: white; border: 2px solid #667eea; color: #667eea; padding: 20px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: all 0.3s; }
   .admin-btn:hover { background: #667eea; color: white; }
   .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
   .btn-logout { background: #e74c3c; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
   
-  /* JSON Output */
-  .json-output { background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; padding: 15px; margin-top: 15px; max-height: 300px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
-  .btn-copiar { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
-  .btn-copiar:hover { background: #229954; }
-  .instrucoes { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-top: 15px; border-radius: 6px; }
-  .instrucoes h4 { color: #856404; margin-bottom: 10px; }
-  .instrucoes p { color: #856404; line-height: 1.6; margin-bottom: 8px; }
-  .instrucoes a { color: #004085; font-weight: bold; }
+  .status-msg { position: fixed; top: 80px; right: 20px; background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; display: none; max-width: 400px; }
+  .status-msg.show { display: block; }
+  .status-msg.success { border-left: 4px solid #27ae60; }
+  .status-msg.error { border-left: 4px solid #e74c3c; }
+  .status-msg.loading { border-left: 4px solid #667eea; }
   
   @media (max-width: 600px) {
     .texto-pagina { padding: 25px; }
@@ -192,7 +186,7 @@
 
   <div class="pagina" id="pagina-politicas">
     <section>
-      <h2 class="section-title">📋 Nossas Políticas</h2>
+      <h2 class="section-title"> Nossas Políticas</h2>
       <div class="texto-pagina" id="conteudoPoliticas"></div>
     </section>
   </div>
@@ -202,7 +196,7 @@
       <h2 class="section-title">📞 Fale Conosco</h2>
       <div class="contato-info">
         <div class="contato-card">
-          <div class="icone">📧</div>
+          <div class="icone"></div>
           <h3>E-mail</h3>
           <p><a href="mailto:contato@amesaarrumacao.com">contato@amesaarrumacao.com</a></p>
         </div>
@@ -217,7 +211,7 @@
           <p>Rua Exemplo, 123 - São Paulo/SP</p>
         </div>
         <div class="contato-card">
-          <div class="icone">🕐</div>
+          <div class="icone"></div>
           <h3>Horário</h3>
           <p>Seg a Sex: 9h às 18h</p>
         </div>
@@ -246,10 +240,10 @@
         <label>Senha</label>
         <input type="password" id="loginSenha" required placeholder="admin123">
       </div>
-      <button type="submit" class="btn-entrar">🔓 Entrar</button>
+      <button type="submit" class="btn-entrar"> Entrar</button>
     </form>
     <div class="login-info">
-      <strong>Credenciais padrão:</strong><br>
+      <strong>Credenciais:</strong><br>
       Usuário: <code>admin</code> | Senha: <code>admin123</code>
     </div>
     <div class="modal-buttons" style="margin-top:15px;">
@@ -267,8 +261,7 @@
     </div>
     <div class="admin-menu">
       <button class="admin-btn" onclick="abrirModalProduto()">➕ Novo Produto</button>
-      <button class="admin-btn" onclick="abrirModalNoticia()">📰 Nova Notícia</button>
-      <button class="admin-btn" onclick="gerarJSON()">📋 Gerar JSON</button>
+      <button class="admin-btn" onclick="abrirModalNoticia()"> Nova Notícia</button>
     </div>
     <div class="modal-buttons">
       <button type="button" class="btn-cancelar" onclick="fecharModal('modalAdmin')">Fechar</button>
@@ -298,13 +291,13 @@
         <input type="url" id="produtoLink" required placeholder="https://wa.me/5511999999999">
       </div>
       <div class="form-group">
-        <label>📸 URL da Imagem</label>
+        <label> URL da Imagem</label>
         <input type="url" id="produtoImg" required placeholder="https://exemplo.com/imagem.jpg">
         <p style="font-size:0.8rem;color:#888;margin-top:5px;">💡 Use imagens do Unsplash, Pexels ou Imgur</p>
       </div>
       <div class="modal-buttons">
         <button type="button" class="btn-cancelar" onclick="fecharModal('modalProduto')">Cancelar</button>
-        <button type="submit" class="btn-salvar">Adicionar</button>
+        <button type="submit" class="btn-salvar">Salvar</button>
       </div>
     </form>
   </div>
@@ -337,35 +330,27 @@
       </div>
       <div class="modal-buttons">
         <button type="button" class="btn-cancelar" onclick="fecharModal('modalNoticia')">Cancelar</button>
-        <button type="submit" class="btn-salvar">Adicionar</button>
+        <button type="submit" class="btn-salvar">Salvar</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- MODAL JSON -->
-<div class="modal" id="modalJSON">
-  <div class="modal-content" style="max-width:800px;">
-    <h2>📋 JSON Gerado</h2>
-    <p style="color:#666;margin-bottom:15px;">Copie este código e cole no arquivo <strong>dados.json</strong> do GitHub:</p>
-    <div class="json-output" id="jsonOutput"></div>
-    <button class="btn-copiar" onclick="copiarJSON()">📋 Copiar JSON</button>
-    <div class="instrucoes">
-      <h4>📝 Próximos passos:</h4>
-      <p>1. Clique em <strong>"Copiar JSON"</strong> acima</p>
-      <p>2. Abra este link: <a href="https://github.com/tommeyjor-max/Loja-Landely/edit/main/dados.json" target="_blank">Editar dados.json no GitHub</a></p>
-      <p>3. Apague tudo que está lá e cole o JSON copiado</p>
-      <p>4. Clique em <strong>"Commit changes"</strong></p>
-      <p>5. Aguarde 1-2 minutos e recarregue o site!</p>
-    </div>
-    <div class="modal-buttons">
-      <button type="button" class="btn-cancelar" onclick="fecharModal('modalJSON')">Fechar</button>
-    </div>
-  </div>
-</div>
+<!-- Status Message -->
+<div class="status-msg" id="statusMsg"></div>
 
 <script>
-  const URL_DADOS = 'https://raw.githubusercontent.com/tommeyjor-max/Loja-Landely/main/dados.json';
+  // ============================================================
+  // ⚠️ CONFIGURAÇÃO - Cole seu token do GitHub aqui
+  // ============================================================
+  const GITHUB_TOKEN = 'COLE_SEU_TOKEN_AQUI'; // Ex: ghp_xxxxxxxxxxxx
+  const GITHUB_REPO = 'tommeyjor-max/Loja-Landely';
+  const GITHUB_BRANCH = 'main';
+  const DADOS_FILE = 'dados.json';
+  // ============================================================
+
+  const URL_DADOS = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/${DADOS_FILE}`;
+  const API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DADOS_FILE}`;
   
   let dados = {
     nomeLoja: 'A Mesa Arrumação',
@@ -375,52 +360,34 @@
     textos: {}
   };
 
-  // Autenticação
-  function hashSenha(senha) {
-    let hash = 0;
-    const str = 'AMA_XOR_' + senha + '_SALT_2026';
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash |= 0;
-    }
-    return 'h_' + Math.abs(hash).toString(36) + '_' + str.length;
-  }
-
-  function inicializarAuth() {
-    if (!localStorage.getItem('auth_usuario')) {
-      localStorage.setItem('auth_usuario', 'admin');
-      localStorage.setItem('auth_senha_hash', hashSenha('admin123'));
+  // Status message
+  function mostrarStatus(msg, tipo = 'loading') {
+    const status = document.getElementById('statusMsg');
+    status.textContent = msg;
+    status.className = 'status-msg show ' + tipo;
+    if (tipo !== 'loading') {
+      setTimeout(() => status.classList.remove('show'), 4000);
     }
   }
 
-  function verificarCredenciais(usuario, senha) {
-    return usuario === localStorage.getItem('auth_usuario') && 
-           hashSenha(senha) === localStorage.getItem('auth_senha_hash');
-  }
-
+  // Autenticação simplificada
   function estaLogado() {
-    const sessao = localStorage.getItem('auth_sessao');
-    if (!sessao) return false;
-    try {
-      const dados = JSON.parse(sessao);
-      if (Date.now() - dados.timestamp > 2 * 60 * 60 * 1000) {
-        localStorage.removeItem('auth_sessao');
-        return false;
-      }
-      return dados.logado === true;
-    } catch { return false; }
+    return sessionStorage.getItem('admin_logado') === 'true';
   }
 
-  function criarSessao(usuario) {
-    localStorage.setItem('auth_sessao', JSON.stringify({
-      logado: true, usuario, timestamp: Date.now()
-    }));
+  function fazerLogin(usuario, senha) {
+    if (usuario === 'admin' && senha === 'admin123') {
+      sessionStorage.setItem('admin_logado', 'true');
+      return true;
+    }
+    return false;
   }
 
-  function destruirSessao() { localStorage.removeItem('auth_sessao'); }
+  function fazerLogout() {
+    sessionStorage.removeItem('admin_logado');
+  }
 
-  // Carregar dados
+  // Carregar dados do GitHub
   async function carregarDados() {
     try {
       const url = URL_DADOS + '?t=' + Date.now();
@@ -446,6 +413,61 @@
       console.error('Erro ao carregar dados:', error);
       document.getElementById('listaNoticiasHome').innerHTML = '<div class="vazio"><h3>⚠️ Erro ao carregar</h3><p>Verifique se o arquivo dados.json existe.</p></div>';
       document.getElementById('listaProdutosHome').innerHTML = '';
+    }
+  }
+
+  // Salvar dados no GitHub via API
+  async function salvarDadosNoGitHub() {
+    if (!GITHUB_TOKEN || GITHUB_TOKEN === 'COLE_SEU_TOKEN_AQUI') {
+      mostrarStatus('❌ Token do GitHub não configurado!', 'error');
+      return false;
+    }
+
+    try {
+      mostrarStatus('💾 Salvando no GitHub...', 'loading');
+      
+      // 1. Obter o SHA atual do arquivo
+      const getResponse = await fetch(API_URL, {
+        headers: {
+          'Authorization': `token ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      });
+      
+      if (!getResponse.ok) throw new Error('Erro ao obter arquivo');
+      
+      const fileData = await getResponse.json();
+      const sha = fileData.sha;
+      
+      // 2. Atualizar o arquivo
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2))));
+      
+      const putResponse = await fetch(API_URL, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Atualização via painel admin - ' + new Date().toLocaleString('pt-BR'),
+          content: content,
+          sha: sha,
+          branch: GITHUB_BRANCH
+        })
+      });
+      
+      if (!putResponse.ok) {
+        const error = await putResponse.json();
+        throw new Error(error.message || 'Erro ao salvar');
+      }
+      
+      mostrarStatus('✅ Salvo com sucesso! Atualize a página em 1-2 minutos.', 'success');
+      return true;
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+      mostrarStatus('❌ Erro ao salvar: ' + error.message, 'error');
+      return false;
     }
   }
 
@@ -558,8 +580,7 @@
     const usuario = document.getElementById('loginUsuario').value.trim();
     const senha = document.getElementById('loginSenha').value;
 
-    if (verificarCredenciais(usuario, senha)) {
-      criarSessao(usuario);
+    if (fazerLogin(usuario, senha)) {
       fecharModal('modalLogin');
       setTimeout(() => abrirAdmin(), 300);
     } else {
@@ -569,7 +590,7 @@
 
   function fazerLogout() {
     if (!confirm('Deseja sair?')) return;
-    destruirSessao();
+    fazerLogout();
     fecharModal('modalAdmin');
   }
 
@@ -583,8 +604,9 @@
     document.getElementById('modalNoticia').classList.add('active');
   }
 
-  document.getElementById('formProduto').addEventListener('submit', function(e) {
+  document.getElementById('formProduto').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
     const novoProduto = {
       id: Date.now(),
       nome: document.getElementById('produtoNome').value,
@@ -596,12 +618,16 @@
     
     dados.produtos.push(novoProduto);
     fecharModal('modalProduto');
-    alert('✅ Produto adicionado! Agora clique em "Gerar JSON" para copiar e colar no GitHub.');
-    gerarJSON();
+    
+    const salvou = await salvarDadosNoGitHub();
+    if (salvou) {
+      renderizarProdutos();
+    }
   });
 
-  document.getElementById('formNoticia').addEventListener('submit', function(e) {
+  document.getElementById('formNoticia').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
     const novaNoticia = {
       id: Date.now(),
       categoria: document.getElementById('noticiaCategoria').value,
@@ -614,25 +640,12 @@
     
     dados.noticias.push(novaNoticia);
     fecharModal('modalNoticia');
-    alert('✅ Notícia adicionada! Agora clique em "Gerar JSON" para copiar e colar no GitHub.');
-    gerarJSON();
+    
+    const salvou = await salvarDadosNoGitHub();
+    if (salvou) {
+      renderizarNoticias();
+    }
   });
-
-  function gerarJSON() {
-    const json = JSON.stringify(dados, null, 2);
-    document.getElementById('jsonOutput').textContent = json;
-    fecharModal('modalAdmin');
-    document.getElementById('modalJSON').classList.add('active');
-  }
-
-  function copiarJSON() {
-    const json = document.getElementById('jsonOutput').textContent;
-    navigator.clipboard.writeText(json).then(() => {
-      alert('✅ JSON copiado! Agora cole no arquivo dados.json do GitHub.');
-    }).catch(() => {
-      alert('❌ Erro ao copiar. Selecione o texto manualmente e copie.');
-    });
-  }
 
   function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
 
@@ -670,7 +683,6 @@
   });
 
   // Iniciar
-  inicializarAuth();
   carregarDados();
   setInterval(carregarDados, 5 * 60 * 1000);
 </script>
