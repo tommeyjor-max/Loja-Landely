@@ -103,8 +103,13 @@
   .config-box h3 { color: #856404; margin-bottom: 10px; }
   .config-box p { color: #856404; line-height: 1.6; margin-bottom: 10px; font-size: 0.9rem; }
   .config-box a { color: #004085; font-weight: bold; }
-  .config-box input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: monospace; font-size: 0.9rem; margin-top: 10px; }
+  .config-box input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: monospace; font-size: 0.9rem; margin-top: 10px; box-sizing: border-box; }
   .config-box .btn-configurar { background: #ffc107; color: #000; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .config-box .btn-testar { background: #17a2b8; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .config-box .status-teste { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.9rem; display: none; }
+  .config-box .status-teste.show { display: block; }
+  .config-box .status-teste.ok { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .config-box .status-teste.erro { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
   
   .toast { position: fixed; top: 80px; right: 20px; background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; display: none; max-width: 400px; }
   .toast.show { display: block; animation: slideIn 0.3s; }
@@ -112,6 +117,13 @@
   .toast.error { border-left: 4px solid #e74c3c; }
   .toast.loading { border-left: 4px solid #667eea; }
   @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  
+  .json-output { background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; padding: 15px; max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
+  .btn-copiar { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .instrucoes { background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin-top: 15px; border-radius: 6px; }
+  .instrucoes h4 { color: #0d47a1; margin-bottom: 10px; }
+  .instrucoes p { color: #333; line-height: 1.6; margin-bottom: 8px; }
+  .instrucoes a { color: #1976D2; font-weight: bold; }
   
   @media (max-width: 600px) {
     .texto-pagina { padding: 25px; }
@@ -235,7 +247,7 @@
 <!-- MODAL LOGIN -->
 <div class="modal" id="modalLogin">
   <div class="modal-content login-box">
-    <div class="login-icon">🔐</div>
+    <div class="login-icon"></div>
     <h2>Acesso Administrativo</h2>
     <p class="login-subtitle">Digite suas credenciais</p>
     <div class="login-error" id="loginErro">❌ Usuário ou senha inválidos.</div>
@@ -265,21 +277,24 @@
   <div class="modal-content">
     <div class="admin-header">
       <h2 style="margin-bottom:0;">⚙️ Painel Admin</h2>
-      <button class="btn-logout" onclick="fazerLogout()">🚪 Sair</button>
+      <button class="btn-logout" onclick="fazerLogout()"> Sair</button>
     </div>
     
     <div class="config-box" id="configBox">
       <h3>🔑 Configurar Token do GitHub</h3>
       <p>Para salvar automaticamente, cole seu token do GitHub abaixo:</p>
       <p>👉 <a href="https://github.com/settings/tokens" target="_blank">Gerar token no GitHub</a></p>
-      <input type="text" id="tokenInput" placeholder="Cole seu token aqui (ghp_...)">
+      <p style="font-size:0.85rem;"><strong>Importante:</strong> Marque a permissão <code>repo</code> ao criar o token.</p>
+      <input type="text" id="tokenInput" placeholder="Cole seu token aqui (começa com ghp_...)">
+      <button class="btn-testar" onclick="testarToken()"> Testar Token</button>
+      <div class="status-teste" id="statusTeste"></div>
       <button class="btn-configurar" onclick="salvarToken()">💾 Salvar Token</button>
     </div>
     
     <div class="admin-menu">
       <button class="admin-btn" onclick="abrirModalProduto()">➕ Novo Produto</button>
       <button class="admin-btn" onclick="abrirModalNoticia()">📰 Nova Notícia</button>
-      <button class="admin-btn" onclick="gerarJSON()">📋 Gerar JSON (backup)</button>
+      <button class="admin-btn" onclick="gerarJSON()">📋 Gerar JSON</button>
     </div>
     <div class="modal-buttons">
       <button type="button" class="btn-cancelar" onclick="fecharModal('modalAdmin')">Fechar</button>
@@ -323,7 +338,7 @@
 <!-- MODAL NOTICIA -->
 <div class="modal" id="modalNoticia">
   <div class="modal-content">
-    <h2>📰 Nova Notícia</h2>
+    <h2> Nova Notícia</h2>
     <form id="formNoticia">
       <div class="form-group">
         <label>Categoria</label>
@@ -347,7 +362,7 @@
       </div>
       <div class="modal-buttons">
         <button type="button" class="btn-cancelar" onclick="fecharModal('modalNoticia')">Cancelar</button>
-        <button type="submit" class="btn-salvar">💾 Salvar</button>
+        <button type="submit" class="btn-salvar"> Salvar</button>
       </div>
     </form>
   </div>
@@ -356,10 +371,18 @@
 <!-- MODAL JSON -->
 <div class="modal" id="modalJSON">
   <div class="modal-content" style="max-width:800px;">
-    <h2>📋 JSON Gerado (Backup)</h2>
-    <p style="color:#666;margin-bottom:15px;">Se o salvamento automático falhar, use este JSON:</p>
-    <div class="json-output" id="jsonOutput" style="background:#f8f9fa;border:1px solid #ddd;border-radius:6px;padding:15px;max-height:300px;overflow-y:auto;font-family:monospace;font-size:0.85rem;white-space:pre-wrap;"></div>
-    <button class="btn-copiar" onclick="copiarJSON()" style="background:#27ae60;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-weight:bold;margin-top:10px;width:100%;">📋 Copiar JSON</button>
+    <h2>📋 JSON Gerado</h2>
+    <p style="color:#666;margin-bottom:15px;">Copie este código e cole no arquivo <strong>dados.json</strong> do GitHub:</p>
+    <div class="json-output" id="jsonOutput"></div>
+    <button class="btn-copiar" onclick="copiarJSON()">📋 Copiar JSON</button>
+    <div class="instrucoes">
+      <h4>📝 Como publicar:</h4>
+      <p>1. Clique em <strong>"Copiar JSON"</strong> acima</p>
+      <p>2. Abra: <a href="https://github.com/tommeyjor-max/Loja-Landely/edit/main/dados.json" target="_blank">Editar dados.json no GitHub</a></p>
+      <p>3. Apague tudo e cole o JSON copiado</p>
+      <p>4. Clique em <strong>"Commit changes"</strong></p>
+      <p>5. Aguarde 1-2 minutos e recarregue o site!</p>
+    </div>
     <div class="modal-buttons">
       <button type="button" class="btn-cancelar" onclick="fecharModal('modalJSON')">Fechar</button>
     </div>
@@ -394,18 +417,61 @@
     return localStorage.getItem('github_token') || '';
   }
 
+  // TESTAR TOKEN - verifica se está funcionando
+  async function testarToken() {
+    const token = document.getElementById('tokenInput').value.trim();
+    const statusDiv = document.getElementById('statusTeste');
+    
+    if (!token) {
+      statusDiv.textContent = '❌ Cole um token primeiro!';
+      statusDiv.className = 'status-teste show erro';
+      return;
+    }
+    
+    statusDiv.textContent = '🔍 Testando conexão com o GitHub...';
+    statusDiv.className = 'status-teste show';
+    
+    try {
+      // Testa a API do GitHub
+      const response = await fetch('https://api.github.com/user', {
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      });
+      
+      if (response.status === 200) {
+        const user = await response.json();
+        statusDiv.textContent = '✅ Token válido! Conectado como: ' + user.login;
+        statusDiv.className = 'status-teste show ok';
+      } else if (response.status === 401) {
+        statusDiv.textContent = '❌ Token inválido ou expirado. Gere um novo em: github.com/settings/tokens';
+        statusDiv.className = 'status-teste show erro';
+      } else if (response.status === 403) {
+        statusDiv.textContent = '⚠️ Token sem permissão. Ao criar o token, marque a opção "repo" (acesso completo ao repositório).';
+        statusDiv.className = 'status-teste show erro';
+      } else {
+        statusDiv.textContent = '⚠️ Erro desconhecido. Código: ' + response.status;
+        statusDiv.className = 'status-teste show erro';
+      }
+    } catch (error) {
+      statusDiv.textContent = '❌ Erro de conexão: ' + error.message;
+      statusDiv.className = 'status-teste show erro';
+    }
+  }
+
   function salvarToken() {
     const token = document.getElementById('tokenInput').value.trim();
     if (!token) {
       showToast('❌ Cole um token válido!', 'error');
       return;
     }
-    if (!token.startsWith('ghp_') || token.length < 20) {
-      showToast('⚠️ Token inválido! Deve começar com ghp_ e ter ~40 caracteres.', 'error');
+    if (!token.startsWith('ghp_')) {
+      showToast('⚠️ Token deve começar com ghp_', 'error');
       return;
     }
     localStorage.setItem('github_token', token);
-    showToast('✅ Token salvo! Agora o salvamento é automático.', 'success');
+    showToast('✅ Token salvo!', 'success');
     document.getElementById('configBox').style.display = 'none';
   }
 
@@ -445,15 +511,14 @@
       renderizarTextos();
     } catch (error) {
       console.error('Erro:', error);
-      showToast('⚠️ Erro ao carregar dados', 'error');
     }
   }
 
-  // CORREÇÃO: Criar arquivo se não existir
+  // SALVAR NO GITHUB - com diagnóstico detalhado
   async function salvarNoGitHub() {
     const token = getToken();
     if (!token) {
-      showToast('⚠️ Configure o token primeiro! Clique em Admin → Configurar Token', 'error');
+      showToast('⚠️ Configure o token primeiro!', 'error');
       return false;
     }
 
@@ -463,41 +528,59 @@
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 15000);
       
-      // 1. Tentar obter o arquivo existente
+      // 1. Verificar se o arquivo existe
       let sha = null;
       let arquivoExiste = false;
       
-      try {
-        const getResponse = await fetch(API_URL, {
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
-          },
-          signal: controller.signal
-        });
-        
-        if (getResponse.status === 200) {
-          const fileData = await getResponse.json();
-          sha = fileData.sha;
-          arquivoExiste = true;
-        } else if (getResponse.status === 404) {
-          // Arquivo não existe - vamos criar
-          arquivoExiste = false;
-          showToast('📝 Criando arquivo dados.json...', 'loading');
-        } else {
-          const error = await getResponse.json();
-          throw new Error(error.message || 'Erro ao verificar arquivo');
-        }
-      } catch (checkError) {
-        if (checkError.name !== 'AbortError') {
-          throw checkError;
-        }
+      const getResponse = await fetch(API_URL, {
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (getResponse.status === 401) {
+        showToast('❌ Token inválido! Vá em Admin e teste o token.', 'error');
+        return false;
+      }
+      
+      if (getResponse.status === 403) {
+        showToast('❌ Token sem permissão "repo". Gere um novo token.', 'error');
+        return false;
+      }
+      
+      if (getResponse.status === 200) {
+        const fileData = await getResponse.json();
+        sha = fileData.sha;
+        arquivoExiste = true;
+      } else if (getResponse.status === 404) {
+        arquivoExiste = false;
+      } else {
+        const errorText = await getResponse.text();
+        showToast('❌ Erro GitHub (' + getResponse.status + '): ' + errorText.substring(0, 100), 'error');
+        return false;
       }
       
       // 2. Preparar conteúdo
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2))));
       
-      // 3. Salvar/Atualizar arquivo
+      // 3. Salvar
+      const putController = new AbortController();
+      const putTimeout = setTimeout(() => putController.abort(), 15000);
+      
+      const body = {
+        message: 'Atualização via admin - ' + new Date().toLocaleString('pt-BR'),
+        content: content,
+        branch: 'main'
+      };
+      
+      if (arquivoExiste) {
+        body.sha = sha;
+      }
+      
       const putResponse = await fetch(API_URL, {
         method: 'PUT',
         headers: {
@@ -505,27 +588,37 @@
           'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          message: 'Atualização via admin - ' + new Date().toLocaleString('pt-BR'),
-          content: content,
-          ...(arquivoExiste && { sha: sha }),
-          branch: 'main'
-        }),
-        signal: controller.signal
+        body: JSON.stringify(body),
+        signal: putController.signal
       });
       
-      clearTimeout(timeoutId);
+      clearTimeout(putTimeout);
+      
+      if (putResponse.status === 401) {
+        showToast('❌ Token inválido!', 'error');
+        return false;
+      }
+      
+      if (putResponse.status === 403) {
+        showToast('❌ Token sem permissão!', 'error');
+        return false;
+      }
       
       if (!putResponse.ok) {
         const error = await putResponse.json();
-        throw new Error(error.message || 'Erro ao salvar arquivo');
+        showToast('❌ Erro: ' + (error.message || 'Desconhecido'), 'error');
+        return false;
       }
       
-      showToast('✅ Salvo com sucesso! Atualize a página em 1-2 min.', 'success');
+      showToast('✅ Salvo! Atualize em 1-2 min.', 'success');
       return true;
     } catch (error) {
       console.error('Erro:', error);
-      showToast('❌ Erro: ' + error.message, 'error');
+      if (error.name === 'AbortError') {
+        showToast('️ Tempo esgotado. Verifique sua internet.', 'error');
+      } else {
+        showToast('❌ Erro: ' + error.message, 'error');
+      }
       return false;
     }
   }
@@ -672,9 +765,21 @@
     
     fecharModal('modalProduto');
     
+    const token = getToken();
+    if (!token) {
+      // Sem token - mostra JSON para copiar
+      showToast('️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
     const salvou = await salvarNoGitHub();
     if (salvou) {
       renderizarProdutos();
+    } else {
+      // Fallback - mostra JSON
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
     }
   });
 
@@ -693,9 +798,19 @@
     
     fecharModal('modalNoticia');
     
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
     const salvou = await salvarNoGitHub();
     if (salvou) {
       renderizarNoticias();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
     }
   });
 
@@ -709,7 +824,7 @@
   function copiarJSON() {
     const json = document.getElementById('jsonOutput').textContent;
     navigator.clipboard.writeText(json).then(() => {
-      showToast('✅ JSON copiado!', 'success');
+      showToast('✅ JSON copiado! Cole no GitHub.', 'success');
     }).catch(() => {
       showToast('❌ Erro ao copiar', 'error');
     });
