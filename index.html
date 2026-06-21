@@ -125,6 +125,7 @@
   .instrucoes p { color: #333; line-height: 1.6; margin-bottom: 8px; }
   .instrucoes a { color: #1976D2; font-weight: bold; }
 
+  /* Botões admin nos cards */
   .admin-actions {
     position: absolute;
     top: 10px;
@@ -277,6 +278,7 @@
   <p>&copy; 2026 <span id="footerNome">A Mesa Arrumação</span> - Todos os direitos reservados</p>
 </footer>
 
+<!-- MODAL LOGIN -->
 <div class="modal" id="modalLogin">
   <div class="modal-content login-box">
     <div class="login-icon"></div>
@@ -304,6 +306,7 @@
   </div>
 </div>
 
+<!-- MODAL ADMIN -->
 <div class="modal" id="modalAdmin">
   <div class="modal-content">
     <div class="admin-header">
@@ -311,9 +314,21 @@
       <button class="btn-logout" onclick="fazerLogout()"> Sair</button>
     </div>
     
+    <div class="config-box" id="configBox">
+      <h3>🔑 Configurar Token do GitHub</h3>
+      <p>Para salvar automaticamente, cole seu token do GitHub abaixo:</p>
+      <p>👉 <a href="https://github.com/settings/tokens" target="_blank">Gerar token no GitHub</a></p>
+      <p style="font-size:0.85rem;"><strong>Importante:</strong> Marque a permissão <code>repo</code> ao criar o token.</p>
+      <input type="text" id="tokenInput" placeholder="Cole seu token aqui (começa com ghp_...)">
+      <button class="btn-testar" onclick="testarToken()"> Testar Token</button>
+      <div class="status-teste" id="statusTeste"></div>
+      <button class="btn-configurar" onclick="salvarToken()">💾 Salvar Token</button>
+    </div>
+    
     <div class="admin-menu">
       <button class="admin-btn" onclick="abrirModalProduto()">➕ Novo Produto</button>
       <button class="admin-btn" onclick="abrirModalNoticia()">📰 Nova Notícia</button>
+      <button class="admin-btn" onclick="gerarJSON()">📋 Gerar JSON</button>
     </div>
     <div class="modal-buttons">
       <button type="button" class="btn-cancelar" onclick="fecharModal('modalAdmin')">Fechar</button>
@@ -321,6 +336,7 @@
   </div>
 </div>
 
+<!-- MODAL PRODUTO -->
 <div class="modal" id="modalProduto">
   <div class="modal-content">
     <h2 id="tituloModalProduto">➕ Novo Produto</h2>
@@ -353,6 +369,7 @@
   </div>
 </div>
 
+<!-- MODAL NOTICIA -->
 <div class="modal" id="modalNoticia">
   <div class="modal-content">
     <h2 id="tituloModalNoticia">📰 Nova Notícia</h2>
@@ -385,12 +402,33 @@
   </div>
 </div>
 
+<!-- MODAL JSON -->
+<div class="modal" id="modalJSON">
+  <div class="modal-content" style="max-width:800px;">
+    <h2>📋 JSON Gerado</h2>
+    <p style="color:#666;margin-bottom:15px;">Copie este código e cole no arquivo <strong>dados.json</strong> do GitHub:</p>
+    <div class="json-output" id="jsonOutput"></div>
+    <button class="btn-copiar" onclick="copiarJSON()">📋 Copiar JSON</button>
+    <div class="instrucoes">
+      <h4>📝 Como publicar:</h4>
+      <p>1. Clique em <strong>"Copiar JSON"</strong> acima</p>
+      <p>2. Abra: <a href="https://github.com/tommeyjor-max/Loja-Landely/edit/main/dados.json" target="_blank">Editar dados.json no GitHub</a></p>
+      <p>3. Apague tudo e cole o JSON copiado</p>
+      <p>4. Clique em <strong>"Commit changes"</strong></p>
+      <p>5. Aguarde 1-2 minutos e recarregue o site!</p>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalJSON')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
 <div class="toast" id="toast"></div>
 
 <script>
-  const JSONBIN_URL = 'https://api.jsonbin.io/v3/b';
-  const MASTER_KEY = '$2a$10$bxvZlPZ5r5J5vK5vK5vK5e';
-  const BIN_ID_KEY = 'jsonbin_bin_id';
+  const URL_DADOS = 'https://raw.githubusercontent.com/tommeyjor-max/Loja-Landely/main/dados.json';
+  const API_URL = 'https://api.github.com/repos/tommeyjor-max/Loja-Landely/contents/dados.json';
   
   let dados = {
     nomeLoja: 'A Mesa Arrumação',
@@ -400,6 +438,7 @@
     textos: {}
   };
 
+  // ID de edição (null = novo, valor = editando)
   let produtoEditandoId = null;
   let noticiaEditandoId = null;
 
@@ -416,64 +455,95 @@
     }
   }
 
-  async function criarBin() {
+  function getToken() {
+    return localStorage.getItem('github_token') || '';
+  }
+
+  async function testarToken() {
+    const token = document.getElementById('tokenInput').value.trim();
+    const statusDiv = document.getElementById('statusTeste');
+    
+    if (!token) {
+      statusDiv.textContent = '❌ Cole um token primeiro!';
+      statusDiv.className = 'status-teste show erro';
+      return;
+    }
+    
+    statusDiv.textContent = '🔍 Testando conexão com o GitHub...';
+    statusDiv.className = 'status-teste show';
+    
     try {
-      const response = await fetch(JSONBIN_URL, {
-        method: 'POST',
+      const response = await fetch('https://api.github.com/user', {
         headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': MASTER_KEY
-        },
-        body: JSON.stringify(dados)
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
       });
       
-      if (response.ok) {
-        const result = await response.json();
-        const binId = result.metadata.id;
-        localStorage.setItem(BIN_ID_KEY, binId);
-        return binId;
+      if (response.status === 200) {
+        const user = await response.json();
+        statusDiv.textContent = '✅ Token válido! Conectado como: ' + user.login;
+        statusDiv.className = 'status-teste show ok';
+      } else if (response.status === 401) {
+        statusDiv.textContent = '❌ Token inválido ou expirado. Gere um novo em: github.com/settings/tokens';
+        statusDiv.className = 'status-teste show erro';
+      } else if (response.status === 403) {
+        statusDiv.textContent = '⚠️ Token sem permissão. Ao criar o token, marque a opção "repo" (acesso completo ao repositório).';
+        statusDiv.className = 'status-teste show erro';
+      } else {
+        statusDiv.textContent = '⚠️ Erro desconhecido. Código: ' + response.status;
+        statusDiv.className = 'status-teste show erro';
       }
-      return null;
     } catch (error) {
-      console.error('Erro ao criar bin:', error);
-      return null;
+      statusDiv.textContent = '❌ Erro de conexão: ' + error.message;
+      statusDiv.className = 'status-teste show erro';
+    }
+  }
+
+  function salvarToken() {
+    const token = document.getElementById('tokenInput').value.trim();
+    if (!token) {
+      showToast('❌ Cole um token válido!', 'error');
+      return;
+    }
+    if (!token.startsWith('ghp_')) {
+      showToast('⚠️ Token deve começar com ghp_', 'error');
+      return;
+    }
+    localStorage.setItem('github_token', token);
+    showToast('✅ Token salvo!', 'success');
+    document.getElementById('configBox').style.display = 'none';
+  }
+
+  function verificarToken() {
+    const token = getToken();
+    if (token) {
+      document.getElementById('configBox').style.display = 'none';
+      document.getElementById('tokenInput').value = token;
     }
   }
 
   async function carregarDados() {
     try {
-      let binId = localStorage.getItem(BIN_ID_KEY);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
       
-      if (!binId) {
-        binId = await criarBin();
-        if (!binId) {
-          renderizarNoticias();
-          renderizarProdutos();
-          renderizarTextos();
-          return;
-        }
-      }
+      const url = URL_DADOS + '?t=' + Date.now();
+      const response = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
       
-      const response = await fetch(`${JSONBIN_URL}/${binId}/latest`, {
-        headers: {
-          'X-Master-Key': MASTER_KEY
-        }
-      });
+      if (!response.ok) throw new Error('Não foi possível carregar');
+      dados = await response.json();
       
-      if (response.ok) {
-        const result = await response.json();
-        dados = result.record;
-        
-        document.getElementById('nomeLoja').textContent = dados.nomeLoja || 'A Mesa Arrumação';
-        document.getElementById('footerNome').textContent = dados.nomeLoja || 'A Mesa Arrumação';
-        document.title = dados.nomeLoja || 'A Mesa Arrumação';
-        
-        if (dados.logo) {
-          document.getElementById('logoContainer').innerHTML = '<img src="' + dados.logo + '" alt="Logo">';
-        } else {
-          const letra = (dados.nomeLoja || 'A').charAt(0).toUpperCase();
-          document.getElementById('logoContainer').innerHTML = '<span>' + letra + '</span>';
-        }
+      document.getElementById('nomeLoja').textContent = dados.nomeLoja || 'A Mesa Arrumação';
+      document.getElementById('footerNome').textContent = dados.nomeLoja || 'A Mesa Arrumação';
+      document.title = dados.nomeLoja || 'A Mesa Arrumação';
+      
+      if (dados.logo) {
+        document.getElementById('logoContainer').innerHTML = '<img src="' + dados.logo + '" alt="Logo">';
+      } else {
+        const letra = (dados.nomeLoja || 'A').charAt(0).toUpperCase();
+        document.getElementById('logoContainer').innerHTML = '<span>' + letra + '</span>';
       }
       
       renderizarNoticias();
@@ -481,45 +551,110 @@
       renderizarTextos();
     } catch (error) {
       console.error('Erro:', error);
-      renderizarNoticias();
-      renderizarProdutos();
-      renderizarTextos();
     }
   }
 
-  async function salvarDados() {
+  async function salvarNoGitHub() {
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Configure o token primeiro!', 'error');
+      return false;
+    }
+
     try {
       showToast('💾 Salvando...', 'loading');
       
-      let binId = localStorage.getItem(BIN_ID_KEY);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       
-      if (!binId) {
-        binId = await criarBin();
-        if (!binId) {
-          showToast('❌ Erro ao salvar', 'error');
-          return false;
-        }
-      }
+      let sha = null;
+      let arquivoExiste = false;
       
-      const response = await fetch(`${JSONBIN_URL}/${binId}`, {
-        method: 'PUT',
+      const getResponse = await fetch(API_URL, {
         headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': MASTER_KEY
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json'
         },
-        body: JSON.stringify(dados)
+        signal: controller.signal
       });
       
-      if (response.ok) {
-        showToast('✅ Salvo com sucesso!', 'success');
-        return true;
-      } else {
-        showToast('❌ Erro ao salvar', 'error');
+      clearTimeout(timeoutId);
+      
+      if (getResponse.status === 401) {
+        showToast('❌ Token inválido! Vá em Admin e teste o token.', 'error');
         return false;
       }
+      
+      if (getResponse.status === 403) {
+        showToast('❌ Token sem permissão "repo". Gere um novo token.', 'error');
+        return false;
+      }
+      
+      if (getResponse.status === 200) {
+        const fileData = await getResponse.json();
+        sha = fileData.sha;
+        arquivoExiste = true;
+      } else if (getResponse.status === 404) {
+        arquivoExiste = false;
+      } else {
+        const errorText = await getResponse.text();
+        showToast('❌ Erro GitHub (' + getResponse.status + '): ' + errorText.substring(0, 100), 'error');
+        return false;
+      }
+      
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2))));
+      
+      const putController = new AbortController();
+      const putTimeout = setTimeout(() => putController.abort(), 15000);
+      
+      const body = {
+        message: 'Atualização via admin - ' + new Date().toLocaleString('pt-BR'),
+        content: content,
+        branch: 'main'
+      };
+      
+      if (arquivoExiste) {
+        body.sha = sha;
+      }
+      
+      const putResponse = await fetch(API_URL, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body),
+        signal: putController.signal
+      });
+      
+      clearTimeout(putTimeout);
+      
+      if (putResponse.status === 401) {
+        showToast('❌ Token inválido!', 'error');
+        return false;
+      }
+      
+      if (putResponse.status === 403) {
+        showToast('❌ Token sem permissão!', 'error');
+        return false;
+      }
+      
+      if (!putResponse.ok) {
+        const error = await putResponse.json();
+        showToast('❌ Erro: ' + (error.message || 'Desconhecido'), 'error');
+        return false;
+      }
+      
+      showToast('✅ Salvo! Atualize em 1-2 min.', 'success');
+      return true;
     } catch (error) {
       console.error('Erro:', error);
-      showToast('❌ Erro de conexão', 'error');
+      if (error.name === 'AbortError') {
+        showToast('️ Tempo esgotado. Verifique sua internet.', 'error');
+      } else {
+        showToast('❌ Erro: ' + error.message, 'error');
+      }
       return false;
     }
   }
@@ -638,6 +773,7 @@
       document.getElementById('loginErro').classList.remove('show');
       document.getElementById('modalLogin').classList.add('active');
     } else {
+      verificarToken();
       document.getElementById('modalAdmin').classList.add('active');
     }
   }
@@ -651,7 +787,9 @@
       sessionStorage.setItem('admin_logado', 'true');
       fecharModal('modalLogin');
       setTimeout(() => {
+        verificarToken();
         document.getElementById('modalAdmin').classList.add('active');
+        // Re-renderizar para mostrar botões admin
         renderizarNoticias();
         renderizarProdutos();
       }, 300);
@@ -663,10 +801,12 @@
   function fazerLogout() {
     sessionStorage.removeItem('admin_logado');
     fecharModal('modalAdmin');
+    // Re-renderizar para esconder botões admin
     renderizarNoticias();
     renderizarProdutos();
   }
 
+  // ===== PRODUTOS =====
   function abrirModalProduto() {
     produtoEditandoId = null;
     document.getElementById('formProduto').reset();
@@ -692,9 +832,21 @@
     if (!confirm('Tem certeza que deseja excluir este produto?')) return;
     dados.produtos = dados.produtos.filter(p => p.id !== id);
     renderizarProdutos();
-    await salvarDados();
+    
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    const salvou = await salvarNoGitHub();
+    if (!salvou) {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
   }
 
+  // ===== NOTICIAS =====
   function abrirModalNoticia() {
     noticiaEditandoId = null;
     document.getElementById('formNoticia').reset();
@@ -721,11 +873,22 @@
     dados.noticias = dados.noticias.filter(n => n.id !== id);
     renderizarNoticias();
     
+    // Se estava visualizando a matéria, volta para lista
     if (document.getElementById('pagina-materia').classList.contains('active')) {
       voltarParaNoticias();
     }
     
-    await salvarDados();
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    const salvou = await salvarNoGitHub();
+    if (!salvou) {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
+    }
   }
 
   document.getElementById('formProduto').addEventListener('submit', async function(e) {
@@ -754,9 +917,19 @@
     
     fecharModal('modalProduto');
     
-    const salvou = await salvarDados();
+    const token = getToken();
+    if (!token) {
+      showToast('️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
     if (salvou) {
       renderizarProdutos();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
     }
   });
 
@@ -787,11 +960,37 @@
     
     fecharModal('modalNoticia');
     
-    const salvou = await salvarDados();
+    const token = getToken();
+    if (!token) {
+      showToast('⚠️ Token não configurado. Use "Gerar JSON" para publicar.', 'error');
+      gerarJSON();
+      return;
+    }
+    
+    const salvou = await salvarNoGitHub();
     if (salvou) {
       renderizarNoticias();
+    } else {
+      showToast('⚠️ Falha ao salvar. Use "Gerar JSON".', 'error');
+      gerarJSON();
     }
   });
+
+  function gerarJSON() {
+    const json = JSON.stringify(dados, null, 2);
+    document.getElementById('jsonOutput').textContent = json;
+    fecharModal('modalAdmin');
+    document.getElementById('modalJSON').classList.add('active');
+  }
+
+  function copiarJSON() {
+    const json = document.getElementById('jsonOutput').textContent;
+    navigator.clipboard.writeText(json).then(() => {
+      showToast('✅ JSON copiado! Cole no GitHub.', 'success');
+    }).catch(() => {
+      showToast('❌ Erro ao copiar', 'error');
+    });
+  }
 
   function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
 
@@ -833,4 +1032,3 @@
 
 </body>
 </html>
-
