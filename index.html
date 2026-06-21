@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,7 +9,6 @@
   html { scroll-behavior: smooth; }
   body { background: #f4f6f9; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
 
-  /* ===== HEADER ===== */
   header {
     background: white;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
@@ -79,19 +77,6 @@
   }
   .btn-admin:hover { background: #1a252f; }
 
-  /* ===== HERO ===== */
-  .hero {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 60px 20px;
-    text-align: center;
-    border-radius: 12px;
-    margin-bottom: 40px;
-  }
-  .hero h2 { font-size: 2.2rem; margin-bottom: 10px; }
-  .hero p { font-size: 1.1rem; opacity: 0.9; }
-
-  /* ===== PÁGINAS ===== */
   .pagina { display: none; }
   .pagina.active { display: block; }
   
@@ -117,7 +102,6 @@
     border-radius: 2px;
   }
 
-  /* ===== PRODUTOS ===== */
   .produtos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -173,7 +157,6 @@
     grid-column: 1 / -1;
   }
 
-  /* ===== PÁGINAS DE TEXTO ===== */
   .texto-pagina {
     background: white;
     padding: 40px;
@@ -196,9 +179,9 @@
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.85rem;
+    display: none;
   }
 
-  /* ===== NOTÍCIAS ===== */
   .noticias-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -269,22 +252,7 @@
     color: #667eea;
     font-weight: 600;
   }
-  .noticia-actions {
-    display: flex;
-    gap: 8px;
-    padding: 0 20px 20px;
-  }
-  .noticia-actions button {
-    flex: 1;
-    padding: 8px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
 
-  /* ===== LEITURA DE MATÉRIA ===== */
   .materia-leitura {
     background: white;
     border-radius: 12px;
@@ -299,12 +267,7 @@
     object-fit: cover;
     display: block;
   }
-  .materia-body {
-    padding: 40px;
-  }
-  .materia-body .noticia-categoria {
-    margin-bottom: 15px;
-  }
+  .materia-body { padding: 40px; }
   .materia-body h1 {
     font-size: 2.2rem;
     color: #222;
@@ -323,6 +286,12 @@
     line-height: 1.9;
     color: #444;
     white-space: pre-wrap;
+  }
+  .materia-body .conteudo-texto img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 15px 0;
   }
   .btn-voltar {
     display: inline-flex;
@@ -343,7 +312,6 @@
     color: white;
   }
 
-  /* ===== FORMULÁRIOS ===== */
   .form-box {
     background: white;
     padding: 30px;
@@ -380,7 +348,6 @@
     font-size: 1rem;
   }
 
-  /* ===== RECADOS ===== */
   .recados-lista { display: grid; gap: 15px; }
   .recado-card {
     background: white;
@@ -392,18 +359,7 @@
   .recado-nome { font-weight: bold; color: #333; margin-bottom: 5px; }
   .recado-data { font-size: 0.8rem; color: #999; margin-bottom: 10px; }
   .recado-msg { color: #555; line-height: 1.5; }
-  .recado-del {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    margin-top: 10px;
-  }
 
-  /* ===== CONTATO ===== */
   .contato-info {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -422,7 +378,6 @@
   .contato-card p { color: #666; }
   .contato-card a { color: #667eea; text-decoration: none; }
 
-  /* ===== FOOTER ===== */
   footer {
     background: #2c3e50;
     color: white;
@@ -431,7 +386,6 @@
     margin-top: 40px;
   }
 
-  /* ===== MODAL ===== */
   .modal {
     display: none;
     position: fixed;
@@ -476,7 +430,6 @@
   .btn-salvar { background: #27ae60; color: white; }
   .btn-cancelar { background: #95a5a6; color: white; }
 
-  /* ===== MODAL LOGIN ===== */
   .login-box {
     max-width: 420px;
     text-align: center;
@@ -493,22 +446,14 @@
     font-size: 2.5rem;
     color: white;
   }
-  .login-box h2 {
-    color: #333;
-    margin-bottom: 8px;
-  }
+  .login-box h2 { color: #333; margin-bottom: 8px; }
   .login-box .login-subtitle {
     color: #888;
     font-size: 0.9rem;
     margin-bottom: 25px;
   }
-  .login-box .form-group {
-    text-align: left;
-  }
-  .login-box .form-group input {
-    padding: 12px;
-    font-size: 1rem;
-  }
+  .login-box .form-group { text-align: left; }
+  .login-box .form-group input { padding: 12px; font-size: 1rem; }
   .login-error {
     background: #fee;
     color: #c0392b;
@@ -546,7 +491,6 @@
   .btn-entrar:hover { opacity: 0.9; }
   .btn-entrar:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  /* ===== ADMIN ===== */
   .admin-menu {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -573,10 +517,7 @@
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
   }
-  .admin-user {
-    font-size: 0.85rem;
-    color: #888;
-  }
+  .admin-user { font-size: 0.85rem; color: #888; }
   .btn-logout {
     background: #e74c3c;
     color: white;
@@ -589,43 +530,45 @@
   }
   .btn-logout:hover { background: #c0392b; }
 
-  /* ===== BLOQUEIO DE ACESSO ===== */
-  .acesso-negado {
+  .loading-overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: rgba(255,255,255,0.9);
     z-index: 9999;
-    display: none;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    gap: 15px;
   }
-  .acesso-negado.active { display: flex; }
-  .acesso-negado-box {
+  .loading-spinner {
+    width: 50px; height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+  .sync-status {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     background: white;
-    padding: 40px;
-    border-radius: 12px;
-    max-width: 500px;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    padding: 10px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    font-size: 0.85rem;
+    z-index: 1000;
+    display: none;
   }
-  .acesso-negado-box .icon {
-    font-size: 4rem;
-    margin-bottom: 15px;
-  }
-  .acesso-negado-box h2 {
-    color: #c0392b;
-    margin-bottom: 10px;
-  }
-  .acesso-negado-box p {
-    color: #666;
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
+  .sync-status.show { display: block; }
+  .sync-status.success { border-left: 4px solid #27ae60; }
+  .sync-status.error { border-left: 4px solid #e74c3c; }
+  .sync-status.loading { border-left: 4px solid #667eea; }
 
   @media (max-width: 600px) {
-    .hero h2 { font-size: 1.6rem; }
     .texto-pagina { padding: 25px; }
     nav ul { justify-content: center; width: 100%; }
     .materia-body { padding: 25px; }
@@ -635,16 +578,6 @@
 </style>
 </head>
 <body>
-
-<!-- ===== BLOQUEIO DE ACESSO DIRETO ===== -->
-<div class="acesso-negado" id="acessoNegado">
-  <div class="acesso-negado-box">
-    <div class="icon">🔒</div>
-    <h2>Acesso Negado</h2>
-    <p>Você tentou acessar uma área restrita sem autenticação. Faça login para continuar.</p>
-    <button class="btn-entrar" onclick="fecharBloqueio(); abrirLogin()">Fazer Login</button>
-  </div>
-</div>
 
 <!-- ===== HEADER ===== -->
 <header>
@@ -665,7 +598,6 @@
         <li><a href="#" data-pagina="noticias">Notícias</a></li>
         <li><a href="#" data-pagina="produtos">Produtos</a></li>
         <li><a href="#" data-pagina="quem-somos">Quem Somos</a></li>
-        <li><a href="#" data-pagina="recados">Recados</a></li> 
         <li><a href="#" data-pagina="politicas">Políticas</a></li>
         <li><a href="#" data-pagina="contato">Contato</a></li>
       </ul>
@@ -692,7 +624,7 @@
     <section>
       <h2 class="section-title">Dicas e Novidades</h2>
       <p style="text-align: center; color: #666; margin-bottom: 30px; font-size: 1.05rem;">
-        Fique por dentro novidades, dicas, produtos e negócios
+        Fique por dentro de novidades, dicas, produtos e negócios
       </p>
       <div class="noticias-grid" id="listaNoticias"></div>
     </section>
@@ -719,7 +651,7 @@
     <section>
       <h2 class="section-title">👥 Quem Somos</h2>
       <div class="texto-pagina">
-        <button class="btn-editar-texto" onclick="editarTextoPublico('quemSomos')">✏️ Editar</button>
+        <button class="btn-editar-texto" onclick="editarTexto('quemSomos')">✏️ Editar</button>
         <span id="conteudoQuemSomos">Somos a A Mesa Arrumação, uma empresa dedicada a oferecer os melhores produtos com qualidade e preços justos. Nossa missão é proporcionar uma experiência de compra incrível para todos os nossos clientes.
 
 Trabalhamos com dedicação para atender você da melhor forma possível, sempre buscando inovação e excelência em tudo o que fazemos.
@@ -734,7 +666,7 @@ Entre em contato e conheça nossa história!</span>
     <section>
       <h2 class="section-title">📋 Nossas Políticas</h2>
       <div class="texto-pagina">
-        <button class="btn-editar-texto" onclick="editarTextoPublico('politicas')">✏️ Editar</button>
+        <button class="btn-editar-texto" onclick="editarTexto('politicas')">✏️ Editar</button>
         <span id="conteudoPoliticas">📦 POLÍTICA DE ENTREGA
 Realizamos entregas em todo o Brasil. O prazo varia de acordo com a região.
 
@@ -747,30 +679,6 @@ O cliente tem até 7 dias após o recebimento para solicitar troca ou devoluçã
 🔒 PRIVACIDADE
 Seus dados estão seguros conosco. Não compartilhamos informações com terceiros.</span>
       </div>
-    </section>
-  </div>
-
-  <!-- ===== RECADOS ===== -->
-  <div class="pagina" id="pagina-recados">
-    <section>
-      <h2 class="section-title">💬 Deixe seu Recado</h2>
-      
-      <div class="form-box">
-        <form id="formRecado">
-          <div class="form-group">
-            <label>Seu Nome</label>
-            <input type="text" id="recadoNome" required placeholder="Digite seu nome">
-          </div>
-          <div class="form-group">
-            <label>Sua Mensagem</label>
-            <textarea id="recadoMsg" required placeholder="Escreva seu recado..."></textarea>
-          </div>
-          <button type="submit" class="btn-enviar">📤 Enviar Recado</button>
-        </form>
-      </div>
-
-      <h3 style="margin-bottom: 20px; color: #333;">💌 Recados Recebidos</h3>
-      <div class="recados-lista" id="listaRecados"></div>
     </section>
   </div>
 
@@ -801,34 +709,10 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
           <p>Seg a Sex: 9h às 18h</p>
         </div>
       </div>
-
-      <h3 style="margin: 30px 0 20px; color: #333;">✉️ Envie sua mensagem</h3>
-      <div class="form-box">
-        <form id="formContato">
-          <div class="form-group">
-            <label>Nome</label>
-            <input type="text" id="contatoNome" required>
-          </div>
-          <div class="form-group">
-            <label>E-mail</label>
-            <input type="email" id="contatoEmail" required>
-          </div>
-          <div class="form-group">
-            <label>Assunto</label>
-            <input type="text" id="contatoAssunto" required>
-          </div>
-          <div class="form-group">
-            <label>Mensagem</label>
-            <textarea id="contatoMsg" required></textarea>
-          </div>
-          <button type="submit" class="btn-enviar">📤 Enviar Mensagem</button>
-        </form>
-      </div>
     </section>
   </div>
 </main>
 
-<!-- ===== FOOTER ===== -->
 <footer>
   <p>&copy; 2026 <span id="footerNome">A Mesa Arrumação</span> - Todos os direitos reservados</p>
 </footer>
@@ -857,8 +741,8 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     </form>
 
     <div class="login-info">
-      <strong>⚠️ Credenciais padrão (primeiro acesso):</strong><br>
-      Usuário: <code>admin</code> | Senha: <code>******</code><br>
+      <strong>⚠️ Credenciais padrão:</strong><br>
+      Usuário: <code>admin</code> | Senha: <code>admin123</code><br>
       <em>Altere a senha após o primeiro login!</em>
     </div>
 
@@ -1020,18 +904,26 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   </div>
 </div>
 
-<script>
-  // ===== DADOS =====
-  let produtos = JSON.parse(localStorage.getItem('produtos') || '[]');
-  let recados = JSON.parse(localStorage.getItem('recados') || '[]');
-  let contatos = JSON.parse(localStorage.getItem('contatos') || '[]');
-  let noticias = JSON.parse(localStorage.getItem('noticias') || '[]');
-  let textos = JSON.parse(localStorage.getItem('textos') || '{}');
-  let logo = localStorage.getItem('logo') || '';
-  let nomeLoja = localStorage.getItem('nomeLoja') || 'A Mesa Arrumação';
+<!-- Status de sincronização -->
+<div class="sync-status" id="syncStatus"></div>
 
-  // ===== AUTENTICAÇÃO =====
-  // Hash simples (em produção use backend com bcrypt/argon2)
+<script>
+  // ============================================================
+  // ⚠️ CONFIGURAÇÃO OBRIGATÓRIA - PREENCHA COM SEUS DADOS DO JSONBIN
+  // ============================================================
+  const JSONBIN_API_KEY = 'COLE_SUA_MASTER_KEY_AQUI'; // Sua Master Key do JSONBin.io
+  const JSONBIN_BIN_ID = 'COLE_SEU_BIN_ID_AQUI';     // O ID do seu Bin
+  const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+  // ============================================================
+
+  // ===== DADOS (inicialmente vazios, serão carregados do servidor) =====
+  let produtos = [];
+  let noticias = [];
+  let textos = {};
+  let logo = '';
+  let nomeLoja = 'A Mesa Arrumação';
+
+  // ===== AUTENTICAÇÃO (local - cada navegador tem sua sessão) =====
   function hashSenha(senha) {
     let hash = 0;
     const str = 'AMA_XOR_' + senha + '_SALT_2026';
@@ -1061,7 +953,6 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     if (!sessao) return false;
     try {
       const dados = JSON.parse(sessao);
-      // Sessão expira em 2 horas
       if (Date.now() - dados.timestamp > 2 * 60 * 60 * 1000) {
         localStorage.removeItem('auth_sessao');
         return false;
@@ -1084,34 +975,108 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     localStorage.removeItem('auth_sessao');
   }
 
-  // ===== PROTEÇÃO CONTRA ACESSO DIRETO =====
-  function verificarAcessoDireto() {
-    const params = new URLSearchParams(window.location.search);
-    const acessoDireto = params.get('admin') === '1' || 
-                         params.get('painel') === '1' ||
-                         window.location.hash === '#admin' ||
-                         window.location.hash === '#painel';
-    
-    if (acessoDireto && !estaLogado()) {
-      document.getElementById('acessoNegado').classList.add('active');
-      // Limpa URL para não ficar tentando acessar
-      history.replaceState({}, document.title, window.location.pathname);
+  // ============================================================
+  // 🌐 SINCRONIZAÇÃO COM JSONBIN.IO (BANCO DE DADOS CENTRAL)
+  // ============================================================
+  
+  function mostrarStatus(mensagem, tipo = 'loading') {
+    const status = document.getElementById('syncStatus');
+    status.textContent = mensagem;
+    status.className = 'sync-status show ' + tipo;
+    if (tipo !== 'loading') {
+      setTimeout(() => status.classList.remove('show'), 3000);
     }
   }
 
-  function fecharBloqueio() {
-    document.getElementById('acessoNegado').classList.remove('active');
+  async function carregarDadosDoServidor() {
+    try {
+      mostrarStatus('🔄 Carregando dados...', 'loading');
+      
+      const response = await fetch(JSONBIN_URL + '/latest', {
+        method: 'GET',
+        headers: {
+          'X-Master-Key': JSONBIN_API_KEY
+        }
+      });
+
+      if (!response.ok) throw new Error('Falha ao carregar dados');
+
+      const data = await response.json();
+      const record = data.record;
+
+      // Atualizar variáveis globais
+      produtos = record.produtos || [];
+      noticias = record.noticias || [];
+      textos = record.textos || {};
+      logo = record.logo || '';
+      nomeLoja = record.nomeLoja || 'A Mesa Arrumação';
+
+      // Salvar no localStorage como cache
+      localStorage.setItem('produtos', JSON.stringify(produtos));
+      localStorage.setItem('noticias', JSON.stringify(noticias));
+      localStorage.setItem('textos', JSON.stringify(textos));
+      localStorage.setItem('logo', logo);
+      localStorage.setItem('nomeLoja', nomeLoja);
+
+      mostrarStatus('✅ Dados carregados!', 'success');
+      return true;
+    } catch (error) {
+      console.error('Erro ao carregar:', error);
+      mostrarStatus('❌ Erro ao carregar dados. Usando cache local.', 'error');
+      
+      // Tentar usar cache local
+      produtos = JSON.parse(localStorage.getItem('produtos') || '[]');
+      noticias = JSON.parse(localStorage.getItem('noticias') || '[]');
+      textos = JSON.parse(localStorage.getItem('textos') || '{}');
+      logo = localStorage.getItem('logo') || '';
+      nomeLoja = localStorage.getItem('nomeLoja') || 'A Mesa Arrumação';
+      
+      return false;
+    }
   }
 
-  // ===== SALVAR DADOS =====
-  function salvar() {
-    localStorage.setItem('produtos', JSON.stringify(produtos));
-    localStorage.setItem('recados', JSON.stringify(recados));
-    localStorage.setItem('contatos', JSON.stringify(contatos));
-    localStorage.setItem('noticias', JSON.stringify(noticias));
-    localStorage.setItem('textos', JSON.stringify(textos));
-    localStorage.setItem('logo', logo);
-    localStorage.setItem('nomeLoja', nomeLoja);
+  async function salvarDadosNoServidor() {
+    try {
+      mostrarStatus('💾 Salvando...', 'loading');
+      
+      const dados = {
+        produtos: produtos,
+        noticias: noticias,
+        textos: textos,
+        logo: logo,
+        nomeLoja: nomeLoja
+      };
+
+      const response = await fetch(JSONBIN_URL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Master-Key': JSONBIN_API_KEY
+        },
+        body: JSON.stringify(dados)
+      });
+
+      if (!response.ok) throw new Error('Falha ao salvar dados');
+
+      // Atualizar cache local
+      localStorage.setItem('produtos', JSON.stringify(produtos));
+      localStorage.setItem('noticias', JSON.stringify(noticias));
+      localStorage.setItem('textos', JSON.stringify(textos));
+      localStorage.setItem('logo', logo);
+      localStorage.setItem('nomeLoja', nomeLoja);
+
+      mostrarStatus('✅ Salvo com sucesso!', 'success');
+      return true;
+    } catch (error) {
+      console.error('Erro ao salvar:', error);
+      mostrarStatus('❌ Erro ao salvar. Verifique sua conexão.', 'error');
+      return false;
+    }
+  }
+
+  // Função de compatibilidade - agora salva no servidor
+  async function salvar() {
+    await salvarDadosNoServidor();
   }
 
   // ===== NAVEGAÇÃO =====
@@ -1170,14 +1135,12 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     btn.disabled = true;
     btn.textContent = '🔄 Verificando...';
 
-    // Simula delay para evitar brute force rápido
     setTimeout(() => {
       if (verificarCredenciais(usuario, senha)) {
         criarSessao(usuario);
         fecharModal('modalLogin');
         document.getElementById('loginErro').classList.remove('show');
         atualizarBotaoAdmin();
-        // Abre o painel admin automaticamente após login
         setTimeout(() => abrirAdmin(), 300);
       } else {
         document.getElementById('loginErro').classList.add('show');
@@ -1202,8 +1165,10 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     if (estaLogado()) {
       const sessao = JSON.parse(localStorage.getItem('auth_sessao'));
       btn.textContent = '⚙️ Admin (' + sessao.usuario + ')';
+      document.querySelectorAll('.btn-editar-texto').forEach(b => b.style.display = 'block');
     } else {
       btn.textContent = '⚙️ Admin';
+      document.querySelectorAll('.btn-editar-texto').forEach(b => b.style.display = 'none');
     }
   }
 
@@ -1251,18 +1216,18 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     document.title = nomeLoja;
   }
 
-  function trocarLogo() {
+  async function trocarLogo() {
     if (!estaLogado()) { abrirLogin(); return; }
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.onchange = e => {
+    input.onchange = async e => {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = ev => {
+      reader.onload = async ev => {
         logo = ev.target.result;
-        salvar();
+        await salvar();
         carregarLogo();
       };
       reader.readAsDataURL(file);
@@ -1270,12 +1235,12 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     input.click();
   }
 
-  function trocarNomeLoja() {
+  async function trocarNomeLoja() {
     if (!estaLogado()) { abrirLogin(); return; }
     const novo = prompt('Digite o novo nome da loja:', nomeLoja);
     if (novo && novo.trim()) {
       nomeLoja = novo.trim();
-      salvar();
+      await salvar();
       carregarLogo();
     }
   }
@@ -1315,7 +1280,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
       </div>
     `;
 
-    listaHome.innerHTML = noticiasOrdenadas.slice(0, 3).map(n => gerarCard(n, logado)).join('') || 
+    listaHome.innerHTML = noticiasOrdenadas.slice(0, 3).map(n => gerarCard(n, false)).join('') || 
       '<div class="vazio"><h3>📰 Nenhuma matéria publicada</h3></div>';
     
     listaCompleta.innerHTML = noticiasOrdenadas.map(n => gerarCard(n, logado)).join('');
@@ -1349,9 +1314,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     document.getElementById('modalNoticiaTitulo').textContent = 'Nova Matéria';
     document.getElementById('formNoticia').reset();
     document.getElementById('noticiaId').value = '';
-    document.getElementById('noticiaImg').value = '';
     document.getElementById('previewNoticiaImg').style.display = 'none';
-    document.getElementById('previewNoticiaImg').src = '';
     document.getElementById('modalNoticia').classList.add('active');
   }
 
@@ -1366,28 +1329,23 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     document.getElementById('noticiaAutor').value = n.autor || '';
     document.getElementById('noticiaResumo').value = n.resumo;
     document.getElementById('noticiaTexto').value = n.texto;
-    document.getElementById('noticiaImg').value = '';
     const preview = document.getElementById('previewNoticiaImg');
     preview.src = n.img;
     preview.style.display = 'block';
     document.getElementById('modalNoticia').classList.add('active');
   }
 
-  function excluirNoticia(id) {
+  async function excluirNoticia(id) {
     if (!estaLogado()) { abrirLogin(); return; }
     if (!confirm('Deseja realmente excluir esta matéria?')) return;
     noticias = noticias.filter(n => n.id !== id);
-    salvar();
+    await salvar();
     renderizarNoticias();
   }
 
   document.getElementById('noticiaImg').addEventListener('change', function(e) {
     const file = e.target.files[0];
-    if (!file) {
-      document.getElementById('previewNoticiaImg').style.display = 'none';
-      document.getElementById('previewNoticiaImg').src = '';
-      return;
-    }
+    if (!file) return;
     const reader = new FileReader();
     reader.onload = ev => {
       const preview = document.getElementById('previewNoticiaImg');
@@ -1397,22 +1355,12 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     reader.readAsDataURL(file);
   });
 
-  document.getElementById('formNoticia').addEventListener('submit', function(e) {
+  document.getElementById('formNoticia').addEventListener('submit', async function(e) {
     e.preventDefault();
     if (!estaLogado()) { fecharModal('modalNoticia'); abrirLogin(); return; }
-    
     const id = document.getElementById('noticiaId').value;
     const preview = document.getElementById('previewNoticiaImg');
-    let img = '';
-    
-    if (preview.style.display === 'block' && preview.src) {
-      img = preview.src;
-    } else if (id) {
-      const noticiaExistente = noticias.find(n => n.id == id);
-      if (noticiaExistente) {
-        img = noticiaExistente.img;
-      }
-    }
+    const img = preview.style.display === 'block' ? preview.src : (id ? noticias.find(n => n.id == id).img : '');
 
     if (!img) {
       alert('Por favor, adicione uma imagem para a matéria.');
@@ -1427,19 +1375,17 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
       resumo: document.getElementById('noticiaResumo').value,
       texto: document.getElementById('noticiaTexto').value,
       img: img,
-      data: id ? (noticias.find(n => n.id == id)?.data || new Date().toLocaleDateString('pt-BR')) : new Date().toLocaleDateString('pt-BR')
+      data: id ? (noticias.find(n => n.id == id).data) : new Date().toLocaleDateString('pt-BR')
     };
 
     if (id) {
       const idx = noticias.findIndex(n => n.id == id);
-      if (idx !== -1) {
-        noticias[idx] = dados;
-      }
+      noticias[idx] = dados;
     } else {
       noticias.push(dados);
     }
 
-    salvar();
+    await salvar();
     renderizarNoticias();
     fecharModal('modalNoticia');
     alert('✅ Matéria salva com sucesso!');
@@ -1491,6 +1437,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   function editarProduto(id) {
     if (!estaLogado()) { abrirLogin(); return; }
     const p = produtos.find(x => x.id === id);
+    if (!p) return;
     document.getElementById('modalTitulo').textContent = 'Editar Produto';
     document.getElementById('produtoId').value = p.id;
     document.getElementById('produtoNome').value = p.nome;
@@ -1503,11 +1450,11 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     document.getElementById('modalProduto').classList.add('active');
   }
 
-  function excluirProduto(id) {
+  async function excluirProduto(id) {
     if (!estaLogado()) { abrirLogin(); return; }
     if (!confirm('Deseja realmente excluir este produto?')) return;
     produtos = produtos.filter(p => p.id !== id);
-    salvar();
+    await salvar();
     renderizarProdutos();
   }
 
@@ -1523,7 +1470,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     reader.readAsDataURL(file);
   });
 
-  document.getElementById('formProduto').addEventListener('submit', function(e) {
+  document.getElementById('formProduto').addEventListener('submit', async function(e) {
     e.preventDefault();
     if (!estaLogado()) { fecharModal('modalProduto'); abrirLogin(); return; }
     const id = document.getElementById('produtoId').value;
@@ -1551,7 +1498,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
       produtos.push(dados);
     }
 
-    salvar();
+    await salvar();
     renderizarProdutos();
     fecharModal('modalProduto');
   });
@@ -1560,22 +1507,6 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
   function carregarTextos() {
     if (textos.quemSomos) document.getElementById('conteudoQuemSomos').textContent = textos.quemSomos;
     if (textos.politicas) document.getElementById('conteudoPoliticas').textContent = textos.politicas;
-    atualizarBotoesEditar();
-  }
-
-  function atualizarBotoesEditar() {
-    const logado = estaLogado();
-    document.querySelectorAll('.btn-editar-texto').forEach(btn => {
-      btn.style.display = logado ? 'block' : 'none';
-    });
-  }
-
-  function editarTextoPublico(tipo) {
-    if (!estaLogado()) {
-      abrirLogin();
-      return;
-    }
-    editarTexto(tipo);
   }
 
   let textoAtual = '';
@@ -1591,7 +1522,7 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     document.getElementById('modalTexto').classList.add('active');
   }
 
-  function salvarTexto() {
+  async function salvarTexto() {
     if (!estaLogado()) { fecharModal('modalTexto'); abrirLogin(); return; }
     const novo = document.getElementById('areaTexto').value;
     textos[textoAtual] = novo;
@@ -1600,81 +1531,36 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     } else {
       document.getElementById('conteudoPoliticas').textContent = novo;
     }
-    salvar();
+    await salvar();
     fecharModal('modalTexto');
   }
-
-  // ===== RECADOS =====
-  function renderizarRecados() {
-    const lista = document.getElementById('listaRecados');
-    const logado = estaLogado();
-    if (recados.length === 0) {
-      lista.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">Nenhum recado ainda. Seja o primeiro! 💌</p>';
-      return;
-    }
-    lista.innerHTML = recados.slice().reverse().map(r => `
-      <div class="recado-card">
-        <div class="recado-nome">👤 ${r.nome}</div>
-        <div class="recado-data">📅 ${r.data}</div>
-        <div class="recado-msg">${r.msg}</div>
-        ${logado ? `<button class="recado-del" onclick="excluirRecado(${r.id})">🗑️ Excluir</button>` : ''}
-      </div>
-    `).join('');
-  }
-
-  document.getElementById('formRecado').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const recado = {
-      id: Date.now(),
-      nome: document.getElementById('recadoNome').value,
-      msg: document.getElementById('recadoMsg').value,
-      data: new Date().toLocaleString('pt-BR')
-    };
-    recados.push(recado);
-    salvar();
-    renderizarRecados();
-    this.reset();
-    alert('✅ Recado enviado com sucesso!');
-  });
-
-  function excluirRecado(id) {
-    if (!estaLogado()) { abrirLogin(); return; }
-    if (!confirm('Excluir este recado?')) return;
-    recados = recados.filter(r => r.id !== id);
-    salvar();
-    renderizarRecados();
-  }
-
-  // ===== CONTATO =====
-  document.getElementById('formContato').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const msg = {
-      id: Date.now(),
-      nome: document.getElementById('contatoNome').value,
-      email: document.getElementById('contatoEmail').value,
-      assunto: document.getElementById('contatoAssunto').value,
-      msg: document.getElementById('contatoMsg').value,
-      data: new Date().toLocaleString('pt-BR')
-    };
-    contatos.push(msg);
-    salvar();
-    this.reset();
-    alert('✅ Mensagem enviada! Entraremos em contato em breve.');
-  });
 
   // ===== MODAIS =====
   function fecharModal(id) {
     document.getElementById(id).classList.remove('active');
   }
-  function limparTudo() {
+
+  async function limparTudo() {
     if (!estaLogado()) { abrirLogin(); return; }
-    if (!confirm('⚠️ Isso apagará TODOS os dados (produtos, recados, textos, notícias e logo). Continuar?')) return;
+    if (!confirm('⚠️ Isso apagará TODOS os dados (produtos, recados, textos, notícias e logo) para TODOS os visitantes. Continuar?')) return;
+    
+    produtos = [];
+    noticias = [];
+    textos = {};
+    logo = '';
+    nomeLoja = 'A Mesa Arrumação';
+    
+    await salvar();
+    
+    // Manter apenas autenticação local
     const usuario = localStorage.getItem('auth_usuario');
     const hash = localStorage.getItem('auth_senha_hash');
+    const sessao = localStorage.getItem('auth_sessao');
     localStorage.clear();
     if (usuario) localStorage.setItem('auth_usuario', usuario);
     if (hash) localStorage.setItem('auth_senha_hash', hash);
-    destruirSessao();
+    if (sessao) localStorage.setItem('auth_sessao', sessao);
+    
     location.reload();
   }
 
@@ -1684,28 +1570,32 @@ Seus dados estão seguros conosco. Não compartilhamos informações com terceir
     });
   });
 
-  // Monitora sessão em outras abas
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'auth_sessao') {
-      atualizarBotaoAdmin();
-      renderizarProdutos();
-      renderizarNoticias();
-      renderizarRecados();
-      atualizarBotoesEditar();
-    }
-  });
-
   // ===== INICIAR =====
-  inicializarAuth();
-  verificarAcessoDireto();
-  carregarLogo();
-  carregarTextos();
-  renderizarProdutos();
-  renderizarRecados();
-  renderizarNoticias();
-  atualizarBotaoAdmin();
+  async function iniciar() {
+    inicializarAuth();
+    atualizarBotaoAdmin();
+    
+    // Carregar dados do servidor (banco central)
+    await carregarDadosDoServidor();
+    
+    // Renderizar tudo
+    carregarLogo();
+    carregarTextos();
+    renderizarProdutos();
+    renderizarNoticias();
+  }
+
+  iniciar();
+  
+  // Recarregar dados a cada 2 minutos para pegar atualizações de outros admins
+  setInterval(async () => {
+    await carregarDadosDoServidor();
+    renderizarProdutos();
+    renderizarNoticias();
+    carregarTextos();
+    carregarLogo();
+  }, 2 * 60 * 1000);
 </script>
 
 </body>
 </html>
-```
