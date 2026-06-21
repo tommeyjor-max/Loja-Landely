@@ -3,22 +3,6 @@
   "logo": "",
   "produtos": [
     {
-      "id": 1,
-      "nome": "Jogo de Pratos Porcelana",
-      "desc": "Conjunto com 12 pratos de porcelana fina, resistente e elegante. Perfeito para o dia a dia e ocasiões especiais.",
-      "preco": "299.90",
-      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse no Jogo de Pratos",
-      "img": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600"
-    },
-    {
-      "id": 4,
-      "nome": "Taças de Cristal",
-      "desc": "Jogo com 6 taças de cristal para vinho tinto. Design clássico e sofisticado.",
-      "preco": "259.90",
-      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse nas Taças de Cristal",
-      "img": "https://images.unsplash.com/photo-1510882018076-34d9c3a57a54?w=600"
-    },
-    {
       "id": 1782021561454,
       "nome": "Bolsa Feminina de Couro",
       "desc": "dssdsds",
@@ -44,15 +28,6 @@
     }
   ],
   "noticias": [
-    {
-      "id": 1,
-      "categoria": "Dicas",
-      "titulo": "Como montar uma mesa posta perfeita",
-      "resumo": "Aprenda as regras básicas para impressionar seus convidados com uma mesa bem arrumada e elegante.",
-      "texto": "Montar uma mesa posta perfeita é mais simples do que parece! Comece escolhendo uma toalha de qualidade, combinando com os pratos e talheres.\n\nOs pratos devem ser posicionados a 2cm da borda da mesa. À esquerda, os garfos; à direita, as facas com a lâmina voltada para o prato.\n\nAs taças ficam acima das facas, em ordem de uso. Os guardanapos podem ir sobre o prato ou ao lado esquerdo.\n\nUm toque especial: velas e flores baixas para não atrapalhar a conversa entre os convidados!",
-      "img": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800",
-      "data": "20/06/2026"
-    },
     {
       "id": 2,
       "categoria": "Novidades",
