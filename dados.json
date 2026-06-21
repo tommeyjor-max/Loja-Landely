@@ -1,0 +1,71 @@
+{
+  "nomeLoja": "A Mesa Arrumação",
+  "logo": "",
+  "produtos": [
+    {
+      "id": 1,
+      "nome": "Jogo de Pratos Porcelana",
+      "desc": "Conjunto com 12 pratos de porcelana fina, resistente e elegante. Perfeito para o dia a dia e ocasiões especiais.",
+      "preco": "299.90",
+      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse no Jogo de Pratos",
+      "img": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600"
+    },
+    {
+      "id": 2,
+      "nome": "Talheres Inox Premium",
+      "desc": "Kit com 24 peças em aço inoxidável de alta qualidade. Cabos ergonômicos e acabamento espelhado.",
+      "preco": "189.90",
+      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse nos Talheres Inox",
+      "img": "https://images.unsplash.com/photo-1584990347449-a2d4c2b9b4d5?w=600"
+    },
+    {
+      "id": 3,
+      "nome": "Toalha de Mesa Bordada",
+      "desc": "Toalha 100% algodão com bordados artesanais. Tamanho 1,50m x 2,50m. Disponível em várias cores.",
+      "preco": "149.90",
+      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse na Toalha de Mesa",
+      "img": "https://images.unsplash.com/photo-1577140959807-ba4a6b902f68?w=600"
+    },
+    {
+      "id": 4,
+      "nome": "Taças de Cristal",
+      "desc": "Jogo com 6 taças de cristal para vinho tinto. Design clássico e sofisticado.",
+      "preco": "259.90",
+      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse nas Taças de Cristal",
+      "img": "https://images.unsplash.com/photo-1510882018076-34d9c3a57a54?w=600"
+    }
+  ],
+  "noticias": [
+    {
+      "id": 1,
+      "categoria": "Dicas",
+      "titulo": "Como montar uma mesa posta perfeita",
+      "resumo": "Aprenda as regras básicas para impressionar seus convidados com uma mesa bem arrumada e elegante.",
+      "texto": "Montar uma mesa posta perfeita é mais simples do que parece! Comece escolhendo uma toalha de qualidade, combinando com os pratos e talheres.\n\nOs pratos devem ser posicionados a 2cm da borda da mesa. À esquerda, os garfos; à direita, as facas com a lâmina voltada para o prato.\n\nAs taças ficam acima das facas, em ordem de uso. Os guardanapos podem ir sobre o prato ou ao lado esquerdo.\n\nUm toque especial: velas e flores baixas para não atrapalhar a conversa entre os convidados!",
+      "img": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800",
+      "data": "20/06/2026"
+    },
+    {
+      "id": 2,
+      "categoria": "Novidades",
+      "titulo": "Nova coleção de verão chegou!",
+      "resumo": "Confira as novidades da nossa coleção de verão com peças coloridas e alegres para sua mesa.",
+      "texto": "Estamos muito felizes em anunciar a chegada da nossa nova coleção de verão!\n\nAs peças trazem cores vibrantes como azul turquesa, amarelo sol e coral, perfeitas para refeições ao ar livre e dias ensolarados.\n\nEntre os destaques:\n• Pratos com estampas tropicais\n• Taças coloridas em cristal\n• Sousplats de fibra natural\n• Guardanapos de linho em tons pastel\n\nVenha conferir e deixe sua mesa com a cara do verão!",
+      "img": "https://images.unsplash.com/photo-1557683316-973673baf926?w=800",
+      "data": "18/06/2026"
+    },
+    {
+      "id": 3,
+      "categoria": "Eventos",
+      "titulo": "Workshop: Arte de receber",
+      "resumo": "Participe do nosso workshop gratuito sobre etiqueta à mesa e técnicas de recepção.",
+      "texto": "No próximo sábado, realizaremos nosso workshop gratuito 'Arte de Receber'!\n\n📅 Data: 28/06/2026\n🕐 Horário: 14h às 17h\n📍 Local: Nossa loja física\n\nO que você vai aprender:\n• Como organizar um jantar formal\n• Etiqueta básica à mesa\n• Harmonização de cores e texturas\n• Técnicas de dobradura de guardanapos\n\nVagas limitadas! Confirme presença pelo WhatsApp.",
+      "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800",
+      "data": "15/06/2026"
+    }
+  ],
+  "textos": {
+    "quemSomos": "Somos a A Mesa Arrumação, uma empresa dedicada a oferecer os melhores produtos com qualidade e preços justos. Nossa missão é proporcionar uma experiência de compra incrível para todos os nossos clientes.\n\nTrabalhamos com dedicação para atender você da melhor forma possível, sempre buscando inovação e excelência em tudo o que fazemos.\n\nEntre em contato e conheça nossa história!",
+    "politicas": "📦 POLÍTICA DE ENTREGA\nRealizamos entregas em todo o Brasil. O prazo varia de acordo com a região.\n\n💳 POLÍTICA DE PAGAMENTO\nAceitamos diversas formas de pagamento: cartão de crédito, PIX, boleto bancário e transferência.\n\n🔄 TROCAS E DEVOLUÇÕES\nO cliente tem até 7 dias após o recebimento para solicitar troca ou devolução, conforme o Código de Defesa do Consumidor.\n\n🔒 PRIVACIDADE\nSeus dados estão seguros conosco. Não compartilhamos informações com terceiros."
+  }
+}
