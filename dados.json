@@ -11,22 +11,6 @@
       "img": "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600"
     },
     {
-      "id": 2,
-      "nome": "Talheres Inox Premium",
-      "desc": "Kit com 24 peças em aço inoxidável de alta qualidade. Cabos ergonômicos e acabamento espelhado.",
-      "preco": "189.90",
-      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse nos Talheres Inox",
-      "img": "https://images.unsplash.com/photo-1584990347449-a2d4c2b9b4d5?w=600"
-    },
-    {
-      "id": 3,
-      "nome": "Toalha de Mesa Bordada",
-      "desc": "Toalha 100% algodão com bordados artesanais. Tamanho 1,50m x 2,50m. Disponível em várias cores.",
-      "preco": "149.90",
-      "link": "https://wa.me/5511999999999?text=Olá! Tenho interesse na Toalha de Mesa",
-      "img": "https://images.unsplash.com/photo-1577140959807-ba4a6b902f68?w=600"
-    },
-    {
       "id": 4,
       "nome": "Taças de Cristal",
       "desc": "Jogo com 6 taças de cristal para vinho tinto. Design clássico e sofisticado.",
@@ -77,15 +61,6 @@
       "texto": "Estamos muito felizes em anunciar a chegada da nossa nova coleção de verão!\n\nAs peças trazem cores vibrantes como azul turquesa, amarelo sol e coral, perfeitas para refeições ao ar livre e dias ensolarados.\n\nEntre os destaques:\n• Pratos com estampas tropicais\n• Taças coloridas em cristal\n• Sousplats de fibra natural\n• Guardanapos de linho em tons pastel\n\nVenha conferir e deixe sua mesa com a cara do verão!",
       "img": "https://images.unsplash.com/photo-1557683316-973673baf926?w=800",
       "data": "18/06/2026"
-    },
-    {
-      "id": 3,
-      "categoria": "Eventos",
-      "titulo": "Workshop: Arte de receber",
-      "resumo": "Participe do nosso workshop gratuito sobre etiqueta à mesa e técnicas de recepção.",
-      "texto": "No próximo sábado, realizaremos nosso workshop gratuito 'Arte de Receber'!\n\n📅 Data: 28/06/2026\n🕐 Horário: 14h às 17h\n📍 Local: Nossa loja física\n\nO que você vai aprender:\n• Como organizar um jantar formal\n• Etiqueta básica à mesa\n• Harmonização de cores e texturas\n• Técnicas de dobradura de guardanapos\n\nVagas limitadas! Confirme presença pelo WhatsApp.",
-      "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800",
-      "data": "15/06/2026"
     },
     {
       "id": 1782029043856,
