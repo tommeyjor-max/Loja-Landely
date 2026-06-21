@@ -446,4 +446,174 @@
     `;
     
     document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
-    document.getElementById('pagina-m
+    document.getElementById('pagina-materia').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderizarProdutos() {
+    const listaHome = document.getElementById('listaProdutosHome');
+    const listaCompleta = document.getElementById('listaProdutos');
+    
+    if (!dados.produtos || dados.produtos.length === 0) {
+      const vazio = '<div class="vazio"><h3>📦 Nenhum produto</h3></div>';
+      listaHome.innerHTML = vazio;
+      listaCompleta.innerHTML = vazio;
+      return;
+    }
+
+    const html = dados.produtos.map(p => `
+      <div class="produto-card">
+        <img src="${p.img}" alt="${p.nome}" class="produto-img" onerror="this.style.background='#eee'">
+        <div class="produto-info">
+          <div class="produto-nome">${p.nome}</div>
+          <div class="produto-desc">${p.desc}</div>
+          <div class="produto-preco">R$ ${Number(p.preco).toFixed(2).replace('.', ',')}</div>
+          <a href="${p.link}" target="_blank" class="btn-comprar">🛒 Comprar</a>
+        </div>
+      </div>
+    `).join('');
+
+    listaHome.innerHTML = html;
+    listaCompleta.innerHTML = html;
+  }
+
+  function renderizarTextos() {
+    if (dados.textos) {
+      document.getElementById('conteudoQuemSomos').textContent = dados.textos.quemSomos || 'Informações sobre a empresa...';
+      document.getElementById('conteudoPoliticas').textContent = dados.textos.politicas || 'Nossas políticas...';
+    }
+  }
+
+  // Admin - Login SIMPLES
+  function abrirAdmin() {
+    if (sessionStorage.getItem('admin_logado') !== 'true') {
+      document.getElementById('formLogin').reset();
+      document.getElementById('loginErro').classList.remove('show');
+      document.getElementById('modalLogin').classList.add('active');
+    } else {
+      document.getElementById('modalAdmin').classList.add('active');
+    }
+  }
+
+  document.getElementById('formLogin').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const usuario = document.getElementById('loginUsuario').value;
+    const senha = document.getElementById('loginSenha').value;
+    
+    if (usuario === 'admin' && senha === 'admin123') {
+      sessionStorage.setItem('admin_logado', 'true');
+      fecharModal('modalLogin');
+      setTimeout(() => document.getElementById('modalAdmin').classList.add('active'), 300);
+    } else {
+      document.getElementById('loginErro').classList.add('show');
+    }
+  });
+
+  function fazerLogout() {
+    sessionStorage.removeItem('admin_logado');
+    fecharModal('modalAdmin');
+  }
+
+  function abrirModalProduto() {
+    document.getElementById('formProduto').reset();
+    document.getElementById('modalProduto').classList.add('active');
+  }
+
+  function abrirModalNoticia() {
+    document.getElementById('formNoticia').reset();
+    document.getElementById('modalNoticia').classList.add('active');
+  }
+
+  document.getElementById('formProduto').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    dados.produtos.push({
+      id: Date.now(),
+      nome: document.getElementById('produtoNome').value,
+      desc: document.getElementById('produtoDesc').value,
+      preco: document.getElementById('produtoPreco').value,
+      link: document.getElementById('produtoLink').value,
+      img: document.getElementById('produtoImg').value
+    });
+    
+    fecharModal('modalProduto');
+    alert('✅ Produto adicionado! Agora clique em "Gerar JSON" no menu Admin.');
+    gerarJSON();
+  });
+
+  document.getElementById('formNoticia').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    dados.noticias.push({
+      id: Date.now(),
+      categoria: document.getElementById('noticiaCategoria').value,
+      titulo: document.getElementById('noticiaTitulo').value,
+      resumo: document.getElementById('noticiaResumo').value,
+      texto: document.getElementById('noticiaTexto').value,
+      img: document.getElementById('noticiaImg').value,
+      data: new Date().toLocaleDateString('pt-BR')
+    });
+    
+    fecharModal('modalNoticia');
+    alert('✅ Notícia adicionada! Agora clique em "Gerar JSON" no menu Admin.');
+    gerarJSON();
+  });
+
+  function gerarJSON() {
+    const json = JSON.stringify(dados, null, 2);
+    document.getElementById('jsonOutput').textContent = json;
+    fecharModal('modalAdmin');
+    document.getElementById('modalJSON').classList.add('active');
+  }
+
+  function copiarJSON() {
+    const json = document.getElementById('jsonOutput').textContent;
+    navigator.clipboard.writeText(json).then(() => {
+      alert('✅ JSON copiado! Cole no GitHub.');
+    }).catch(() => {
+      alert('❌ Erro. Copie manualmente.');
+    });
+  }
+
+  function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
+
+  // Navegação
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const pagina = this.getAttribute('data-pagina');
+      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+      document.getElementById('pagina-' + pagina).classList.add('active');
+      document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  function irParaHome() {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+    document.getElementById('pagina-home').classList.add('active');
+    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+    document.querySelector('nav a[data-pagina="home"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function voltarParaNoticias() {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
+    document.getElementById('pagina-noticias').classList.add('active');
+    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+    document.querySelector('nav a[data-pagina="noticias"]').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
+  });
+
+  // Iniciar
+  carregarDados();
+  setInterval(carregarDados, 5 * 60 * 1000);
+</script>
+
+</body>
+</html>
