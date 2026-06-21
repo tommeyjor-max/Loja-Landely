@@ -99,11 +99,12 @@
   .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
   .btn-logout { background: #e74c3c; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
   
-  .status-msg { position: fixed; top: 80px; right: 20px; background: white; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; display: none; max-width: 400px; }
-  .status-msg.show { display: block; }
-  .status-msg.success { border-left: 4px solid #27ae60; }
-  .status-msg.error { border-left: 4px solid #e74c3c; }
-  .status-msg.loading { border-left: 4px solid #667eea; }
+  .json-output { background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; padding: 15px; margin-top: 15px; max-height: 300px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
+  .btn-copiar { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .instrucoes { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-top: 15px; border-radius: 6px; }
+  .instrucoes h4 { color: #856404; margin-bottom: 10px; }
+  .instrucoes p { color: #856404; line-height: 1.6; margin-bottom: 8px; }
+  .instrucoes a { color: #004085; font-weight: bold; }
   
   @media (max-width: 600px) {
     .texto-pagina { padding: 25px; }
@@ -186,7 +187,7 @@
 
   <div class="pagina" id="pagina-politicas">
     <section>
-      <h2 class="section-title"> Nossas Políticas</h2>
+      <h2 class="section-title">📋 Nossas Políticas</h2>
       <div class="texto-pagina" id="conteudoPoliticas"></div>
     </section>
   </div>
@@ -196,7 +197,7 @@
       <h2 class="section-title">📞 Fale Conosco</h2>
       <div class="contato-info">
         <div class="contato-card">
-          <div class="icone"></div>
+          <div class="icone">📧</div>
           <h3>E-mail</h3>
           <p><a href="mailto:contato@amesaarrumacao.com">contato@amesaarrumacao.com</a></p>
         </div>
@@ -211,7 +212,7 @@
           <p>Rua Exemplo, 123 - São Paulo/SP</p>
         </div>
         <div class="contato-card">
-          <div class="icone"></div>
+          <div class="icone">🕐</div>
           <h3>Horário</h3>
           <p>Seg a Sex: 9h às 18h</p>
         </div>
@@ -240,7 +241,7 @@
         <label>Senha</label>
         <input type="password" id="loginSenha" required placeholder="admin123">
       </div>
-      <button type="submit" class="btn-entrar"> Entrar</button>
+      <button type="submit" class="btn-entrar">🔓 Entrar</button>
     </form>
     <div class="login-info">
       <strong>Credenciais:</strong><br>
@@ -261,7 +262,8 @@
     </div>
     <div class="admin-menu">
       <button class="admin-btn" onclick="abrirModalProduto()">➕ Novo Produto</button>
-      <button class="admin-btn" onclick="abrirModalNoticia()"> Nova Notícia</button>
+      <button class="admin-btn" onclick="abrirModalNoticia()">📰 Nova Notícia</button>
+      <button class="admin-btn" onclick="gerarJSON()">📋 Gerar JSON</button>
     </div>
     <div class="modal-buttons">
       <button type="button" class="btn-cancelar" onclick="fecharModal('modalAdmin')">Fechar</button>
@@ -291,13 +293,13 @@
         <input type="url" id="produtoLink" required placeholder="https://wa.me/5511999999999">
       </div>
       <div class="form-group">
-        <label> URL da Imagem</label>
+        <label>📸 URL da Imagem</label>
         <input type="url" id="produtoImg" required placeholder="https://exemplo.com/imagem.jpg">
         <p style="font-size:0.8rem;color:#888;margin-top:5px;">💡 Use imagens do Unsplash, Pexels ou Imgur</p>
       </div>
       <div class="modal-buttons">
         <button type="button" class="btn-cancelar" onclick="fecharModal('modalProduto')">Cancelar</button>
-        <button type="submit" class="btn-salvar">Salvar</button>
+        <button type="submit" class="btn-salvar">Adicionar</button>
       </div>
     </form>
   </div>
@@ -330,27 +332,35 @@
       </div>
       <div class="modal-buttons">
         <button type="button" class="btn-cancelar" onclick="fecharModal('modalNoticia')">Cancelar</button>
-        <button type="submit" class="btn-salvar">Salvar</button>
+        <button type="submit" class="btn-salvar">Adicionar</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Status Message -->
-<div class="status-msg" id="statusMsg"></div>
+<!-- MODAL JSON -->
+<div class="modal" id="modalJSON">
+  <div class="modal-content" style="max-width:800px;">
+    <h2>📋 JSON Gerado</h2>
+    <p style="color:#666;margin-bottom:15px;">Copie este código e cole no arquivo <strong>dados.json</strong> do GitHub:</p>
+    <div class="json-output" id="jsonOutput"></div>
+    <button class="btn-copiar" onclick="copiarJSON()">📋 Copiar JSON</button>
+    <div class="instrucoes">
+      <h4>📝 Próximos passos:</h4>
+      <p>1. Clique em <strong>"Copiar JSON"</strong> acima</p>
+      <p>2. Abra: <a href="https://github.com/tommeyjor-max/Loja-Landely/edit/main/dados.json" target="_blank">Editar dados.json</a></p>
+      <p>3. Apague tudo e cole o JSON copiado</p>
+      <p>4. Clique em <strong>"Commit changes"</strong></p>
+      <p>5. Aguarde 1-2 minutos e recarregue o site!</p>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalJSON')">Fechar</button>
+    </div>
+  </div>
+</div>
 
 <script>
-  // ============================================================
-  // ⚠️ CONFIGURAÇÃO - Cole seu token do GitHub aqui
-  // ============================================================
-  const GITHUB_TOKEN = 'const GITHUB_TOKEN = 'ghp_abc123xyz456...'; // Ex: ghp_xxxxxxxxxxxx
-  const GITHUB_REPO = 'tommeyjor-max/Loja-Landely';
-  const GITHUB_BRANCH = 'main';
-  const DADOS_FILE = 'dados.json';
-  // ============================================================
-
-  const URL_DADOS = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/${DADOS_FILE}`;
-  const API_URL = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DADOS_FILE}`;
+  const URL_DADOS = 'https://raw.githubusercontent.com/tommeyjor-max/Loja-Landely/main/dados.json';
   
   let dados = {
     nomeLoja: 'A Mesa Arrumação',
@@ -360,34 +370,7 @@
     textos: {}
   };
 
-  // Status message
-  function mostrarStatus(msg, tipo = 'loading') {
-    const status = document.getElementById('statusMsg');
-    status.textContent = msg;
-    status.className = 'status-msg show ' + tipo;
-    if (tipo !== 'loading') {
-      setTimeout(() => status.classList.remove('show'), 4000);
-    }
-  }
-
-  // Autenticação simplificada
-  function estaLogado() {
-    return sessionStorage.getItem('admin_logado') === 'true';
-  }
-
-  function fazerLogin(usuario, senha) {
-    if (usuario === 'admin' && senha === 'admin123') {
-      sessionStorage.setItem('admin_logado', 'true');
-      return true;
-    }
-    return false;
-  }
-
-  function fazerLogout() {
-    sessionStorage.removeItem('admin_logado');
-  }
-
-  // Carregar dados do GitHub
+  // Carregar dados
   async function carregarDados() {
     try {
       const url = URL_DADOS + '?t=' + Date.now();
@@ -410,64 +393,9 @@
       renderizarProdutos();
       renderizarTextos();
     } catch (error) {
-      console.error('Erro ao carregar dados:', error);
-      document.getElementById('listaNoticiasHome').innerHTML = '<div class="vazio"><h3>⚠️ Erro ao carregar</h3><p>Verifique se o arquivo dados.json existe.</p></div>';
+      console.error('Erro:', error);
+      document.getElementById('listaNoticiasHome').innerHTML = '<div class="vazio"><h3>⚠️ Erro ao carregar</h3><p>Verifique se dados.json existe.</p></div>';
       document.getElementById('listaProdutosHome').innerHTML = '';
-    }
-  }
-
-  // Salvar dados no GitHub via API
-  async function salvarDadosNoGitHub() {
-    if (!GITHUB_TOKEN || GITHUB_TOKEN === 'COLE_SEU_TOKEN_AQUI') {
-      mostrarStatus('❌ Token do GitHub não configurado!', 'error');
-      return false;
-    }
-
-    try {
-      mostrarStatus('💾 Salvando no GitHub...', 'loading');
-      
-      // 1. Obter o SHA atual do arquivo
-      const getResponse = await fetch(API_URL, {
-        headers: {
-          'Authorization': `token ${GITHUB_TOKEN}`,
-          'Accept': 'application/vnd.github.v3+json'
-        }
-      });
-      
-      if (!getResponse.ok) throw new Error('Erro ao obter arquivo');
-      
-      const fileData = await getResponse.json();
-      const sha = fileData.sha;
-      
-      // 2. Atualizar o arquivo
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2))));
-      
-      const putResponse = await fetch(API_URL, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `token ${GITHUB_TOKEN}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: 'Atualização via painel admin - ' + new Date().toLocaleString('pt-BR'),
-          content: content,
-          sha: sha,
-          branch: GITHUB_BRANCH
-        })
-      });
-      
-      if (!putResponse.ok) {
-        const error = await putResponse.json();
-        throw new Error(error.message || 'Erro ao salvar');
-      }
-      
-      mostrarStatus('✅ Salvo com sucesso! Atualize a página em 1-2 minutos.', 'success');
-      return true;
-    } catch (error) {
-      console.error('Erro ao salvar:', error);
-      mostrarStatus('❌ Erro ao salvar: ' + error.message, 'error');
-      return false;
     }
   }
 
@@ -476,7 +404,7 @@
     const listaCompleta = document.getElementById('listaNoticias');
     
     if (!dados.noticias || dados.noticias.length === 0) {
-      const vazio = '<div class="vazio"><h3>📰 Nenhuma matéria publicada</h3></div>';
+      const vazio = '<div class="vazio"><h3>📰 Nenhuma matéria</h3></div>';
       listaHome.innerHTML = vazio;
       listaCompleta.innerHTML = vazio;
       return;
@@ -518,174 +446,4 @@
     `;
     
     document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
-    document.getElementById('pagina-materia').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function renderizarProdutos() {
-    const listaHome = document.getElementById('listaProdutosHome');
-    const listaCompleta = document.getElementById('listaProdutos');
-    
-    if (!dados.produtos || dados.produtos.length === 0) {
-      const vazio = '<div class="vazio"><h3>📦 Nenhum produto</h3></div>';
-      listaHome.innerHTML = vazio;
-      listaCompleta.innerHTML = vazio;
-      return;
-    }
-
-    const html = dados.produtos.map(p => `
-      <div class="produto-card">
-        <img src="${p.img}" alt="${p.nome}" class="produto-img" onerror="this.style.background='#eee'">
-        <div class="produto-info">
-          <div class="produto-nome">${p.nome}</div>
-          <div class="produto-desc">${p.desc}</div>
-          <div class="produto-preco">R$ ${Number(p.preco).toFixed(2).replace('.', ',')}</div>
-          <a href="${p.link}" target="_blank" class="btn-comprar">🛒 Comprar</a>
-        </div>
-      </div>
-    `).join('');
-
-    listaHome.innerHTML = html;
-    listaCompleta.innerHTML = html;
-  }
-
-  function renderizarTextos() {
-    if (dados.textos) {
-      if (dados.textos.quemSomos) {
-        document.getElementById('conteudoQuemSomos').textContent = dados.textos.quemSomos;
-      } else {
-        document.getElementById('conteudoQuemSomos').textContent = 'Informações sobre a empresa...';
-      }
-      if (dados.textos.politicas) {
-        document.getElementById('conteudoPoliticas').textContent = dados.textos.politicas;
-      } else {
-        document.getElementById('conteudoPoliticas').textContent = 'Nossas políticas...';
-      }
-    }
-  }
-
-  // Admin
-  function abrirAdmin() {
-    if (!estaLogado()) {
-      document.getElementById('formLogin').reset();
-      document.getElementById('loginErro').classList.remove('show');
-      document.getElementById('modalLogin').classList.add('active');
-      return;
-    }
-    document.getElementById('modalAdmin').classList.add('active');
-  }
-
-  document.getElementById('formLogin').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const usuario = document.getElementById('loginUsuario').value.trim();
-    const senha = document.getElementById('loginSenha').value;
-
-    if (fazerLogin(usuario, senha)) {
-      fecharModal('modalLogin');
-      setTimeout(() => abrirAdmin(), 300);
-    } else {
-      document.getElementById('loginErro').classList.add('show');
-    }
-  });
-
-  function fazerLogout() {
-    if (!confirm('Deseja sair?')) return;
-    fazerLogout();
-    fecharModal('modalAdmin');
-  }
-
-  function abrirModalProduto() {
-    document.getElementById('formProduto').reset();
-    document.getElementById('modalProduto').classList.add('active');
-  }
-
-  function abrirModalNoticia() {
-    document.getElementById('formNoticia').reset();
-    document.getElementById('modalNoticia').classList.add('active');
-  }
-
-  document.getElementById('formProduto').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const novoProduto = {
-      id: Date.now(),
-      nome: document.getElementById('produtoNome').value,
-      desc: document.getElementById('produtoDesc').value,
-      preco: document.getElementById('produtoPreco').value,
-      link: document.getElementById('produtoLink').value,
-      img: document.getElementById('produtoImg').value
-    };
-    
-    dados.produtos.push(novoProduto);
-    fecharModal('modalProduto');
-    
-    const salvou = await salvarDadosNoGitHub();
-    if (salvou) {
-      renderizarProdutos();
-    }
-  });
-
-  document.getElementById('formNoticia').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const novaNoticia = {
-      id: Date.now(),
-      categoria: document.getElementById('noticiaCategoria').value,
-      titulo: document.getElementById('noticiaTitulo').value,
-      resumo: document.getElementById('noticiaResumo').value,
-      texto: document.getElementById('noticiaTexto').value,
-      img: document.getElementById('noticiaImg').value,
-      data: new Date().toLocaleDateString('pt-BR')
-    };
-    
-    dados.noticias.push(novaNoticia);
-    fecharModal('modalNoticia');
-    
-    const salvou = await salvarDadosNoGitHub();
-    if (salvou) {
-      renderizarNoticias();
-    }
-  });
-
-  function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
-
-  // Navegação
-  document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const pagina = this.getAttribute('data-pagina');
-      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
-      document.getElementById('pagina-' + pagina).classList.add('active');
-      document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
-      this.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
-
-  function irParaHome() {
-    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
-    document.getElementById('pagina-home').classList.add('active');
-    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
-    document.querySelector('nav a[data-pagina="home"]').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function voltarParaNoticias() {
-    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('active'));
-    document.getElementById('pagina-noticias').classList.add('active');
-    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
-    document.querySelector('nav a[data-pagina="noticias"]').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  document.querySelectorAll('.modal').forEach(m => {
-    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
-  });
-
-  // Iniciar
-  carregarDados();
-  setInterval(carregarDados, 5 * 60 * 1000);
-</script>
-
-</body>
-</html>
+    document.getElementById('pagina-m
