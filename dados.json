@@ -33,26 +33,9 @@
       "preco": "88.40",
       "link": "https://shopee.com.br/Bolsa-Mala-De-Viagem-Academia-Multifuncional-De-Grande-Capacidade-isabella-i.1384742237.22298224010?extraParams=%7B%22display_model_id%22%3A229416732176%2C%22model_selection_logic%22%3A3%7D",
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLLOPM9viwNq5uz_wWBL_qVbK4oTaYQl8YWg&s"
-    },
-    {
-      "id": 1782030300757,
-      "nome": "Bolsa Feminina de Couro",
-      "desc": "SASASASASAS",
-      "preco": "12.00",
-      "link": "https://shopee.com.br/Bolsa-Mala-De-Viagem-Academia-Multifuncional-De-Grande-Capacidade-isabella-i.1384742237.22298224010?extraParams=%7B%22display_model_id%22%3A229416732176%2C%22model_selection_logic%22%3A3%7D",
-      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHI-CI7T27wrl6frBM8J5hoSId-Z-9EgIC0jCLappr6A&s=10"
     }
   ],
   "noticias": [
-    {
-      "id": 2,
-      "categoria": "Novidades",
-      "titulo": "Nova coleção de verão chegou!",
-      "resumo": "Confira as novidades da nossa coleção de verão com peças coloridas e alegres para sua mesa.",
-      "texto": "Estamos muito felizes em anunciar a chegada da nossa nova coleção de verão!\n\nAs peças trazem cores vibrantes como azul turquesa, amarelo sol e coral, perfeitas para refeições ao ar livre e dias ensolarados.\n\nEntre os destaques:\n• Pratos com estampas tropicais\n• Taças coloridas em cristal\n• Sousplats de fibra natural\n• Guardanapos de linho em tons pastel\n\nVenha conferir e deixe sua mesa com a cara do verão!",
-      "img": "https://images.unsplash.com/photo-1557683316-973673baf926?w=800",
-      "data": "18/06/2026"
-    },
     {
       "id": 1782029043856,
       "categoria": "Beleza e Estética",
@@ -60,6 +43,15 @@
       "resumo": "rrrrrrrrrrrrrrrrrr",
       "texto": "rrrrrrrrrrrrrrrrrrr",
       "img": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYSDETKoP5ALcYr0HkyKYKEu2m0i4Kmgr4k_FfXtAvas0XtkLXbdzZRGVF796S39cGVMpEpSDtySyL3k7XfNzR-ZXo5cCyjRmcP8ZbvJ3j7KinuzrIDq_R4BablNX7VXhA8c6GJXkNud4Gd3IKgO83-IydMzmXsdDU0UBPIJN5MFkgFwcafEWPtT5PgQ/s1600/a.jpg",
+      "data": "21/06/2026"
+    },
+    {
+      "id": 1782030563586,
+      "categoria": "Beleza e Estética",
+      "titulo": "Cicaplast: O Que Você Precisa Saber",
+      "resumo": "SASASSASASASASASASAS",
+      "texto": "ASASASSASAS",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS45J8IJsmsp0KM9zzJUKjbOuxsUmj68wiR2w&s",
       "data": "21/06/2026"
     }
   ],
