@@ -18,6 +18,8 @@
   nav ul { list-style: none; display: flex; gap: 8px; flex-wrap: wrap; }
   nav a { text-decoration: none; color: #555; padding: 8px 16px; border-radius: 20px; font-weight: 500; transition: all 0.3s; font-size: 0.95rem; cursor: pointer; }
   nav a:hover, nav a.active { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+  .btn-admin { background: #2c3e50; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; }
+  .btn-admin:hover { background: #1a252f; }
   .pagina { display: none; }
   .pagina.active { display: block; }
   main { flex: 1; }
@@ -64,10 +66,51 @@
   .loading { text-align: center; padding: 40px; color: #888; grid-column: 1 / -1; }
   .loading-spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite; }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  .ajuda-editar { background: #e7f3ff; border-left: 4px solid #2196F3; padding: 20px; margin: 20px auto; max-width: 1000px; border-radius: 8px; }
-  .ajuda-editar h3 { color: #0d47a1; margin-bottom: 10px; }
-  .ajuda-editar p { color: #333; line-height: 1.6; margin-bottom: 8px; }
-  .ajuda-editar a { color: #1976D2; font-weight: bold; }
+  
+  /* Modal */
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; justify-content: center; align-items: center; padding: 20px; }
+  .modal.active { display: flex; }
+  .modal-content { background: white; border-radius: 12px; padding: 25px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+  .modal-content h2 { margin-bottom: 20px; color: #333; }
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
+  .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; font-family: inherit; }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-buttons button { flex: 1; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+  .btn-salvar { background: #27ae60; color: white; }
+  .btn-cancelar { background: #95a5a6; color: white; }
+  
+  /* Login */
+  .login-box { max-width: 420px; text-align: center; }
+  .login-box .login-icon { width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; }
+  .login-box h2 { color: #333; margin-bottom: 8px; }
+  .login-box .login-subtitle { color: #888; font-size: 0.9rem; margin-bottom: 25px; }
+  .login-box .form-group { text-align: left; }
+  .login-box .form-group input { padding: 12px; font-size: 1rem; }
+  .login-error { background: #fee; color: #c0392b; padding: 10px; border-radius: 6px; font-size: 0.9rem; margin-bottom: 15px; display: none; border-left: 4px solid #e74c3c; }
+  .login-error.show { display: block; }
+  .login-info { background: #f0f4ff; color: #555; padding: 12px; border-radius: 6px; font-size: 0.8rem; margin-top: 15px; border-left: 4px solid #667eea; text-align: left; }
+  .login-info strong { color: #667eea; }
+  .btn-entrar { width: 100%; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 13px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+  .btn-entrar:hover { opacity: 0.9; }
+  
+  /* Admin */
+  .admin-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
+  .admin-btn { background: white; border: 2px solid #667eea; color: #667eea; padding: 20px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: all 0.3s; }
+  .admin-btn:hover { background: #667eea; color: white; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+  .btn-logout { background: #e74c3c; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+  
+  /* JSON Output */
+  .json-output { background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; padding: 15px; margin-top: 15px; max-height: 300px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.85rem; white-space: pre-wrap; word-break: break-all; }
+  .btn-copiar { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+  .btn-copiar:hover { background: #229954; }
+  .instrucoes { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-top: 15px; border-radius: 6px; }
+  .instrucoes h4 { color: #856404; margin-bottom: 10px; }
+  .instrucoes p { color: #856404; line-height: 1.6; margin-bottom: 8px; }
+  .instrucoes a { color: #004085; font-weight: bold; }
+  
   @media (max-width: 600px) {
     .texto-pagina { padding: 25px; }
     nav ul { justify-content: center; width: 100%; }
@@ -100,18 +143,11 @@
         <li><a href="#" data-pagina="contato">Contato</a></li>
       </ul>
     </nav>
+    <button class="btn-admin" id="btnAdmin" onclick="abrirAdmin()">⚙️ Admin</button>
   </div>
 </header>
 
 <main>
-  <!-- Aviso de ajuda -->
-  <div class="ajuda-editar" id="ajudaEditar">
-    <h3>📝 Como adicionar produtos e notícias?</h3>
-    <p>Os dados do site estão no arquivo <strong>dados.json</strong> no seu repositório do GitHub.</p>
-    <p>👉 <a href="https://github.com/tommeyjor-max/Loja-Landely/edit/main/dados.json" target="_blank">Clique aqui para EDITAR o arquivo dados.json</a></p>
-    <p>Depois de editar, clique no botão verde <strong>"Commit changes"</strong> e aguarde alguns minutos para atualizar!</p>
-  </div>
-
   <div class="pagina active" id="pagina-home">
     <section>
       <h2 class="section-title">Dicas e Novidades</h2>
@@ -194,8 +230,141 @@
   <p>&copy; 2026 <span id="footerNome">A Mesa Arrumação</span> - Todos os direitos reservados</p>
 </footer>
 
+<!-- MODAL LOGIN -->
+<div class="modal" id="modalLogin">
+  <div class="modal-content login-box">
+    <div class="login-icon">🔐</div>
+    <h2>Acesso Administrativo</h2>
+    <p class="login-subtitle">Digite suas credenciais</p>
+    <div class="login-error" id="loginErro">❌ Usuário ou senha inválidos.</div>
+    <form id="formLogin">
+      <div class="form-group">
+        <label>Usuário</label>
+        <input type="text" id="loginUsuario" required placeholder="admin">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input type="password" id="loginSenha" required placeholder="admin123">
+      </div>
+      <button type="submit" class="btn-entrar">🔓 Entrar</button>
+    </form>
+    <div class="login-info">
+      <strong>Credenciais padrão:</strong><br>
+      Usuário: <code>admin</code> | Senha: <code>admin123</code>
+    </div>
+    <div class="modal-buttons" style="margin-top:15px;">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalLogin')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ADMIN -->
+<div class="modal" id="modalAdmin">
+  <div class="modal-content">
+    <div class="admin-header">
+      <h2 style="margin-bottom:0;">⚙️ Painel Admin</h2>
+      <button class="btn-logout" onclick="fazerLogout()">🚪 Sair</button>
+    </div>
+    <div class="admin-menu">
+      <button class="admin-btn" onclick="abrirModalProduto()">➕ Novo Produto</button>
+      <button class="admin-btn" onclick="abrirModalNoticia()">📰 Nova Notícia</button>
+      <button class="admin-btn" onclick="gerarJSON()">📋 Gerar JSON</button>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalAdmin')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRODUTO -->
+<div class="modal" id="modalProduto">
+  <div class="modal-content">
+    <h2>➕ Novo Produto</h2>
+    <form id="formProduto">
+      <div class="form-group">
+        <label>Nome do Produto</label>
+        <input type="text" id="produtoNome" required placeholder="Ex: Jogo de Pratos">
+      </div>
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea id="produtoDesc" required placeholder="Descreva o produto..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Preço (R$)</label>
+        <input type="number" id="produtoPreco" step="0.01" min="0" required placeholder="99.90">
+      </div>
+      <div class="form-group">
+        <label>🔗 Link (WhatsApp, site)</label>
+        <input type="url" id="produtoLink" required placeholder="https://wa.me/5511999999999">
+      </div>
+      <div class="form-group">
+        <label>📸 URL da Imagem</label>
+        <input type="url" id="produtoImg" required placeholder="https://exemplo.com/imagem.jpg">
+        <p style="font-size:0.8rem;color:#888;margin-top:5px;">💡 Use imagens do Unsplash, Pexels ou Imgur</p>
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalProduto')">Cancelar</button>
+        <button type="submit" class="btn-salvar">Adicionar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL NOTICIA -->
+<div class="modal" id="modalNoticia">
+  <div class="modal-content">
+    <h2>📰 Nova Notícia</h2>
+    <form id="formNoticia">
+      <div class="form-group">
+        <label>Categoria</label>
+        <input type="text" id="noticiaCategoria" placeholder="Ex: Dicas, Novidades">
+      </div>
+      <div class="form-group">
+        <label>Título</label>
+        <input type="text" id="noticiaTitulo" required placeholder="Título da notícia">
+      </div>
+      <div class="form-group">
+        <label>Resumo</label>
+        <textarea id="noticiaResumo" required placeholder="Breve descrição..." style="min-height:80px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Texto Completo</label>
+        <textarea id="noticiaTexto" required placeholder="Conteúdo completo..." style="min-height:150px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label>📸 URL da Imagem</label>
+        <input type="url" id="noticiaImg" required placeholder="https://exemplo.com/imagem.jpg">
+      </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancelar" onclick="fecharModal('modalNoticia')">Cancelar</button>
+        <button type="submit" class="btn-salvar">Adicionar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL JSON -->
+<div class="modal" id="modalJSON">
+  <div class="modal-content" style="max-width:800px;">
+    <h2>📋 JSON Gerado</h2>
+    <p style="color:#666;margin-bottom:15px;">Copie este código e cole no arquivo <strong>dados.json</strong> do GitHub:</p>
+    <div class="json-output" id="jsonOutput"></div>
+    <button class="btn-copiar" onclick="copiarJSON()">📋 Copiar JSON</button>
+    <div class="instrucoes">
+      <h4>📝 Próximos passos:</h4>
+      <p>1. Clique em <strong>"Copiar JSON"</strong> acima</p>
+      <p>2. Abra este link: <a href="https://github.com/tommeyjor-max/Loja-Landely/edit/main/dados.json" target="_blank">Editar dados.json no GitHub</a></p>
+      <p>3. Apague tudo que está lá e cole o JSON copiado</p>
+      <p>4. Clique em <strong>"Commit changes"</strong></p>
+      <p>5. Aguarde 1-2 minutos e recarregue o site!</p>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="btn-cancelar" onclick="fecharModal('modalJSON')">Fechar</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // URL do arquivo dados.json no GitHub
   const URL_DADOS = 'https://raw.githubusercontent.com/tommeyjor-max/Loja-Landely/main/dados.json';
   
   let dados = {
@@ -206,16 +375,59 @@
     textos: {}
   };
 
-  // Carregar dados do GitHub
+  // Autenticação
+  function hashSenha(senha) {
+    let hash = 0;
+    const str = 'AMA_XOR_' + senha + '_SALT_2026';
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash |= 0;
+    }
+    return 'h_' + Math.abs(hash).toString(36) + '_' + str.length;
+  }
+
+  function inicializarAuth() {
+    if (!localStorage.getItem('auth_usuario')) {
+      localStorage.setItem('auth_usuario', 'admin');
+      localStorage.setItem('auth_senha_hash', hashSenha('admin123'));
+    }
+  }
+
+  function verificarCredenciais(usuario, senha) {
+    return usuario === localStorage.getItem('auth_usuario') && 
+           hashSenha(senha) === localStorage.getItem('auth_senha_hash');
+  }
+
+  function estaLogado() {
+    const sessao = localStorage.getItem('auth_sessao');
+    if (!sessao) return false;
+    try {
+      const dados = JSON.parse(sessao);
+      if (Date.now() - dados.timestamp > 2 * 60 * 60 * 1000) {
+        localStorage.removeItem('auth_sessao');
+        return false;
+      }
+      return dados.logado === true;
+    } catch { return false; }
+  }
+
+  function criarSessao(usuario) {
+    localStorage.setItem('auth_sessao', JSON.stringify({
+      logado: true, usuario, timestamp: Date.now()
+    }));
+  }
+
+  function destruirSessao() { localStorage.removeItem('auth_sessao'); }
+
+  // Carregar dados
   async function carregarDados() {
     try {
-      // Adiciona timestamp para evitar cache
       const url = URL_DADOS + '?t=' + Date.now();
       const response = await fetch(url);
       if (!response.ok) throw new Error('Não foi possível carregar');
       dados = await response.json();
       
-      // Atualizar interface
       document.getElementById('nomeLoja').textContent = dados.nomeLoja || 'A Mesa Arrumação';
       document.getElementById('footerNome').textContent = dados.nomeLoja || 'A Mesa Arrumação';
       document.title = dados.nomeLoja || 'A Mesa Arrumação';
@@ -232,7 +444,7 @@
       renderizarTextos();
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
-      document.getElementById('listaNoticiasHome').innerHTML = '<div class="vazio"><h3>⚠️ Erro ao carregar</h3><p>Verifique se o arquivo dados.json existe no repositório.</p></div>';
+      document.getElementById('listaNoticiasHome').innerHTML = '<div class="vazio"><h3>⚠️ Erro ao carregar</h3><p>Verifique se o arquivo dados.json existe.</p></div>';
       document.getElementById('listaProdutosHome').innerHTML = '';
     }
   }
@@ -330,6 +542,100 @@
     }
   }
 
+  // Admin
+  function abrirAdmin() {
+    if (!estaLogado()) {
+      document.getElementById('formLogin').reset();
+      document.getElementById('loginErro').classList.remove('show');
+      document.getElementById('modalLogin').classList.add('active');
+      return;
+    }
+    document.getElementById('modalAdmin').classList.add('active');
+  }
+
+  document.getElementById('formLogin').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const usuario = document.getElementById('loginUsuario').value.trim();
+    const senha = document.getElementById('loginSenha').value;
+
+    if (verificarCredenciais(usuario, senha)) {
+      criarSessao(usuario);
+      fecharModal('modalLogin');
+      setTimeout(() => abrirAdmin(), 300);
+    } else {
+      document.getElementById('loginErro').classList.add('show');
+    }
+  });
+
+  function fazerLogout() {
+    if (!confirm('Deseja sair?')) return;
+    destruirSessao();
+    fecharModal('modalAdmin');
+  }
+
+  function abrirModalProduto() {
+    document.getElementById('formProduto').reset();
+    document.getElementById('modalProduto').classList.add('active');
+  }
+
+  function abrirModalNoticia() {
+    document.getElementById('formNoticia').reset();
+    document.getElementById('modalNoticia').classList.add('active');
+  }
+
+  document.getElementById('formProduto').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const novoProduto = {
+      id: Date.now(),
+      nome: document.getElementById('produtoNome').value,
+      desc: document.getElementById('produtoDesc').value,
+      preco: document.getElementById('produtoPreco').value,
+      link: document.getElementById('produtoLink').value,
+      img: document.getElementById('produtoImg').value
+    };
+    
+    dados.produtos.push(novoProduto);
+    fecharModal('modalProduto');
+    alert('✅ Produto adicionado! Agora clique em "Gerar JSON" para copiar e colar no GitHub.');
+    gerarJSON();
+  });
+
+  document.getElementById('formNoticia').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const novaNoticia = {
+      id: Date.now(),
+      categoria: document.getElementById('noticiaCategoria').value,
+      titulo: document.getElementById('noticiaTitulo').value,
+      resumo: document.getElementById('noticiaResumo').value,
+      texto: document.getElementById('noticiaTexto').value,
+      img: document.getElementById('noticiaImg').value,
+      data: new Date().toLocaleDateString('pt-BR')
+    };
+    
+    dados.noticias.push(novaNoticia);
+    fecharModal('modalNoticia');
+    alert('✅ Notícia adicionada! Agora clique em "Gerar JSON" para copiar e colar no GitHub.');
+    gerarJSON();
+  });
+
+  function gerarJSON() {
+    const json = JSON.stringify(dados, null, 2);
+    document.getElementById('jsonOutput').textContent = json;
+    fecharModal('modalAdmin');
+    document.getElementById('modalJSON').classList.add('active');
+  }
+
+  function copiarJSON() {
+    const json = document.getElementById('jsonOutput').textContent;
+    navigator.clipboard.writeText(json).then(() => {
+      alert('✅ JSON copiado! Agora cole no arquivo dados.json do GitHub.');
+    }).catch(() => {
+      alert('❌ Erro ao copiar. Selecione o texto manualmente e copie.');
+    });
+  }
+
+  function fecharModal(id) { document.getElementById(id).classList.remove('active'); }
+
   // Navegação
   document.querySelectorAll('nav a').forEach(link => {
     link.addEventListener('click', function(e) {
@@ -359,10 +665,13 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  document.querySelectorAll('.modal').forEach(m => {
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
+  });
+
   // Iniciar
+  inicializarAuth();
   carregarDados();
-  
-  // Recarregar a cada 5 minutos
   setInterval(carregarDados, 5 * 60 * 1000);
 </script>
 
